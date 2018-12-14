@@ -144,7 +144,7 @@ public class Menu : MonoBehaviour
                                 "<b>1. "+mapa.titulo+"</b> \nModo: Solo\tDificuldade: "+
                                 mapa.dificuldade+" de 5\n"+mapa.descricao);
 
-                if (pressed)
+                if (pressed==true)
                 {
                     if (mapa.Buidindex < SceneManager.sceneCount)
                     {
