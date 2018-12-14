@@ -146,6 +146,7 @@ public class Menu : MonoBehaviour
 
                 if (pressed==true)
                 {
+                    print(mapa.Buidindex);
                     if (mapa.Buidindex < SceneManager.sceneCount)
                     {
                         tracker.MapaEscolhido = mapa.Buidindex;
