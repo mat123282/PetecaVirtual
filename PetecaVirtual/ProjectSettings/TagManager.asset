@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Cilindro_amarelo
+  - Cilindro_anil
+  - Cilindro_magenta
+  - Cilindro_verde
+  - Cubo_amarelo
+  - Cubo_anil
+  - Cubo_magenta
+  - Cubo_verde
+  - Esfera_amarelo
+  - Esfera_anil
+  - Esfera_magenta
+  - Esfera_verde
+  - PrismaTriangular_amarelo
+  - PrismaTriangular_anil
+  - PrismaTriangular_magenta
+  - PrismaTriangular_verde
+  - Pecas
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - PostProcessing
+  - Chao
+  - Parede
+  - MeiaParede
+  - UmQuatroParede
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
