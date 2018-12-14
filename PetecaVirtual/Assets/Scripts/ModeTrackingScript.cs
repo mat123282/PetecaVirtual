@@ -24,7 +24,7 @@ public class ModeTrackingScript : MonoBehaviour
 
     [System.Serializable]
     public struct Mapa {
-        public string titulo ;
+        public string titulo;
         [Range(1,5,order =1)]
         public int dificuldade;
         [Multiline(1), Tooltip("Descreve o nivel")]
@@ -41,8 +41,7 @@ public class ModeTrackingScript : MonoBehaviour
     private bool primeiraVez = true;
     private bool fimDeJogo = false;
 
-    void Start()
-    {
+    void Start() {
         DontDestroyOnLoad(transform.gameObject);
         tracker = GameObject.Find("Mode Tracker");
         Pecas = GameObject.Find("Pecas");
@@ -125,7 +124,11 @@ public class ModeTrackingScript : MonoBehaviour
             GUI.skin = skin;
             
             if (botaoArquivo == true) {
-                mostrarArquivo = (mostrarArquivo == true) ? false : true;
+                if (mostrarArquivo == true) {
+                    mostrarArquivo = false;
+                } else {
+                    mostrarArquivo = true;
+                }
             }
             if (botaoReiniciar == true) {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
