@@ -5,8 +5,7 @@ using UnityEditor;
 using System.Diagnostics;
 using UnityEngine.SceneManagement;
 
-public class Menu : MonoBehaviour
-{
+public class Menu : MonoBehaviour {
     // FIGURAS
     public Texture2D LogoPetecaVirtual; // Logo do PetVirtual em .psd
     public Texture2D LogoPeteca;
@@ -132,14 +131,14 @@ public class Menu : MonoBehaviour
 
         }
         else if (BotaoSelecionadoToolbar == 1) { //Treinamento
-
-            ScrollPosition = GUI.BeginScrollView(new Rect(15, 65, 800, 400), ScrollPosition, new Rect(0, 0, 750, tracker.maps.Length*72), false, true);
+            print(tracker.ListaMapasTreinamento.numeroMapas);
+            ScrollPosition = GUI.BeginScrollView(new Rect(15, 65, 800, 400), ScrollPosition, new Rect(0, 0, 750, tracker.ListaMapasTreinamento.numeroMapas*72), false, true);
 
             GUI.skin = ConteudoBotoes;
 
-            for (int i = 0; i < tracker.maps.Length; i++)
+            for (int i = 0; i < tracker.ListaMapasTreinamento.numeroMapas; i++)
             {
-                var mapa = tracker.maps[i];
+                Mapa mapa = tracker.ListaMapasTreinamento.mapas[i];
                 bool pressed=GUI.Button(new Rect(0, 70*i, 780, 60), 
                                 "<b>1. "+mapa.titulo+"</b> \nModo: Solo\tDificuldade: "+
                                 mapa.dificuldade+" de 5\n"+mapa.descricao);
@@ -149,7 +148,7 @@ public class Menu : MonoBehaviour
                     if (mapa.Buidindex < SceneManager.sceneCountInBuildSettings)
                     {
                         tracker.MapaEscolhido = mapa.Buidindex;
-                        tracker.ModoJogo = 1;
+                        tracker.ModoJogo = mapa.modoJogo;
                     }
                     else
                     {
@@ -165,7 +164,8 @@ public class Menu : MonoBehaviour
             bool VerificaMapaSelecionado = GUI.Button(new Rect(975, 370, 100, 30), "Selecionar");
             if (VerificaMapaSelecionado) {
                 mostrarJanelaIrParaMapa = true;
-            }           
+            }  
+            
             GUI.BeginGroup(new Rect(850, 90, 350, 250));
             GUI.skin = ConteudoMenu;
             GUI.Box(new Rect(5, 5, 340, 240), "Modo de Partida");
@@ -189,11 +189,8 @@ public class Menu : MonoBehaviour
                 tracker.TipoPontuacao = 1;
                 tracker.TempoTotal = 0;
             }
-            
-            
 
             GUI.EndGroup();           
-
         }
         else if (BotaoSelecionadoToolbar == 2) { //mapas
             //GUI.skin = ControlSkin;
@@ -238,8 +235,9 @@ public class Menu : MonoBehaviour
             GUI.Box(new Rect(735, 65, 400, 150), "Créditos", "score");
             GUI.Label(new Rect(740, 90, 390, 140), "O PetecaVirtual foi desenvolvido pelo programa PETECA-Desafios. O objetivo do PetecaVirtual é promover competições de robótica para os alunos de Engenharia de Controle " +
                 "e Automação no campus de Sorocaba da UNESP. " +
-                "Agradecemos ao projeto open-source VirtualVex, pois algumas funcionalidades foram trazidas e adaptadas de lá. Para mais informações sobre o VirtualVex, " +
-                "você pode acessar o site através do link: https://sites.google.com/site/virtualvex/");
+                "Agradecemos ao projeto open-source VirtualVex. Para mais informações sobre o VirtualVex, " +
+                "você pode acessar o site através do link: https://sites.google.com/site/virtualvex/.\n" +
+                "Créditos da música: Esley Joubert Callai Bitencourt.");
 
 
             GUI.skin = Transparent; // Design para o conteudo
@@ -279,7 +277,6 @@ public class Menu : MonoBehaviour
         yield return VersaoUpdate1;
         PegarVersao = VersaoUpdate1.text;
     }
-
     IEnumerator CarregarLogUpdate()
     {
         VersaoUpdate1 = new WWW("http://www.sorocaba.unesp.br/Home/PaginaDocentes/PET-ECA/petecavirtualversaoatual.txt");
@@ -287,7 +284,6 @@ public class Menu : MonoBehaviour
         yield return siteLogAtualizacao;
         textoLogAtualizacao = siteLogAtualizacao.text;
     }
-
     void VerificarAtualizacao(int windowID) {
         string textoDaJanela = "Tentando conectar com o servidor...";
         if (VersaoUpdate1!=null)
@@ -309,7 +305,6 @@ public class Menu : MonoBehaviour
         }
         GUI.DragWindow(new Rect(0, 0, 10000, 20));
     }
-
     void VerificarIrParaMapa(int windowID) {
         GUI.Label(new Rect(30, 30, 300, 150), "Você deseja ir para o Mapa? Verifique se as " +
             "configurações colocadas estão de acordo com a sua preferência.");

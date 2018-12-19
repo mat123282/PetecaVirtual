@@ -22,18 +22,9 @@ public class ModeTrackingScript : MonoBehaviour
     private GameObject tracker;
     public GameObject Pecas;
 
-    [System.Serializable]
-    public struct Mapa {
-        public string titulo;
-        [Range(1,5,order =1)]
-        public int dificuldade;
-        [Multiline(1), Tooltip("Descreve o nivel")]
-        public string descricao;
-        public int Buidindex;
-    }
+    public MapasTreinamento ListaMapasTreinamento;
+    public MapasCompeticoes ListaMapasCompeticoes;
 
-    public Mapa[] maps;
-    
     private float tempoInicio;
     private float tempo;
     private string segundosContador = "";
@@ -45,6 +36,8 @@ public class ModeTrackingScript : MonoBehaviour
         DontDestroyOnLoad(transform.gameObject);
         tracker = GameObject.Find("Mode Tracker");
         Pecas = GameObject.Find("Pecas");
+        ListaMapasTreinamento = new MapasTreinamento();
+        ListaMapasCompeticoes = new MapasCompeticoes();
 
         Time.timeScale = 0;
         mostrarArquivo = false;
@@ -135,6 +128,7 @@ public class ModeTrackingScript : MonoBehaviour
                 Time.timeScale = 0;
                 Pecas = SceneManager.GetSceneByBuildIndex(MapaEscolhido).GetRootGameObjects().Where(o => o.name == "Pecas").ToArray().First();
                 ReiniciarPontuacao();
+                fimDeJogo = false;
             }
             if (botaoPausar == true) {
                 if (Time.timeScale == 0) {
@@ -155,7 +149,6 @@ public class ModeTrackingScript : MonoBehaviour
 
                 if (botaoMenuPrincipal) {
                     ReiniciarPontuacao();
-                    fimDeJogo = false;
                     SceneManager.LoadScene(0, LoadSceneMode.Single);
 
                 } else if (botaoSair) {
@@ -202,9 +195,9 @@ public class ModeTrackingScript : MonoBehaviour
         if (ModoJogo == 1) {
             pontuacaoRoboAzul = 0;
             pontuacaoRoboVermelho = 0;
-            fimDeJogo = false;
             ControlaTempo();
         }
+        fimDeJogo = false;
     }
 
     private void ControlaTempo() {
