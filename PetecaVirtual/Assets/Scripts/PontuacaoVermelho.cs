@@ -4,24 +4,15 @@ using UnityEngine;
 
 public class PontuacaoVermelho : MonoBehaviour {
 
-    public GameObject Caracteristicas;
-    public GameObject Tracker;
 
     private CaracteristicasScript Valores;
     private ModeTrackingScript tracker;
 
-    // Use this for initialization
     void Start () {
-        Tracker = GameObject.Find("Mode Tracker");
-        Valores = Caracteristicas.GetComponent<CaracteristicasScript>();
-        tracker = Tracker.GetComponent<ModeTrackingScript>();
+        Valores = FindObjectOfType<CaracteristicasScript>();
+        tracker = FindObjectOfType<ModeTrackingScript>();
     }
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
     private void OnTriggerEnter(Collider objetoDeColisao)
     {
         if (objetoDeColisao.tag == "Cilindro_amarelo") {

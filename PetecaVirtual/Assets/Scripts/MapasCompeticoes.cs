@@ -1,36 +1,33 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
+/// <summary>
+/// Uma classe com valores estáticos, 
+/// assim que inicializada seus valores podem ser acessados globalmente.
+/// </summary>
+/// <example>
+/// Para acessar um mapa dos Mapas de treinamento, basta usar:
+/// <c>... new MapasCompeticoes();</c> para inicializar
+/// <c> MapasCompeticoes.mapas[valor] </c> buscar valor
+/// </example>
 public class MapasCompeticoes {
-    public List<Mapa> mapas;
-    public int numeroMapas;
+    public static List<Mapa> mapas =
+        new List<Mapa>(){
 
-    public MapasCompeticoes() {
-        Mapa mapa1 = new Mapa();
-        mapa1.titulo = "Movimento";
-        mapa1.dificuldade = 1;
-        mapa1.descricao = "Mapa inicial para aprender sobre as movimentações básicas do robo e verificar seu código.";
-        mapa1.Buidindex = 1;
+            new Mapa(){//Mapa1
+                titulo = "Movimento",
+                dificuldade = 1,
+                descricao = "Mapa inicial para aprender sobre as movimentações" +
+                            " básicas do robo e verificar seu código.",
+                buildIndex = 1
+            },
 
-        mapas.Add(mapa1);
-
-        Mapa mapa2 = new Mapa();
-        mapa2.titulo = "Curva logo a frente";
-        mapa2.dificuldade = 1;
-        mapa2.descricao = "Teste suas habilidades de rotação com as curvas que você encontrará aqui.";
-        mapa2.Buidindex = 2;
-
-        mapas.Add(mapa2);
-
-        numeroMapas = mapas.Count;
-    }
-
-    //    Mapa mapa = new Mapa();
-    //    mapa.titulo = "Movimento";
-    //    mapa.dificuldade = 1;
-    //    mapa.descricao = "Mapa inicial para aprender sobre as movimentações básicas do robo e verificar seu código.";
-    //    mapa.Buidindex = 1;
-
-    //    mapas.Add(mapa);
+            new Mapa(){//Mapa2
+                titulo = "Curva logo a frente",
+                dificuldade = 1,
+                descricao = "Teste suas habilidades de rotação com " +
+                            "as curvas que você encontrará aqui.",
+                buildIndex = 2
+            }
+        };
+    public int numeroMapas => mapas.Count;
 }

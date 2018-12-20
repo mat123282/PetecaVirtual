@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731704, g: 0.13414727, b: 0.121078536, a: 1}
+  m_IndirectSpecularColor: {r: 0.1273183, g: 0.13414839, b: 0.12107935, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -125,7 +125,7 @@ GameObject:
   m_Layer: 0
   m_Name: Audio Source
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -252,7 +252,7 @@ GameObject:
   m_Layer: 0
   m_Name: Mode Tracker
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -290,21 +290,6 @@ MonoBehaviour:
   pontuacaoRoboVermelho: 0
   pontuacaoRoboAzul: 0
   Pecas: {fileID: 0}
-  maps:
-  - titulo: Movimento
-    dificuldade: 1
-    descricao: "Mapa inicial para aprender sobre as movimenta\xE7\xF5es b\xE1sicas
-      do robo e verificar seu c\xF3digo."
-    Buidindex: 1
-  - titulo: Curva logo a frente
-    dificuldade: 1
-    descricao: "Teste suas habilidades de rota\xE7\xE3o com as curvas que voc\xEA
-      encontrar\xE1 aqui."
-    Buidindex: 2
-  - titulo: Sem fim
-    dificuldade: 1
-    descricao: cimentro
-    Buidindex: 3
 --- !u!1 &1674404218
 GameObject:
   m_ObjectHideFlags: 0
@@ -320,7 +305,7 @@ GameObject:
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -409,7 +394,7 @@ GameObject:
   m_Layer: 0
   m_Name: GUI
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1

@@ -131,23 +131,26 @@ public class Menu : MonoBehaviour {
 
         }
         else if (BotaoSelecionadoToolbar == 1) { //Treinamento
-            print(tracker.ListaMapasTreinamento.numeroMapas);
-            ScrollPosition = GUI.BeginScrollView(new Rect(15, 65, 800, 400), ScrollPosition, new Rect(0, 0, 750, tracker.ListaMapasTreinamento.numeroMapas*72), false, true);
+
+            ScrollPosition = GUI.BeginScrollView(
+                                new Rect(15, 65, 800, 400), ScrollPosition,
+                                new Rect(0, 0, 750, MapasTreinamento.numeroMapas*72),
+                                false, true);
 
             GUI.skin = ConteudoBotoes;
 
-            for (int i = 0; i < tracker.ListaMapasTreinamento.numeroMapas; i++)
+            for (int i = 0; i < MapasTreinamento.numeroMapas; i++)
             {
-                Mapa mapa = tracker.ListaMapasTreinamento.mapas[i];
+                Mapa mapa = MapasTreinamento.mapas[i];
                 bool pressed=GUI.Button(new Rect(0, 70*i, 780, 60), 
                                 "<b>1. "+mapa.titulo+"</b> \nModo: Solo\tDificuldade: "+
                                 mapa.dificuldade+" de 5\n"+mapa.descricao);
 
                 if (pressed==true)
                 {
-                    if (mapa.Buidindex < SceneManager.sceneCountInBuildSettings)
+                    if (mapa.buildIndex < SceneManager.sceneCountInBuildSettings)
                     {
-                        tracker.MapaEscolhido = mapa.Buidindex;
+                        tracker.MapaEscolhido = mapa.buildIndex;
                         tracker.ModoJogo = mapa.modoJogo;
                     }
                     else

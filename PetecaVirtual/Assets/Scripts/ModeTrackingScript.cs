@@ -6,24 +6,26 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Linq;
 
-
+//a tag abaixo adiciona uma descrição ao script
+/// <summary>
+/// Esse Script se mantem com a troca de cenários,
+/// tornando o objeto que o carrega persistente.
+///Sendo usado para manter as variaves globais do jogo
+/// </summary>
 public class ModeTrackingScript : MonoBehaviour
 {
     public GUISkin skin;
 
-    public int MapaEscolhido = 0; // 0 - Menu. 1,2,3 - Mapas
-    public int ModoJogo = 0; // 0 - Nada. 1 - Solo. 2 - Batalha. 3 - Arena
-    public int TipoPontuacao = 0; // 0 - Por tempo. 1 - Por pontos. 2 - Por tempo e pontuacao
+    public int MapaEscolhido = 0;                   // 0 - Menu. 1,2,3 - Mapas
+    public ModoDeJogo ModoJogo = 0;                 // 0 - Nada. 1 - Solo. 2 - Batalha. 3 - Arena
+    public int TipoPontuacao = 0;                   // 0 - Por tempo. 1 - Por pontos. 2 - Por tempo e pontuacao
 
-    public float TempoTotal = 0;
-    public int pontuacaoRoboVermelho = 0;
-    public int pontuacaoRoboAzul = 0;
+    public float TempoTotal = 0;                    //
+    public int pontuacaoRoboVermelho = 0;           //
+    public int pontuacaoRoboAzul = 0;               //
 
-    private GameObject tracker;
-    public GameObject Pecas;
-
-    public MapasTreinamento ListaMapasTreinamento;
-    public MapasCompeticoes ListaMapasCompeticoes;
+    private GameObject tracker;                     //referência Objeto que carrega esse script
+    public GameObject Pecas;                        //
 
     private float tempoInicio;
     private float tempo;
@@ -33,11 +35,9 @@ public class ModeTrackingScript : MonoBehaviour
     private bool fimDeJogo = false;
 
     void Start() {
-        DontDestroyOnLoad(transform.gameObject);
-        tracker = GameObject.Find("Mode Tracker");
+        DontDestroyOnLoad(transform.gameObject);                    //Torna obj persistente a troca de cenas
+        tracker = FindObjectOfType<ModeTrackingScript>().gameObject;//encontra o objeto que tem esse script
         Pecas = GameObject.Find("Pecas");
-        ListaMapasTreinamento = new MapasTreinamento();
-        ListaMapasCompeticoes = new MapasCompeticoes();
 
         Time.timeScale = 0;
         mostrarArquivo = false;
@@ -158,11 +158,11 @@ public class ModeTrackingScript : MonoBehaviour
 
             if (fimDeJogo == true) {
                 GUI.TextArea(new Rect(Screen.width/2 - 200, Screen.height/2 - 50, 400, 100), "<color=#ffa500ff><size=50><b>Fim de Partida</b></size></color>");
-                if (ModoJogo == 1) {
+                if (ModoJogo == ModoDeJogo.Solo) {
                     GUI.TextArea(new Rect(Screen.width / 2 - 275, Screen.height / 2 + 20, 550, 100), "<color=#ffa500ff><size=30><b>Você finalizou o jogo em: " +
                         segundosContador + "</b></size></color>");
                 }
-                else if (ModoJogo == 2) {
+                else if (ModoJogo == ModoDeJogo.Competição) {
                     if (pontuacaoRoboAzul > pontuacaoRoboVermelho) {
                         GUI.TextArea(new Rect(Screen.width / 2 - 200, Screen.height / 2 + 20, 400, 100), "<color=#ffa500ff><size=30><b>O time " + "Azul" +
                         " ganhou!" + "</b></size></color>");
@@ -172,7 +172,7 @@ public class ModeTrackingScript : MonoBehaviour
                     }
                     
                 }
-                else if (ModoJogo == 3) {
+                else if (ModoJogo == ModoDeJogo.Arena) {
                     if (pontuacaoRoboAzul > pontuacaoRoboVermelho) {
                         GUI.TextArea(new Rect(Screen.width / 2 - 200, Screen.height / 2 + 20, 400, 100), "<color=#ffa500ff><size=30><b>O time " + "Azul" +
                         " ganhou!" + "</b></size></color>");
@@ -192,7 +192,7 @@ public class ModeTrackingScript : MonoBehaviour
     }
 
     private void ReiniciarPontuacao() {
-        if (ModoJogo == 1) {
+        if (ModoJogo == ModoDeJogo.Solo) {
             pontuacaoRoboAzul = 0;
             pontuacaoRoboVermelho = 0;
             ControlaTempo();
