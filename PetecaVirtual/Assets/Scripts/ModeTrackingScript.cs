@@ -27,22 +27,28 @@ public class ModeTrackingScript : MonoBehaviour
     private GameObject tracker;                     //referência Objeto que carrega esse script
     public GameObject Pecas;                        //
 
-    private float tempoInicio;
-    private float tempo;
-    private string segundosContador = "";
-    private bool mostrarArquivo = false;
-    private bool primeiraVez = true;
-    private bool fimDeJogo = false;
+    private float tempoInicio;                      //
+    private float tempo;                            //
+    private string segundosContador = "";           //
+    private bool mostrarArquivo = false;            //
+    private bool primeiraVez = true;                //
+    private bool fimDeJogo = false;                 //
 
     void Start() {
         DontDestroyOnLoad(transform.gameObject);                    //Torna obj persistente a troca de cenas
         tracker = FindObjectOfType<ModeTrackingScript>().gameObject;//encontra o objeto que tem esse script
         Pecas = GameObject.Find("Pecas");
 
-        Time.timeScale = 0;
-        mostrarArquivo = false;
-        QualitySettings.vSyncCount = 0;
-        Application.targetFrameRate = 60;
+        Time.timeScale = 0;                         //
+        mostrarArquivo = false;                     //
+        QualitySettings.vSyncCount = 0;             //
+        Application.targetFrameRate = 60;           //
+    }
+
+
+    private void OnEnable()
+    {
+        print("CARREGADO");
     }
 
     void Update() {
@@ -95,38 +101,41 @@ public class ModeTrackingScript : MonoBehaviour
         GUI.skin = skin;
               
 
-        if (SceneManager.GetActiveScene().buildIndex != 0)
+        if (SceneManager.GetActiveScene().buildIndex != 0)          //Se a cena ativa não for o menu
         {
-            GUI.Box(new Rect(0, 0, Screen.width - 150, 25), "");
-            bool botaoArquivo = GUI.Button(new Rect(0, 0, 100, 25), "Arquivo");
-            bool botaoReiniciar = GUI.Button(new Rect(100, 0, 100, 25), "Reiniciar");
-            bool botaoPausar = GUI.Button(new Rect(200, 0, 120, 25), "Pausar/Despausar");
+            GUI.Box(new Rect(0, 0, Screen.width - 150, 25), "");                            //
+            bool botaoArquivo = GUI.Button(new Rect(0, 0, 100, 25), "Arquivo");             //Arquivo
+            bool botaoReiniciar = GUI.Button(new Rect(100, 0, 100, 25), "Reiniciar");       //Reniciar
+            bool botaoPausar = GUI.Button(new Rect(200, 0, 120, 25), "Pausar/Despausar");   //Pausar/Despausar
 
-            GUI.BeginGroup(new Rect(Screen.width - 150, 0, 200, 80));
-            GUI.Box(new Rect(0, 0, 150, 80), "");
-            GUI.Label(new Rect(35, 0, 50, 25), "<b>Tempo: </b>");
-            GUI.Label(new Rect(90, 0, 50, 25), segundosContador);
-            GUI.contentColor = Color.red;
-            GUI.Label(new Rect(20, 25, 100, 25), "<b>Vermelho: </b>");
-            GUI.Label(new Rect(90, 25, 100, 25), pontuacaoRoboVermelho.ToString());
-            GUI.contentColor = Color.blue;
-            GUI.Label(new Rect(45, 50, 100, 25), "<b>Azul: </b>");
-            GUI.Label(new Rect(90, 50, 100, 25), pontuacaoRoboAzul.ToString());
-            GUI.EndGroup();
+            GUI.BeginGroup(new Rect(Screen.width - 150, 0, 200, 80));                       //----------------
+                                                                                            
+                GUI.Box(new Rect(0, 0, 150, 80), "");                                       //
+                GUI.Label(new Rect(35, 0, 50, 25), "<b>Tempo: </b>");                       //Tempo:<tempo>
+                GUI.Label(new Rect(90, 0, 50, 25), segundosContador);                       //
+                                                                                            
+                GUI.contentColor = Color.red;                                               //
+                GUI.Label(new Rect(20, 25, 100, 25), "<b>Vermelho: </b>");                  //Vermelho:<pontos>
+                GUI.Label(new Rect(90, 25, 100, 25), pontuacaoRoboVermelho.ToString());     //
+                                                                                            
+                GUI.contentColor = Color.blue;                                              //
+                GUI.Label(new Rect(45, 50, 100, 25), "<b>Azul: </b>");                      //Azul:<pontos>
+                GUI.Label(new Rect(90, 50, 100, 25), pontuacaoRoboAzul.ToString());         //
+
+            GUI.EndGroup();                                                                 //----------------
+
             GUI.contentColor = Color.white;
             GUI.skin = skin;
             
             if (botaoArquivo == true) {
-                if (mostrarArquivo == true) {
-                    mostrarArquivo = false;
-                } else {
-                    mostrarArquivo = true;
-                }
+                mostrarArquivo = !mostrarArquivo;
             }
+
             if (botaoReiniciar == true) {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
                 Time.timeScale = 0;
-                Pecas = SceneManager.GetSceneByBuildIndex(MapaEscolhido).GetRootGameObjects().Where(o => o.name == "Pecas").ToArray().First();
+                Pecas = SceneManager.GetSceneByBuildIndex(MapaEscolhido).GetRootGameObjects()
+                                    .Where(o => o.name == "Pecas").ToArray().First();
                 ReiniciarPontuacao();
                 fimDeJogo = false;
             }
@@ -138,12 +147,14 @@ public class ModeTrackingScript : MonoBehaviour
                 }
                 if (primeiraVez == true) {
                     ControlaTempo();
-                    Pecas = SceneManager.GetSceneByBuildIndex(MapaEscolhido).GetRootGameObjects().Where(o => o.name == "Pecas").ToArray().First();
+                    Pecas = SceneManager.GetSceneByBuildIndex(MapaEscolhido).GetRootGameObjects()
+                                        .Where(o => o.name == "Pecas").ToArray().First();
                     primeiraVez = false;
                 }
             }
 
             if (mostrarArquivo) {
+
                 bool botaoMenuPrincipal = GUI.Button(new Rect(0, 25, 150, 25), "Menu Principal");
                 bool botaoSair = GUI.Button(new Rect(0, 50, 150, 25), "Sair");
 
@@ -157,28 +168,35 @@ public class ModeTrackingScript : MonoBehaviour
             }
 
             if (fimDeJogo == true) {
-                GUI.TextArea(new Rect(Screen.width/2 - 200, Screen.height/2 - 50, 400, 100), "<color=#ffa500ff><size=50><b>Fim de Partida</b></size></color>");
+                GUI.TextArea(new Rect(Screen.width/2 - 200, Screen.height/2 - 50, 400, 100),
+                    "<color=#ffa500ff><size=50><b>Fim de Partida</b></size></color>");
+
                 if (ModoJogo == ModoDeJogo.Solo) {
-                    GUI.TextArea(new Rect(Screen.width / 2 - 275, Screen.height / 2 + 20, 550, 100), "<color=#ffa500ff><size=30><b>Você finalizou o jogo em: " +
+                    GUI.TextArea(new Rect(Screen.width / 2 - 275, Screen.height / 2 + 20, 550, 100),
+                        "<color=#ffa500ff><size=30><b>Você finalizou o jogo em: " +
                         segundosContador + "</b></size></color>");
                 }
                 else if (ModoJogo == ModoDeJogo.Competição) {
                     if (pontuacaoRoboAzul > pontuacaoRoboVermelho) {
-                        GUI.TextArea(new Rect(Screen.width / 2 - 200, Screen.height / 2 + 20, 400, 100), "<color=#ffa500ff><size=30><b>O time " + "Azul" +
-                        " ganhou!" + "</b></size></color>");
+                        GUI.TextArea(new Rect(Screen.width / 2 - 200, Screen.height / 2 + 20, 400, 100),
+                            "<color=#ffa500ff><size=30><b>O time " + "Azul" +
+                            " ganhou!" + "</b></size></color>");
                     } else {
-                        GUI.TextArea(new Rect(Screen.width / 2 - 200, Screen.height / 2 + 20, 400, 100), "<color=#ffa500ff><size=30><b>O time " + "Vermelho" +
-                        " ganhou!" + "</b></size></color>");
+                        GUI.TextArea(new Rect(Screen.width / 2 - 200, Screen.height / 2 + 20, 400, 100),
+                            "<color=#ffa500ff><size=30><b>O time " + "Vermelho" +
+                            " ganhou!" + "</b></size></color>");
                     }
                     
                 }
                 else if (ModoJogo == ModoDeJogo.Arena) {
                     if (pontuacaoRoboAzul > pontuacaoRoboVermelho) {
-                        GUI.TextArea(new Rect(Screen.width / 2 - 200, Screen.height / 2 + 20, 400, 100), "<color=#ffa500ff><size=30><b>O time " + "Azul" +
-                        " ganhou!" + "</b></size></color>");
+                        GUI.TextArea(new Rect(Screen.width / 2 - 200, Screen.height / 2 + 20, 400, 100),
+                            "<color=#ffa500ff><size=30><b>O time " + "Azul" +
+                            " ganhou!" + "</b></size></color>");
                     } else {
-                        GUI.TextArea(new Rect(Screen.width / 2 - 200, Screen.height / 2 + 20, 400, 100), "<color=#ffa500ff><size=30><b>O time " + "Vermelho" +
-                        " ganhou!" + "</b></size></color>");
+                        GUI.TextArea(new Rect(Screen.width / 2 - 200, Screen.height / 2 + 20, 400, 100),
+                            "<color=#ffa500ff><size=30><b>O time " + "Vermelho" +
+                            " ganhou!" + "</b></size></color>");
                     }
                 }
             }
@@ -207,4 +225,5 @@ public class ModeTrackingScript : MonoBehaviour
             tempoInicio = Time.time + TempoTotal;
         }
     }
+    
 }

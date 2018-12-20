@@ -4,62 +4,54 @@ using System.Collections;
 using UnityEditor;
 using System.Diagnostics;
 using UnityEngine.SceneManagement;
+using UnityEngine.Networking;
+
 
 public class Menu : MonoBehaviour {
     // FIGURAS
-    public Texture2D LogoPetecaVirtual; // Logo do PetVirtual em .psd
-    public Texture2D LogoPeteca;
-    public Texture2D LogoPetecaDesafios;
-    public Texture2D LogoVirtualVex;
-
-    // Tracker
+    public Texture2D LogoPetecaVirtual;                            // Logo do PetVirtual em .psd
+    public Texture2D LogoPeteca;                                   //
+    public Texture2D LogoPetecaDesafios;                           //
+    public Texture2D LogoVirtualVex;                               //
+                                                                   
+    // Tracker                                                     
     public GameObject Tracker;
 
-    // GUI DESIGN
-    public GUISkin Skin; // Design para a GUI
-    public GUISkin ControlSkin; // Design para a GUI
-    public GUISkin Transparent; // Design para a GUI
-    public GUISkin ConteudoMenu;
-    public GUISkin ConteudoBotoes;
+    // GUI DESIGN                                                  // Design para a GUI
+    public GUISkin Skin;                                           // 
+    public GUISkin ControlSkin;                                    //
+    public GUISkin Transparent;                                    //
+    public GUISkin ConteudoMenu;                                   //
+    public GUISkin ConteudoBotoes;                                 //
 
     // TOOLBAR
-    private string[] Topicos = { "Inicio", "Treinamento", "Mapas", "Updates & Créditos" }; // String dos topicos do Toolbar
+    private string[] Topicos = {                                   //String com os 
+        "Inicio", "Treinamento", "Mapas", "Updates & Créditos"     //       topicos do Toolbar
+        };                                                         //
     private int BotaoSelecionadoToolbar = 0;
 
-    // JANELAS
-    private bool mostrarJanelaUpdate;
-    private bool mostrarJanelaIrParaMapa;
-    private bool botaoTempo = false;
-    private bool botaoPontuacao = false;
+    // JANELAS                                                     //
+    private bool mostrarJanelaUpdate;                              //
+    private bool mostrarJanelaIrParaMapa;                          //
+    private bool botaoTempo = false;                               //
+    private bool botaoPontuacao = false;                           //
+                                                                   
+    private string PegarVersao = "";                               //
+    private Rect janelaUpdate;                                     //
+    private Rect janelaIrParaMapa;                                 //
 
-    private string PegarVersao = "";
-    private WWW VersaoUpdate;
-    private Rect janelaUpdate;
-    private Rect janelaIrParaMapa;
-
-    // CONFIGURACOES COM O SITE
-    public string textoNoticias = "Carregando...";
-    public string textoLogAtualizacao = "Carregando...";
-    private ModeTrackingScript tracker;
-    private WWW siteNoticias;
-    private WWW siteLogAtualizacao;
+    // CONFIGURACOES COM O SITE                                    //
+    public string textoNoticias = "Carregando...";                 //
+    public string textoLogAtualizacao = "Carregando...";           //
+    private ModeTrackingScript tracker;                            //
+    private UnityWebRequest siteNoticias;                          //
+    private UnityWebRequest siteLogAtualizacao;                    //
 
     public Vector2 ScrollPosition = Vector2.down;
 
     public string stringToEdit = "1000";
 
-    public WWW VersaoUpdate1
-    {
-        get
-        {
-            return VersaoUpdate;
-        }
-
-        set
-        {
-            VersaoUpdate = value;
-        }
-    }
+    public UnityWebRequest VersaoUpdate1 { get; set; }
 
     private void Awake()
     {
@@ -70,12 +62,12 @@ public class Menu : MonoBehaviour {
     {
         
         tracker = Tracker.GetComponent<ModeTrackingScript>();
-        siteNoticias = new WWW("http://www.sorocaba.unesp.br/Home/PaginaDocentes/PET-ECA/petecavirtualnoticias.txt");
+        siteNoticias = UnityWebRequest.Get("http://www.sorocaba.unesp.br/Home/PaginaDocentes/PET-ECA/petecavirtualnoticias.txt");
         while (!siteNoticias.isDone) yield return null;
         yield return siteNoticias;
         StartCoroutine(CarregarVersaoUpdate());
         StartCoroutine(CarregarLogUpdate());
-        textoNoticias = siteNoticias.text;
+        textoNoticias = siteNoticias.downloadHandler.text;
         janelaUpdate = new Rect(Screen.width / 2 - 200, Screen.height / 2 - 200, 400, 200);
         janelaIrParaMapa = new Rect(Screen.width / 2 - 200, Screen.height / 2 - 200, 400, 200);
         mostrarJanelaUpdate = false;
@@ -275,17 +267,17 @@ public class Menu : MonoBehaviour {
     /// <returns></returns>
     IEnumerator CarregarVersaoUpdate()
     {
-        VersaoUpdate1 = new WWW("http://www.sorocaba.unesp.br/Home/PaginaDocentes/PET-ECA/petecavirtualversaoatual.txt");
+        VersaoUpdate1 = UnityWebRequest.Get("http://www.sorocaba.unesp.br/Home/PaginaDocentes/PET-ECA/petecavirtualversaoatual.txt");
         while (!VersaoUpdate1.isDone) yield return null;
         yield return VersaoUpdate1;
-        PegarVersao = VersaoUpdate1.text;
+        PegarVersao = VersaoUpdate1.downloadHandler.text;
     }
     IEnumerator CarregarLogUpdate()
     {
-        VersaoUpdate1 = new WWW("http://www.sorocaba.unesp.br/Home/PaginaDocentes/PET-ECA/petecavirtualversaoatual.txt");
-        siteLogAtualizacao = new WWW("http://www.sorocaba.unesp.br/Home/PaginaDocentes/PET-ECA/petecavirtualnotasatualizacao.txt");
+        VersaoUpdate1 = UnityWebRequest.Get("http://www.sorocaba.unesp.br/Home/PaginaDocentes/PET-ECA/petecavirtualversaoatual.txt");
+        siteLogAtualizacao = UnityWebRequest.Get("http://www.sorocaba.unesp.br/Home/PaginaDocentes/PET-ECA/petecavirtualnotasatualizacao.txt");
         yield return siteLogAtualizacao;
-        textoLogAtualizacao = siteLogAtualizacao.text;
+        textoLogAtualizacao = siteLogAtualizacao.downloadHandler.text;
     }
     void VerificarAtualizacao(int windowID) {
         string textoDaJanela = "Tentando conectar com o servidor...";

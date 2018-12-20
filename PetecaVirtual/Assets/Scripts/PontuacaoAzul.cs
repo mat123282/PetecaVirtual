@@ -1,11 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PontuacaoAzul : MonoBehaviour {
-
-    public GameObject Caracteristicas;
-    public GameObject Tracker;
 
     private CaracteristicasScript Valores;
     private ModeTrackingScript tracker;
@@ -13,9 +8,8 @@ public class PontuacaoAzul : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        Tracker = GameObject.Find("Mode Tracker");
-        Valores = Caracteristicas.GetComponent<CaracteristicasScript>();
-        tracker = Tracker.GetComponent<ModeTrackingScript>();
+        Valores = FindObjectOfType<CaracteristicasScript>();
+        tracker = FindObjectOfType<ModeTrackingScript>();
     }
 
     // Update is called once per frame
