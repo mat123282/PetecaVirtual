@@ -48,7 +48,7 @@ public class ModeTrackingScript : MonoBehaviour
 
     private void OnEnable()
     {
-        print("CARREGADO");
+        
     }
 
     void Update() {
