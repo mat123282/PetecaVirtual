@@ -8,16 +8,19 @@ using UnityEngine.UI;
 
 public class Menu : MonoBehaviour
 {
+    // Tracker                                                     
+    [Header("   ")]
+    public GameObject Tracker;
+    
     // FIGURAS
+    [Header("Figuras")]
     public Texture2D LogoPetecaVirtual;                            // Logo do PetVirtual em .psd
     public Texture2D LogoPeteca;                                   //
     public Texture2D LogoPetecaDesafios;                           //
     public Texture2D LogoVirtualVex;                               //
 
-    // Tracker                                                     
-    public GameObject Tracker;
-
     // GUI DESIGN                                                  // Design para a GUI
+    [Header("GUI Skins")]
     public GUISkin Skin;                                           // 
     public GUISkin ControlSkin;                                    //
     public GUISkin Transparent;                                    //
@@ -40,13 +43,15 @@ public class Menu : MonoBehaviour
     private Rect janelaUpdate;                                     //
     private Rect janelaIrParaMapa;                                 //
 
-    // CONFIGURACOES COM O SITE                                    //
+    // CONFIGURACOES COM O SITE  
+    [Header("   ")]
     public string textoNoticias = "Carregando...";                 //
     public string textoLogAtualizacao = "Carregando...";           //
     private ModeTrackingScript tracker;                            //
     private UnityWebRequest siteNoticias;                          //
     private UnityWebRequest siteLogAtualizacao;                    //
 
+    [Header("   ")]
     public Vector2 ScrollPosition = Vector2.down;
 
     public string stringToEdit = "1000";
