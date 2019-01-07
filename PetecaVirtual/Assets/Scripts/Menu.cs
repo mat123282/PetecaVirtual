@@ -292,15 +292,15 @@ public class Menu : MonoBehaviour
     /// </summary>
     private IEnumerator CarregarLogUpdate()
     {
-        VersaoUpdate1 = UnityWebRequest.Get(
-            "http://www.sorocaba.unesp.br/Home/PaginaDocentes/" +
-            "PET-ECA/petecavirtualversaoatual.txt");
         siteLogAtualizacao = UnityWebRequest.Get("" +
             "http://www.sorocaba.unesp.br/Home/PaginaDocentes/" +
             "PET-ECA/petecavirtualnotasatualizacao.txt");
 
         yield return siteLogAtualizacao.SendWebRequest();
 
+        if (siteLogAtualizacao.isNetworkError || siteLogAtualizacao.isHttpError) {
+            print(siteLogAtualizacao.error);
+            siteLogAtualizacao = null;
         } else {
             textoLogAtualizacao = siteLogAtualizacao.downloadHandler.text;
         }
