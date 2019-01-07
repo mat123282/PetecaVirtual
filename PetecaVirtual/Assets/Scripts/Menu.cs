@@ -11,7 +11,7 @@ public class Menu : MonoBehaviour
     // Tracker                                                     
     [Header("   ")]
     public GameObject Tracker;
-    
+
     // FIGURAS
     [Header("Figuras")]
     public Texture2D LogoPetecaVirtual;                            // Logo do PetVirtual em .psd
@@ -54,7 +54,6 @@ public class Menu : MonoBehaviour
     [Header("   ")]
     public Vector2 ScrollPosition = Vector2.down;
 
-    public string stringToEdit = "1000";
 
     public UnityWebRequest VersaoUpdate1 { get; set; }
 
@@ -278,9 +277,10 @@ public class Menu : MonoBehaviour
         VersaoUpdate1 = UnityWebRequest.Get("" +
             "http://www.sorocaba.unesp.br/Home/PaginaDocentes/" +
             "PET-ECA/petecavirtualversaoatual.txt");
+        yield return VersaoUpdate1.SendWebRequest();
 
-        while (!VersaoUpdate1.isDone) yield return null;
-        yield return VersaoUpdate1;
+        if (VersaoUpdate1.isNetworkError || VersaoUpdate1.isHttpError) {
+            print(VersaoUpdate1.error);
             VersaoUpdate1 = null;
         } else {
             PegarVersao = VersaoUpdate1.downloadHandler.text;
@@ -295,17 +295,15 @@ public class Menu : MonoBehaviour
         VersaoUpdate1 = UnityWebRequest.Get(
             "http://www.sorocaba.unesp.br/Home/PaginaDocentes/" +
             "PET-ECA/petecavirtualversaoatual.txt");
-
         siteLogAtualizacao = UnityWebRequest.Get("" +
             "http://www.sorocaba.unesp.br/Home/PaginaDocentes/" +
             "PET-ECA/petecavirtualnotasatualizacao.txt");
 
-        yield return siteLogAtualizacao;
-        textoLogAtualizacao = siteLogAtualizacao.downloadHandler.text;
         yield return siteLogAtualizacao.SendWebRequest();
 
         } else {
             textoLogAtualizacao = siteLogAtualizacao.downloadHandler.text;
+        }
     }
 
     private void VerificarAtualizacao(int windowID)
@@ -333,7 +331,7 @@ public class Menu : MonoBehaviour
 
     private void VerificarIrParaMapa(int windowID)
     {
-        GUI.Label(new Rect(30, 30, 300, 150), 
+        GUI.Label(new Rect(30, 30, 300, 150),
             "Você deseja ir para o Mapa? Verifique se as " +
             "configurações colocadas estão de acordo com a sua preferência.");
         bool irParaMapa = GUI.Button(new Rect(30, 150, 80, 25), "Sim");

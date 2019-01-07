@@ -233,7 +233,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 388356709}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.084537, y: 3.0566168, z: 3.9464908}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -264,7 +264,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1176917896}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.11183764, y: 0.46053362, z: -0.17717719}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -366,13 +366,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1674404218}
-  m_LocalRotation: {x: 0.12548797, y: -0.32559982, z: 0.043646738, w: 0.9361263}
-  m_LocalPosition: {x: 7.635375, y: 4.382705, z: -9.468331}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 15.27, y: -38.357, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!124 &1674404222
 Behaviour:
   m_ObjectHideFlags: 0
@@ -406,7 +406,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1974951499}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.26, y: 1.288938, z: 0.21}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -424,11 +424,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12b6ad11b700f4146bc3d3adb44bdde3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Tracker: {fileID: 1176917896}
   LogoPetecaVirtual: {fileID: 2800000, guid: d765fb281842a70459e14e1838ecf5ed, type: 3}
   LogoPeteca: {fileID: 2800000, guid: 51c67500f467336438082d33ab615b9c, type: 3}
   LogoPetecaDesafios: {fileID: 2800000, guid: 79b0a3daef1e36744908ab33cc31e8ab, type: 3}
   LogoVirtualVex: {fileID: 2800000, guid: b291fa7fb7e3e1f4ab971992e52668a2, type: 3}
-  Tracker: {fileID: 1176917896}
   Skin: {fileID: 11400000, guid: 00c5827bef6972c42888b7aea50684fb, type: 2}
   ControlSkin: {fileID: 11400000, guid: 512adee28fc30f94ca587d3d56b3df0f, type: 2}
   Transparent: {fileID: 11400000, guid: 610037e5b804bc044ad4dd153f553a02, type: 2}
@@ -437,4 +437,3 @@ MonoBehaviour:
   textoNoticias: Carregando...
   textoLogAtualizacao: Carregando...
   ScrollPosition: {x: 0, y: -1}
-  stringToEdit: 1000
