@@ -58,6 +58,7 @@ public class Menu : MonoBehaviour
 
     public UnityWebRequest VersaoUpdate1 { get; set; }
 
+
     private void Awake()
     {
         Application.targetFrameRate = 60;
@@ -68,13 +69,19 @@ public class Menu : MonoBehaviour
 
         tracker = Tracker.GetComponent<ModeTrackingScript>();
         siteNoticias = UnityWebRequest.Get(
-            "http://www.sorocaba.unesp.br/Home/PaginaDocentes" +
-            "/PET-ECA/petecavirtualnoticias.txt");
-        while (!siteNoticias.isDone) yield return null;
-        yield return siteNoticias;
+            "http://www.sorocaba.unesp.br/Home/PaginaDocentes/" +
+            "PET-ECA/petecavirtualnoticias.txt");
+        yield return siteNoticias.SendWebRequest();
+
+        if (siteNoticias.isNetworkError || siteNoticias.isHttpError) {
+            print(siteNoticias.error);
+            siteNoticias = null;
+        } else {
+            textoNoticias = siteNoticias.downloadHandler.text;
+        }
+
         StartCoroutine(CarregarVersaoUpdate());
         StartCoroutine(CarregarLogUpdate());
-        textoNoticias = siteNoticias.downloadHandler.text;
 
         mostrarJanelaUpdate = false;
         mostrarJanelaIrParaMapa = false;
@@ -85,7 +92,7 @@ public class Menu : MonoBehaviour
     /// </summary>
     private void OnGUI()
     {
-        GUI.skin = Transparent; // Design para as imagens
+        GUI.skin = Transparent;                                // Design para as imagens
         GUI.Box(new Rect(20, 30, 440, 88), LogoPetecaVirtual); // Coloca o Logo do PetecaVirtual
         GUI.Label(new Rect(Screen.width - 230, 20, 210, 80), "Página Inicial"); // Coloca o escrito "Página Inicial" no canto superior direito
         GUI.Label(new Rect(20, Screen.height - 40, 100, 35), Constants.VERSION, "versionlabel"); // Coloca a versão do programa no canto inferior esquerdo
@@ -104,17 +111,17 @@ public class Menu : MonoBehaviour
             if (siteNoticias == null) {//sit.isDone
                 GUI.Box(new Rect(10, 90, 390, 320), "Carregando...");
             } else {
-                GUI.Box(new Rect(10, 90, 390, 320), textoNoticias, "Noticías");
+                GUI.Box(new Rect(10, 90, 390, 320), textoNoticias, "news");//news definido em custom style
             }
             GUI.Box(new Rect(415, 65, 300, 120), "Documentação", "score");
-            GUI.Label(new Rect(415, 90, 290, 110), 
+            GUI.Label(new Rect(415, 90, 290, 110),
                 "A documentação do PetecaVirtual fornece ajuda completa sobre " +
                 "todos os recursos disponíveis para se utilizar " +
                 "na programação do seu robô.");
             bool help = GUI.Button(new Rect(415, 155, 130, 25), "Ver Documentação");
 
             GUI.Box(new Rect(730, 65, 300, 120), "Website", "score");
-            GUI.Label(new Rect(735, 90, 290, 110), 
+            GUI.Label(new Rect(735, 90, 290, 110),
                 "Visite o site do PETECA para descobrir mais sobre o grupo e " +
                 "ficar ligado no que cada programa tem a oferecer.");
             bool site = GUI.Button(new Rect(735, 155, 130, 25), "Ver o site");
@@ -207,7 +214,8 @@ public class Menu : MonoBehaviour
                 if (!siteLogAtualizacao.isDone) {
                     GUI.Box(new Rect(10, 90, 390, 320), "Carregando...");
                 } else {
-                    GUI.Box(new Rect(10, 90, 390, 320), textoLogAtualizacao, "Notícias");
+                    GUI.Box(new Rect(10, 90, 390, 320), textoLogAtualizacao, "news");//news estilo customizado
+
                 }
             }
 
@@ -254,14 +262,17 @@ public class Menu : MonoBehaviour
 
         bool exit = GUI.Button(new Rect(Screen.width - 150, Screen.height - 60, 120, 40), "Sair PetecaVirtual");
         if (exit) {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
             Application.Quit();
+#endif
         }
     }
 
     /// <summary>
-    /// Access the update server
+    /// Busca a atual versão do server
     /// </summary>
-    /// <returns></returns>
     private IEnumerator CarregarVersaoUpdate()
     {
         VersaoUpdate1 = UnityWebRequest.Get("" +
@@ -270,9 +281,15 @@ public class Menu : MonoBehaviour
 
         while (!VersaoUpdate1.isDone) yield return null;
         yield return VersaoUpdate1;
-        PegarVersao = VersaoUpdate1.downloadHandler.text;
+            VersaoUpdate1 = null;
+        } else {
+            PegarVersao = VersaoUpdate1.downloadHandler.text;
+        }
     }
 
+    /// <summary>
+    /// Mostra o registro de atualização
+    /// </summary>
     private IEnumerator CarregarLogUpdate()
     {
         VersaoUpdate1 = UnityWebRequest.Get(
@@ -285,6 +302,10 @@ public class Menu : MonoBehaviour
 
         yield return siteLogAtualizacao;
         textoLogAtualizacao = siteLogAtualizacao.downloadHandler.text;
+        yield return siteLogAtualizacao.SendWebRequest();
+
+        } else {
+            textoLogAtualizacao = siteLogAtualizacao.downloadHandler.text;
     }
 
     private void VerificarAtualizacao(int windowID)
@@ -324,4 +345,5 @@ public class Menu : MonoBehaviour
             Tracker.GetComponent<ModeTrackingScript>().IniciarMapa();
         }
     }
+
 }
