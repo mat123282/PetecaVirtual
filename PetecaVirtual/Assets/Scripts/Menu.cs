@@ -1,16 +1,12 @@
 ﻿using System.Collections;
-using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 
 public class Menu : MonoBehaviour
 {
-    // Tracker                                                     
-    [Header("   ")]
-    public GameObject Tracker;
+    
 
     // FIGURAS
     [Header("Figuras")]
@@ -47,12 +43,13 @@ public class Menu : MonoBehaviour
     [Header("   ")]
     public string textoNoticias = "Carregando...";                 //
     public string textoLogAtualizacao = "Carregando...";           //
-    private ModeTrackingScript tracker;                            //
     private UnityWebRequest siteNoticias;                          //
     private UnityWebRequest siteLogAtualizacao;                    //
 
     [Header("   ")]
     public Vector2 ScrollPosition = Vector2.down;
+    private GameObject Tracker => FindObjectOfType<ModeTrackingScript>().gameObject;
+    private ModeTrackingScript tracker;                            
 
 
     public UnityWebRequest VersaoUpdate1 { get; set; }
@@ -130,20 +127,27 @@ public class Menu : MonoBehaviour
             if (site)
                 Application.OpenURL("http://www.sorocaba.unesp.br/#!/peteca");
 
-        } else if (BotaoSelecionadoToolbar == 1) { //Treinamento
+        } else
+
+        if (BotaoSelecionadoToolbar == 1) { //Treinamento
 
             ScrollPosition = GUI.BeginScrollView(
                                 new Rect(15, 65, 800, 400), ScrollPosition,
                                 new Rect(0, 0, 750, MapasTreinamento.numeroMapas * 72),
                                 false, true);
-
+            #region SELEÇÃO DE MAPAS
             GUI.skin = ConteudoBotoes;
 
             for (int i = 0; i < MapasTreinamento.numeroMapas; i++) {
                 Mapa mapa = MapasTreinamento.mapas[i];
+                bool choosed = (tracker.MapaEscolhido == mapa.buildIndex);
+
                 bool pressed = GUI.Button(new Rect(0, 70 * i, 780, 60),
-                                "<b>1. " + mapa.titulo + "</b> \nModo: Solo\tDificuldade: " +
-                                mapa.dificuldade + " de 5\n" + mapa.descricao);
+                    ((choosed) ? $"<color=#ffffff><size={ConteudoBotoes.font.fontSize + 2}>_" :
+                                 $"<color=#aaaaaa><size={ConteudoBotoes.font.fontSize    }> ") +
+                                $"<b>{i + 1}. {mapa.titulo}</b></size> \nModo: Solo\tDificuldade: " +
+                                $"{mapa.dificuldade} de 5\n{ mapa.descricao}</color>");
+
 
                 if (pressed == true) {
                     if (mapa.buildIndex < SceneManager.sceneCountInBuildSettings) {
@@ -154,42 +158,40 @@ public class Menu : MonoBehaviour
                     }
                 }
             }
-
+            #endregion SELEÇÃO DE MAPAS
             GUI.EndScrollView();
 
             GUI.skin = ControlSkin; // Design para o conteudo
-
+            //botão selecionar
             bool VerificaMapaSelecionado = GUI.Button(new Rect(975, 370, 100, 30), "Selecionar");
             if (VerificaMapaSelecionado) {
                 mostrarJanelaIrParaMapa = true;
             }
 
             GUI.BeginGroup(new Rect(850, 90, 350, 250));
+            #region MODO DE PARTIDA
             GUI.skin = ConteudoMenu;
             GUI.Box(new Rect(5, 5, 340, 240), "Modo de Partida");
 
             GUI.skin = ControlSkin; // Design para o conteudo
-            botaoTempo = GUI.Toggle(new Rect(50, 60, 220, 30), botaoTempo, "<size=18>Por tempo</size>");
-            botaoPontuacao = GUI.Toggle(new Rect(50, 160, 220, 30), botaoPontuacao, "<size=18>Por pontuação</size>");
+            botaoTempo = GUI.Toggle(new Rect(50, 60, 220, 30), botaoTempo, "<size=18>Por tempo</size>", "checkbox");
+            botaoPontuacao = GUI.Toggle(new Rect(50, 160, 220, 30), botaoPontuacao, "<size=18>Por pontuação</size>", "checkbox");
 
-            if ((botaoTempo == true) && (botaoPontuacao == true)) {
-                tracker.TipoPontuacao = 2;
+            //tipo de pontuação é 0 se for apenas de tempo, 1 se não for de tempo e 2 se for de tempo e pontuação
+            tracker.TipoPontuacao = (!botaoTempo) ? 1 : (botaoPontuacao) ? 2 : 0;
+            if (botaoTempo) {
                 GUI.Label(new Rect(90, 110, 70, 60), "<size=18>Tempo: </size>");
                 tracker.TempoTotal = int.Parse(GUI.TextField(new Rect(160, 115, 60, 20), tracker.TempoTotal.ToString()));
-            } else if ((botaoTempo == true)) {
-                tracker.TipoPontuacao = 0;
-                GUI.Label(new Rect(90, 110, 70, 60), "<size=18>Tempo: </size>");
-                tracker.TempoTotal = int.Parse(GUI.TextField(new Rect(160, 115, 60, 20), tracker.TempoTotal.ToString()));
-            } else if ((botaoPontuacao == true)) {
-                tracker.TipoPontuacao = 1;
-                tracker.TempoTotal = 0;
             } else {
-                tracker.TipoPontuacao = 1;
-                tracker.TempoTotal = 0;
+                tracker.TempoTotal = tracker.DEFAULT_INITIAL_TIME;
             }
 
+            #endregion MODO DE PARTIDA
             GUI.EndGroup();
-        } else if (BotaoSelecionadoToolbar == 2) { //mapas
+
+        } else 
+        
+        if (BotaoSelecionadoToolbar == 2) { //mapas
             //GUI.skin = ControlSkin;
             //ScrollPosition = GUI.BeginScrollView(new Rect(15, 65, 800, 400), ScrollPosition, new Rect(0, 0, 750, 600), false, true);
 
@@ -206,7 +208,9 @@ public class Menu : MonoBehaviour
             //GUI.Button(new Rect(900, 200, 130, 50), "Botao1");
             //GUI.Button(new Rect(1100, 200, 130, 50), "Botao2");
             //GUI.Button(new Rect(1000, 300, 130, 50), "Botao3");
-        } else if (BotaoSelecionadoToolbar == 3) { //Updates
+        } else
+        
+        if (BotaoSelecionadoToolbar == 3) { //Updates
             GUI.Box(new Rect(5, 65, 400, 350), "Notas de Atualização", "score");
             if (siteLogAtualizacao != null)//caso o site já tenha sido declarado...
             {

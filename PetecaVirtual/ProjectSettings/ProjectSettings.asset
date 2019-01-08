@@ -612,10 +612,10 @@ PlayerSettings:
   facebookXfbml: 0
   facebookFrictionlessRequests: 1
   apiCompatibilityLevel: 6
-  cloudProjectId: 8d853868-475d-420b-87b2-326f3d5422b1
+  cloudProjectId: 
   framebufferDepthMemorylessMode: 0
-  projectName: PetecaVirtual
-  organizationId: mat123282
+  projectName: 
+  organizationId: 
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0

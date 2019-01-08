@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Diagnostics;
+//using System.Diagnostics;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -20,7 +20,8 @@ public class ModeTrackingScript : MonoBehaviour
     public ModoDeJogo ModoJogo = 0;                 // 0 - Nada. 1 - Solo. 2 - Batalha. 3 - Arena
     public int TipoPontuacao = 0;                   // 0 - Por tempo. 1 - Por pontos. 2 - Por tempo e pontuacao
 
-    public float TempoTotal = 0;                    //
+    public float TempoTotal = 0;                    //Tempo total inicial, em segundos
+    public float DEFAULT_INITIAL_TIME = 60; //tempo inicial padrão
     public int pontuacaoRoboVermelho = 0;           //
     public int pontuacaoRoboAzul = 0;               //
 
@@ -34,8 +35,20 @@ public class ModeTrackingScript : MonoBehaviour
     private bool primeiraVez = true;                //
     private bool fimDeJogo = false;                 //
 
+    private static ModeTrackingScript ModeTrack;
+    void Awake()
+    {
+        DontDestroyOnLoad(transform.gameObject);        //Torna obj persistente a troca de cenas
+
+        if (ModeTrack == null) {
+            ModeTrack = this;
+        } else {
+            Destroy(gameObject);
+        }
+    }
+
     void Start() {
-        DontDestroyOnLoad(transform.gameObject);                    //Torna obj persistente a troca de cenas
+        //DontDestroyOnLoad(transform.gameObject);                    
         tracker = FindObjectOfType<ModeTrackingScript>().gameObject;//encontra o objeto que tem esse script
         Pecas = GameObject.Find("Pecas");
 
@@ -72,8 +85,7 @@ public class ModeTrackingScript : MonoBehaviour
                     fimDeJogo = true;
                 }
             }
-            
-            
+
         }
         else if (TipoPontuacao == 2) {
             tempo = tempoInicio - Time.time;
@@ -147,6 +159,7 @@ public class ModeTrackingScript : MonoBehaviour
                 }
                 if (primeiraVez == true) {
                     ControlaTempo();
+                    Debug.Log(MapaEscolhido);
                     Pecas = SceneManager.GetSceneByBuildIndex(MapaEscolhido).GetRootGameObjects()
                                         .Where(o => o.name == "Pecas").ToArray().First();
                     primeiraVez = false;
