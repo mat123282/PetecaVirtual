@@ -48,10 +48,21 @@ public class ModeTrackingScript : MonoBehaviour {
         DontDestroyOnLoad(transform.gameObject);
         tracker = FindObjectOfType<ModeTrackingScript>().gameObject; //encontra o objeto que tem esse script
 
+        SceneManager.sceneLoaded += OnSceneLoaded;
         Time.timeScale = 0;                         //
         mostrarArquivo = false;                     //
         QualitySettings.vSyncCount = 0;             //
         Application.targetFrameRate = 60;           //
+    }
+
+    private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+    {
+        if (arg0.buildIndex!=0)// se a cena aberta não for o menu
+        {//atualiza a ref de peças
+            Pecas = SceneManager.GetSceneByBuildIndex(MapaEscolhido).GetRootGameObjects().Where(o => o.name == "Pecas").ToArray().First();
+            Debug.Log(Pecas.transform.childCount);
+        }
+        //Debug.Log($"Scene {arg0.name}({arg0.buildIndex}) loaded");
     }
 
     void Update() {
@@ -151,15 +162,12 @@ public class ModeTrackingScript : MonoBehaviour {
             if (botaoReiniciar == true) {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
                 Time.timeScale = 0;
-                Pecas = SceneManager.GetSceneByBuildIndex(MapaEscolhido).GetRootGameObjects().Where(o => o.name == "Pecas").ToArray().First();
                 ReiniciarPontuacao();
                 fimDeJogo = false;
             }
             if (botaoPausar == true) {
                 if (primeiraVez == true) {
                     ControlaTempo();
-                    Debug.Log(MapaEscolhido);
-                    Pecas = SceneManager.GetSceneByBuildIndex(MapaEscolhido).GetRootGameObjects().Where(o => o.name == "Pecas").ToArray().First();
                     primeiraVez = false;
                 }
                 Time.timeScale = (Time.timeScale == 0) ? 1 : 0;
