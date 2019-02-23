@@ -68,6 +68,14 @@ public class ModeTrackingScript : MonoBehaviour {
 
     void Update() {
         // 0 - Por tempo. 1 - Por pontos. 2 - Por tempo e pontuacao
+        if (Input.GetKeyDown(KeyCode.P) == true) {
+            JogoPausado = !JogoPausado;
+            Time.timeScale = (Time.timeScale == 0) ? 1 : 0;
+            if (primeiraVez == true) {
+                ControlaTempo();
+                primeiraVez = false;
+            }
+        }
         if (TipoPontuacao == 0) {
             tempo = tempoInicio - Time.time;
             if (tempo < 0) {
@@ -169,13 +177,13 @@ public class ModeTrackingScript : MonoBehaviour {
                 JogoPausado = true;
             }
 
-            if (botaoPausar == true || Input.GetKeyDown("space")) {
+            if (botaoPausar == true) {
                 JogoPausado = !JogoPausado;
+                Time.timeScale = (Time.timeScale == 0) ? 1 : 0;
                 if (primeiraVez == true) {
                     ControlaTempo();
                     primeiraVez = false;
                 }
-                Time.timeScale = (Time.timeScale == 0) ? 1 : 0;
             }
             
             if (fimDeJogo == true) {
