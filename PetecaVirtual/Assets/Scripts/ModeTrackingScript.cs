@@ -29,9 +29,9 @@ public class ModeTrackingScript : MonoBehaviour {
     private float tempoInicio;                      //
     private float tempo;                            //
     private string segundosContador = "";           //
-    private bool mostrarArquivo = false;            //
-    private bool primeiraVez = true;                //
-    private bool fimDeJogo = false;                 //
+    private bool mostrarArquivo = false;             //
+    private bool primeiraVez = true;                 //
+    private bool fimDeJogo = false;                  //
 
     private static ModeTrackingScript ModeTrack;
     void Awake() {
@@ -47,7 +47,6 @@ public class ModeTrackingScript : MonoBehaviour {
     void Start() {
         DontDestroyOnLoad(transform.gameObject);
         tracker = FindObjectOfType<ModeTrackingScript>().gameObject; //encontra o objeto que tem esse script
-        Pecas = GameObject.Find("Pecas");
 
         Time.timeScale = 0;                         //
         mostrarArquivo = false;                     //
@@ -108,6 +107,7 @@ public class ModeTrackingScript : MonoBehaviour {
             bool botaoReiniciar = GUI.Button(new Rect(100, 0, 100, 25), "Reiniciar");       //Reniciar
             bool botaoPausar = GUI.Button(new Rect(200, 0, 120, 25), "Pausar/Despausar");   //Pausar/Despausar
 
+            #region Interface
             GUI.BeginGroup(new Rect(Screen.width - 150, 0, 200, 80));                       //----------------
             if (ModoJogo != ModoDeJogo.Solo) {
                 GUI.Box(new Rect(0, 0, 150, 80), "");
@@ -124,44 +124,16 @@ public class ModeTrackingScript : MonoBehaviour {
                 GUI.Label(new Rect(20, 25, 100, 25), "<b>Pontuação: </b>");                 //Solo:<pontos>
                 GUI.Label(new Rect(90, 25, 100, 25), pontuacaoRoboVermelho.ToString());     //
             }
-
-            if (TipoPontuacao != 1) {
-                GUI.Label(new Rect(35, 0, 50, 25), "<b>Tempo: </b>");                       //Tempo:<tempo>
-                GUI.Label(new Rect(90, 0, 50, 25), segundosContador);                       //
-            }
-
+           
+            GUI.Label(new Rect(35, 0, 50, 25), "<b>Tempo: </b>");                           //Tempo:<tempo>
+            GUI.Label(new Rect(90, 0, 50, 25), segundosContador);                           //
             GUI.EndGroup();                                                                 //----------------
+            #endregion
 
             GUI.contentColor = Color.white;
             GUI.skin = skin;
             
-            if (botaoArquivo == true) {
-                mostrarArquivo = !mostrarArquivo;
-            }
-
-            if (botaoReiniciar == true) {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
-                Time.timeScale = 0;
-                Pecas = SceneManager.GetSceneByBuildIndex(MapaEscolhido).GetRootGameObjects()
-                                    .Where(o => o.name == "Pecas").ToArray().First();
-                ReiniciarPontuacao();
-                fimDeJogo = false;
-            }
-            if (botaoPausar == true) {
-                if (Time.timeScale == 0) {
-                    Time.timeScale = 1;
-                } else {
-                    Time.timeScale = 0;
-                }
-                if (primeiraVez == true) {
-                    ControlaTempo();
-                    Debug.Log(MapaEscolhido);
-                    Pecas = SceneManager.GetSceneByBuildIndex(MapaEscolhido).GetRootGameObjects()
-                                        .Where(o => o.name == "Pecas").ToArray().First();
-                    primeiraVez = false;
-                }
-            }
-
+            if (botaoArquivo == true) mostrarArquivo = !mostrarArquivo;
             if (mostrarArquivo) {
 
                 bool botaoMenuPrincipal = GUI.Button(new Rect(0, 25, 150, 25), "Menu Principal");
@@ -169,13 +141,30 @@ public class ModeTrackingScript : MonoBehaviour {
 
                 if (botaoMenuPrincipal) {
                     ReiniciarPontuacao();
+                    MapaEscolhido = 0;
                     SceneManager.LoadScene(0, LoadSceneMode.Single);
 
                 } else if (botaoSair) {
                     Application.Quit();
                 }
             }
-
+            if (botaoReiniciar == true) {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
+                Time.timeScale = 0;
+                Pecas = SceneManager.GetSceneByBuildIndex(MapaEscolhido).GetRootGameObjects().Where(o => o.name == "Pecas").ToArray().First();
+                ReiniciarPontuacao();
+                fimDeJogo = false;
+            }
+            if (botaoPausar == true) {
+                if (primeiraVez == true) {
+                    ControlaTempo();
+                    Debug.Log(MapaEscolhido);
+                    Pecas = SceneManager.GetSceneByBuildIndex(MapaEscolhido).GetRootGameObjects().Where(o => o.name == "Pecas").ToArray().First();
+                    primeiraVez = false;
+                }
+                Time.timeScale = (Time.timeScale == 0) ? 1 : 0;
+            }
+            
             if (fimDeJogo == true) {
                 GUI.TextArea(new Rect(Screen.width/2 - 200, Screen.height/2 - 50, 400, 100),
                     "<color=#ffa500ff><size=50><b>Fim de Partida</b></size></color>");
@@ -214,6 +203,9 @@ public class ModeTrackingScript : MonoBehaviour {
     }
 
     public void IniciarMapa() {
+        mostrarArquivo = false;
+        fimDeJogo = false;
+        primeiraVez = true;
         SceneManager.LoadScene(MapaEscolhido, LoadSceneMode.Single);
         ControlaTempo();
     }

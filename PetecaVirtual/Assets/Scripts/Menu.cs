@@ -193,8 +193,9 @@ public class Menu : MonoBehaviour {
             GUI.skin = ControlSkin; // Design para o conteudo
             if (tracker.TipoPontuacao != -1) {
                 bool VerificaMapaSelecionado = GUI.Button(new Rect(975, 370, 100, 30), "Selecionar"); //botão selecionar
-                if (VerificaMapaSelecionado)
+                if (VerificaMapaSelecionado) {
                     mostrarJanelaIrParaMapa = true;
+                }
             }
         } 
         else if (BotaoSelecionadoToolbar == 2) { //mapas
