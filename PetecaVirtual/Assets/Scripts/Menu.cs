@@ -4,9 +4,7 @@ using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 
 
-public class Menu : MonoBehaviour
-{
-    
+public class Menu : MonoBehaviour {
 
     // FIGURAS
     [Header("Figuras")]
@@ -55,13 +53,11 @@ public class Menu : MonoBehaviour
     public UnityWebRequest VersaoUpdate1 { get; set; }
 
 
-    private void Awake()
-    {
+    private void Awake() {
         Application.targetFrameRate = 60;
     }
 
-    private IEnumerator Start()
-    {
+    private IEnumerator Start() {
 
         tracker = Tracker.GetComponent<ModeTrackingScript>();
         siteNoticias = UnityWebRequest.Get(
@@ -86,8 +82,7 @@ public class Menu : MonoBehaviour
     /// <summary>
     /// Draw the Menu GUI
     /// </summary>
-    private void OnGUI()
-    {
+    private void OnGUI() {
         GUI.skin = Transparent;                                // Design para as imagens
         GUI.Box(new Rect(20, 30, 440, 88), LogoPetecaVirtual); // Coloca o Logo do PetecaVirtual
         GUI.Label(new Rect(Screen.width - 230, 20, 210, 80), "Página Inicial"); // Coloca o escrito "Página Inicial" no canto superior direito
@@ -143,11 +138,10 @@ public class Menu : MonoBehaviour
                 bool choosed = (tracker.MapaEscolhido == mapa.buildIndex);
 
                 bool pressed = GUI.Button(new Rect(0, 70 * i, 780, 60),
-                    ((choosed) ? $"<color=#ffffff><size={ConteudoBotoes.font.fontSize + 2}>_" :
+                    ((choosed) ? $"<color=#ffffff><size={ConteudoBotoes.font.fontSize + 2}>*" :
                                  $"<color=#aaaaaa><size={ConteudoBotoes.font.fontSize    }> ") +
                                 $"<b>{i + 1}. {mapa.titulo}</b></size> \nModo: Solo\tDificuldade: " +
                                 $"{mapa.dificuldade} de 5\n{ mapa.descricao}</color>");
-
 
                 if (pressed == true) {
                     if (mapa.buildIndex < SceneManager.sceneCountInBuildSettings) {
@@ -265,19 +259,18 @@ public class Menu : MonoBehaviour
 
         bool exit = GUI.Button(new Rect(Screen.width - 150, Screen.height - 60, 120, 40), "Sair PetecaVirtual");
         if (exit) {
-#if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-#else
-            Application.Quit();
-#endif
+        #if UNITY_EDITOR
+                    UnityEditor.EditorApplication.isPlaying = false;
+        #else
+                    Application.Quit();
+        #endif
         }
     }
 
     /// <summary>
     /// Busca a atual versão do server
     /// </summary>
-    private IEnumerator CarregarVersaoUpdate()
-    {
+    private IEnumerator CarregarVersaoUpdate() {
         VersaoUpdate1 = UnityWebRequest.Get("" +
             "http://www.sorocaba.unesp.br/Home/PaginaDocentes/" +
             "PET-ECA/petecavirtualversaoatual.txt");
@@ -294,8 +287,7 @@ public class Menu : MonoBehaviour
     /// <summary>
     /// Mostra o registro de atualização
     /// </summary>
-    private IEnumerator CarregarLogUpdate()
-    {
+    private IEnumerator CarregarLogUpdate() {
         siteLogAtualizacao = UnityWebRequest.Get("" +
             "http://www.sorocaba.unesp.br/Home/PaginaDocentes/" +
             "PET-ECA/petecavirtualnotasatualizacao.txt");
@@ -310,8 +302,7 @@ public class Menu : MonoBehaviour
         }
     }
 
-    private void VerificarAtualizacao(int windowID)
-    {
+    private void VerificarAtualizacao(int windowID) {
         string textoDaJanela = "Tentando conectar com o servidor...";
         if (VersaoUpdate1 != null) {
             if (Constants.VERSION.Equals(PegarVersao)) {
@@ -333,8 +324,7 @@ public class Menu : MonoBehaviour
         GUI.DragWindow(new Rect(0, 0, 10000, 20));
     }
 
-    private void VerificarIrParaMapa(int windowID)
-    {
+    private void VerificarIrParaMapa(int windowID) {
         GUI.Label(new Rect(30, 30, 300, 150),
             "Você deseja ir para o Mapa? Verifique se as " +
             "configurações colocadas estão de acordo com a sua preferência.");
