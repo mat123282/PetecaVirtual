@@ -30,7 +30,7 @@ public class Menu : MonoBehaviour {
     // JANELAS                                                     //
     private bool mostrarJanelaUpdate;                              //
     private bool mostrarJanelaIrParaMapa;                          //
-    private bool botaoTempo = false;                               //
+    private bool botaoTempo = true;                               //
     private bool botaoPontuacao = false;                           //
 
     private string PegarVersao = "";                               //
@@ -122,9 +122,8 @@ public class Menu : MonoBehaviour {
             if (site)
                 Application.OpenURL("http://www.sorocaba.unesp.br/#!/peteca");
 
-        } else
-
-        if (BotaoSelecionadoToolbar == 1) { //Treinamento
+        }
+        else if (BotaoSelecionadoToolbar == 1) { //Treinamento
 
             ScrollPosition = GUI.BeginScrollView(
                                 new Rect(15, 65, 800, 400), ScrollPosition,
@@ -138,7 +137,7 @@ public class Menu : MonoBehaviour {
                 bool choosed = (tracker.MapaEscolhido == mapa.buildIndex);
 
                 bool pressed = GUI.Button(new Rect(0, 70 * i, 780, 60),
-                    ((choosed) ? $"<color=#ffffff><size={ConteudoBotoes.font.fontSize + 2}>*" :
+                   ((choosed) ? $"<color=#ffffff><size={ConteudoBotoes.font.fontSize + 2}>  " :
                                  $"<color=#aaaaaa><size={ConteudoBotoes.font.fontSize    }> ") +
                                 $"<b>{i + 1}. {mapa.titulo}</b></size> \nModo: Solo\tDificuldade: " +
                                 $"{mapa.dificuldade} de 5\n{ mapa.descricao}</color>");
@@ -148,22 +147,15 @@ public class Menu : MonoBehaviour {
                         tracker.MapaEscolhido = mapa.buildIndex;
                         tracker.ModoJogo = mapa.modoJogo;
                     } else {
-                        print("seu adm errou a build index");
+                        print("Contate o administrador, erro de Build Inde");
                     }
                 }
             }
-            #endregion SELEÇÃO DE MAPAS
             GUI.EndScrollView();
+            #endregion SELEÇÃO DE MAPAS
 
-            GUI.skin = ControlSkin; // Design para o conteudo
-            //botão selecionar
-            bool VerificaMapaSelecionado = GUI.Button(new Rect(975, 370, 100, 30), "Selecionar");
-            if (VerificaMapaSelecionado) {
-                mostrarJanelaIrParaMapa = true;
-            }
-
-            GUI.BeginGroup(new Rect(850, 90, 350, 250));
             #region MODO DE PARTIDA
+            GUI.BeginGroup(new Rect(850, 90, 350, 250));
             GUI.skin = ConteudoMenu;
             GUI.Box(new Rect(5, 5, 340, 240), "Modo de Partida");
 
@@ -171,8 +163,23 @@ public class Menu : MonoBehaviour {
             botaoTempo = GUI.Toggle(new Rect(50, 60, 220, 30), botaoTempo, "<size=18>Por tempo</size>", "checkbox");
             botaoPontuacao = GUI.Toggle(new Rect(50, 160, 220, 30), botaoPontuacao, "<size=18>Por pontuação</size>", "checkbox");
 
-            //tipo de pontuação é 0 se for apenas de tempo, 1 se não for de tempo e 2 se for de tempo e pontuação
-            tracker.TipoPontuacao = (!botaoTempo) ? 1 : (botaoPontuacao) ? 2 : 0;
+            // 0 - Por tempo. 1 - Por pontos. 2 - Por tempo e pontuacao
+            if (botaoTempo == true) {
+                if (botaoPontuacao == true) {
+                    tracker.TipoPontuacao = 2;
+                } else {
+                    tracker.TipoPontuacao = 0;
+                }
+            } else {
+                if (botaoPontuacao == true) {
+                    tracker.TipoPontuacao = 1;
+                } else {
+                    tracker.TipoPontuacao = -1;
+                }
+            }
+            tracker.TipoPontuacao = botaoTempo ? (botaoPontuacao ? 2:0) : (botaoPontuacao ? 1 : -1);
+            
+
             if (botaoTempo) {
                 GUI.Label(new Rect(90, 110, 70, 60), "<size=18>Tempo: </size>");
                 tracker.TempoTotal = int.Parse(GUI.TextField(new Rect(160, 115, 60, 20), tracker.TempoTotal.ToString()));
@@ -180,12 +187,17 @@ public class Menu : MonoBehaviour {
                 tracker.TempoTotal = tracker.DEFAULT_INITIAL_TIME;
             }
 
-            #endregion MODO DE PARTIDA
             GUI.EndGroup();
+            #endregion MODO DE PARTIDA
 
-        } else 
-        
-        if (BotaoSelecionadoToolbar == 2) { //mapas
+            GUI.skin = ControlSkin; // Design para o conteudo
+            if (tracker.TipoPontuacao != -1) {
+                bool VerificaMapaSelecionado = GUI.Button(new Rect(975, 370, 100, 30), "Selecionar"); //botão selecionar
+                if (VerificaMapaSelecionado)
+                    mostrarJanelaIrParaMapa = true;
+            }
+        } 
+        else if (BotaoSelecionadoToolbar == 2) { //mapas
             //GUI.skin = ControlSkin;
             //ScrollPosition = GUI.BeginScrollView(new Rect(15, 65, 800, 400), ScrollPosition, new Rect(0, 0, 750, 600), false, true);
 
@@ -202,9 +214,8 @@ public class Menu : MonoBehaviour {
             //GUI.Button(new Rect(900, 200, 130, 50), "Botao1");
             //GUI.Button(new Rect(1100, 200, 130, 50), "Botao2");
             //GUI.Button(new Rect(1000, 300, 130, 50), "Botao3");
-        } else
-        
-        if (BotaoSelecionadoToolbar == 3) { //Updates
+        } 
+        else if (BotaoSelecionadoToolbar == 3) { //Updates
             GUI.Box(new Rect(5, 65, 400, 350), "Notas de Atualização", "score");
             if (siteLogAtualizacao != null)//caso o site já tenha sido declarado...
             {

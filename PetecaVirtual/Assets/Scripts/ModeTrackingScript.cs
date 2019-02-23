@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-//using System.Diagnostics;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -12,16 +11,15 @@ using System.Linq;
 /// tornando o objeto que o carrega persistente.
 ///Sendo usado para manter as variaves globais do jogo
 /// </summary>
-public class ModeTrackingScript : MonoBehaviour
-{
+public class ModeTrackingScript : MonoBehaviour {
     public GUISkin skin;
-
+    
     public int MapaEscolhido = 0;                   // 0 - Menu. 1,2,3 - Mapas
     public ModoDeJogo ModoJogo = 0;                 // 0 - Nada. 1 - Solo. 2 - Batalha. 3 - Arena
     public int TipoPontuacao = 0;                   // 0 - Por tempo. 1 - Por pontos. 2 - Por tempo e pontuacao
 
     public float TempoTotal = 0;                    //Tempo total inicial, em segundos
-    public float DEFAULT_INITIAL_TIME = 60; //tempo inicial padrão
+    public float DEFAULT_INITIAL_TIME = 60;         //tempo inicial padrão
     public int pontuacaoRoboVermelho = 0;           //
     public int pontuacaoRoboAzul = 0;               //
 
@@ -36,8 +34,7 @@ public class ModeTrackingScript : MonoBehaviour
     private bool fimDeJogo = false;                 //
 
     private static ModeTrackingScript ModeTrack;
-    void Awake()
-    {
+    void Awake() {
         DontDestroyOnLoad(transform.gameObject);        //Torna obj persistente a troca de cenas
 
         if (ModeTrack == null) {
@@ -48,8 +45,8 @@ public class ModeTrackingScript : MonoBehaviour
     }
 
     void Start() {
-        //DontDestroyOnLoad(transform.gameObject);                    
-        tracker = FindObjectOfType<ModeTrackingScript>().gameObject;//encontra o objeto que tem esse script
+        DontDestroyOnLoad(transform.gameObject);
+        tracker = FindObjectOfType<ModeTrackingScript>().gameObject; //encontra o objeto que tem esse script
         Pecas = GameObject.Find("Pecas");
 
         Time.timeScale = 0;                         //
@@ -58,15 +55,9 @@ public class ModeTrackingScript : MonoBehaviour
         Application.targetFrameRate = 60;           //
     }
 
-
-    private void OnEnable()
-    {
-        
-    }
-
     void Update() {
-
-        if (TipoPontuacao == 0) { 
+        // 0 - Por tempo. 1 - Por pontos. 2 - Por tempo e pontuacao
+        if (TipoPontuacao == 0) {
             tempo = tempoInicio - Time.time;
             if (tempo < 0) {
                 tempo = 0;
@@ -107,32 +98,37 @@ public class ModeTrackingScript : MonoBehaviour
         segundosContador = tempo.ToString("f3");
     }
 
-    void OnGUI()
-    {
+    void OnGUI() {
         GUI.depth = 1;
         GUI.skin = skin;
               
-
-        if (SceneManager.GetActiveScene().buildIndex != 0)          //Se a cena ativa não for o menu
-        {
+        if (SceneManager.GetActiveScene().buildIndex != 0) {  //Se a scene não for o menu
             GUI.Box(new Rect(0, 0, Screen.width - 150, 25), "");                            //
             bool botaoArquivo = GUI.Button(new Rect(0, 0, 100, 25), "Arquivo");             //Arquivo
             bool botaoReiniciar = GUI.Button(new Rect(100, 0, 100, 25), "Reiniciar");       //Reniciar
             bool botaoPausar = GUI.Button(new Rect(200, 0, 120, 25), "Pausar/Despausar");   //Pausar/Despausar
 
             GUI.BeginGroup(new Rect(Screen.width - 150, 0, 200, 80));                       //----------------
-                                                                                            
-                GUI.Box(new Rect(0, 0, 150, 80), "");                                       //
-                GUI.Label(new Rect(35, 0, 50, 25), "<b>Tempo: </b>");                       //Tempo:<tempo>
-                GUI.Label(new Rect(90, 0, 50, 25), segundosContador);                       //
-                                                                                            
+            if (ModoJogo != ModoDeJogo.Solo) {
+                GUI.Box(new Rect(0, 0, 150, 80), "");
                 GUI.contentColor = Color.red;                                               //
                 GUI.Label(new Rect(20, 25, 100, 25), "<b>Vermelho: </b>");                  //Vermelho:<pontos>
                 GUI.Label(new Rect(90, 25, 100, 25), pontuacaoRoboVermelho.ToString());     //
-                                                                                            
+
                 GUI.contentColor = Color.blue;                                              //
                 GUI.Label(new Rect(45, 50, 100, 25), "<b>Azul: </b>");                      //Azul:<pontos>
                 GUI.Label(new Rect(90, 50, 100, 25), pontuacaoRoboAzul.ToString());         //
+            } else {
+                GUI.Box(new Rect(0, 0, 150, 50), "");
+                GUI.contentColor = Color.white;                                             //
+                GUI.Label(new Rect(20, 25, 100, 25), "<b>Pontuação: </b>");                 //Solo:<pontos>
+                GUI.Label(new Rect(90, 25, 100, 25), pontuacaoRoboVermelho.ToString());     //
+            }
+
+            if (TipoPontuacao != 1) {
+                GUI.Label(new Rect(35, 0, 50, 25), "<b>Tempo: </b>");                       //Tempo:<tempo>
+                GUI.Label(new Rect(90, 0, 50, 25), segundosContador);                       //
+            }
 
             GUI.EndGroup();                                                                 //----------------
 
@@ -232,7 +228,7 @@ public class ModeTrackingScript : MonoBehaviour
     }
 
     private void ControlaTempo() {
-        if (TempoTotal == 0) {
+        if (TempoTotal <= 0) {
             tempoInicio = Time.time;
         } else if (TempoTotal > 0) {
             tempoInicio = Time.time + TempoTotal;

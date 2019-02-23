@@ -15,8 +15,7 @@ public class Mapa {
     public Mapa() {}
 
 }
- public enum ModoDeJogo
-{
+ public enum ModoDeJogo {
     Nenhum,
     Solo,
     Competição,
