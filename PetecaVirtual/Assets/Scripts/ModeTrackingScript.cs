@@ -29,9 +29,10 @@ public class ModeTrackingScript : MonoBehaviour {
     private float tempoInicio;                      //
     private float tempo;                            //
     private string segundosContador = "";           //
-    private bool mostrarArquivo = false;             //
-    private bool primeiraVez = true;                 //
-    private bool fimDeJogo = false;                  //
+    private bool mostrarArquivo = false;            //
+    private bool primeiraVez = true;                //
+    private bool fimDeJogo = false;                 //
+    private bool JogoPausado = true;                //
 
     private static ModeTrackingScript ModeTrack;
     void Awake() {
@@ -148,14 +149,18 @@ public class ModeTrackingScript : MonoBehaviour {
                     Application.Quit();
                 }
             }
+
             if (botaoReiniciar == true) {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
                 Time.timeScale = 0;
                 Pecas = SceneManager.GetSceneByBuildIndex(MapaEscolhido).GetRootGameObjects().Where(o => o.name == "Pecas").ToArray().First();
                 ReiniciarPontuacao();
                 fimDeJogo = false;
+                JogoPausado = true;
             }
-            if (botaoPausar == true) {
+
+            if (botaoPausar == true || Input.GetKeyDown("space")) {
+                JogoPausado = !JogoPausado;
                 if (primeiraVez == true) {
                     ControlaTempo();
                     Debug.Log(MapaEscolhido);
@@ -171,8 +176,8 @@ public class ModeTrackingScript : MonoBehaviour {
 
                 if (ModoJogo == ModoDeJogo.Solo) {
                     GUI.TextArea(new Rect(Screen.width / 2 - 275, Screen.height / 2 + 20, 550, 100),
-                        "<color=#ffa500ff><size=30><b>Você finalizou o jogo em: " +
-                        segundosContador + "</b></size></color>");
+                        "<color=#ffa500ff><size=30><b>Você finalizou o jogo com: " +
+                        pontuacaoRoboVermelho + " pontos!</b></size></color>");
                 }
                 else if (ModoJogo == ModoDeJogo.Competição) {
                     if (pontuacaoRoboAzul > pontuacaoRoboVermelho) {
@@ -197,6 +202,11 @@ public class ModeTrackingScript : MonoBehaviour {
                             " ganhou!" + "</b></size></color>");
                     }
                 }
+            } else {
+                if (JogoPausado == true) {
+                    GUI.TextArea(new Rect(Screen.width / 2 - 200, Screen.height / 2 - 50, 400, 100),
+                        "<color=#ffa500ff><size=50><b>Partida Pausada</b></size></color>");
+                }
             }
 
         }
@@ -205,6 +215,7 @@ public class ModeTrackingScript : MonoBehaviour {
     public void IniciarMapa() {
         mostrarArquivo = false;
         fimDeJogo = false;
+        JogoPausado = true;
         primeiraVez = true;
         SceneManager.LoadScene(MapaEscolhido, LoadSceneMode.Single);
         ControlaTempo();
