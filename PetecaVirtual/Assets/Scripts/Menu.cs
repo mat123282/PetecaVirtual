@@ -181,8 +181,16 @@ public class Menu : MonoBehaviour {
             
 
             if (botaoTempo) {
+                
                 GUI.Label(new Rect(90, 110, 70, 60), "<size=18>Tempo: </size>");
-                tracker.TempoTotal = int.Parse(GUI.TextField(new Rect(160, 115, 60, 20), tracker.TempoTotal.ToString()));
+                string totalTimeString = GUI.TextField(new Rect(160, 115, 60, 20), tracker.TempoTotal.ToString());
+                var pt = tracker.TempoTotal;
+                try{
+                    tracker.TempoTotal = int.Parse(totalTimeString);
+                }catch{
+                    tracker.TempoTotal = tracker.DEFAULT_INITIAL_TIME;
+                }
+                
             } else {
                 tracker.TempoTotal = tracker.DEFAULT_INITIAL_TIME;
             }
