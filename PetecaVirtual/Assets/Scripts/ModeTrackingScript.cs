@@ -61,9 +61,7 @@ public class ModeTrackingScript : MonoBehaviour {
         if (arg0.buildIndex!=0)// se a cena aberta não for o menu
         {//atualiza a ref de peças
             Pecas = SceneManager.GetSceneByBuildIndex(MapaEscolhido).GetRootGameObjects().Where(o => o.name == "Pecas").ToArray().First();
-            Debug.Log(Pecas.transform.childCount);
         }
-        //Debug.Log($"Scene {arg0.name}({arg0.buildIndex}) loaded");
     }
 
     void Update() {

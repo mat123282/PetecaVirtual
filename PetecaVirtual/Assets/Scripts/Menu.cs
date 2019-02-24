@@ -16,7 +16,7 @@ public class Menu : MonoBehaviour {
     // GUI DESIGN                                                  // Design para a GUI
     [Header("GUI Skins")]
     public GUISkin Skin;                                           // 
-    public GUISkin ControlSkin;                                    //
+    public GUISkin ControlSkin;                                    //   MetrEX skin
     public GUISkin Transparent;                                    //
     public GUISkin ConteudoMenu;                                   //
     public GUISkin ConteudoBotoes;                                 //
@@ -79,6 +79,7 @@ public class Menu : MonoBehaviour {
         mostrarJanelaIrParaMapa = false;
     }
 
+    string timeTotal;
     /// <summary>
     /// Draw the Menu GUI
     /// </summary>
@@ -157,36 +158,25 @@ public class Menu : MonoBehaviour {
             #region MODO DE PARTIDA
             GUI.BeginGroup(new Rect(850, 90, 350, 250));
             GUI.skin = ConteudoMenu;
-            GUI.Box(new Rect(5, 5, 340, 240), "Modo de Partida");
+            GUI.Box(new Rect(5, 5, 340, 240), "\nModo de Partida");
 
             GUI.skin = ControlSkin; // Design para o conteudo
-            botaoTempo = GUI.Toggle(new Rect(50, 60, 220, 30), botaoTempo, "<size=18>Por tempo</size>", "checkbox");
+            botaoTempo = GUI.Toggle(new Rect(50, 70, 220, 30), botaoTempo, "<size=18>Por tempo</size>", "checkbox");
             botaoPontuacao = GUI.Toggle(new Rect(50, 160, 220, 30), botaoPontuacao, "<size=18>Por pontuação</size>", "checkbox");
 
             // 0 - Por tempo. 1 - Por pontos. 2 - Por tempo e pontuacao
-            if (botaoTempo == true) {
-                if (botaoPontuacao == true) {
-                    tracker.TipoPontuacao = 2;
-                } else {
-                    tracker.TipoPontuacao = 0;
-                }
-            } else {
-                if (botaoPontuacao == true) {
-                    tracker.TipoPontuacao = 1;
-                } else {
-                    tracker.TipoPontuacao = -1;
-                }
-            }
             tracker.TipoPontuacao = botaoTempo ? (botaoPontuacao ? 2:0) : (botaoPontuacao ? 1 : -1);
             
 
             if (botaoTempo) {
                 
-                GUI.Label(new Rect(90, 110, 70, 60), "<size=18>Tempo: </size>");
-                string totalTimeString = GUI.TextField(new Rect(160, 115, 60, 20), tracker.TempoTotal.ToString());
-                var pt = tracker.TempoTotal;
+                GUI.Label(new Rect(90, 100, 70, 60), 
+                    $"{((timeTotal!=tracker.TempoTotal.ToString())? "<color=#ff0000>":"<color=#ffffff>")}" +
+                    $"<size=18>Tempo: </size></color>");
+                //timeTotal = tracker.TempoTotal.ToString();
+                timeTotal = GUI.TextField(new Rect(160, 105, 60, 20), timeTotal);
                 try{
-                    tracker.TempoTotal = int.Parse(totalTimeString);
+                    tracker.TempoTotal = int.Parse(timeTotal);
                 }catch{
                     tracker.TempoTotal = tracker.DEFAULT_INITIAL_TIME;
                 }
@@ -198,14 +188,18 @@ public class Menu : MonoBehaviour {
             GUI.EndGroup();
             #endregion MODO DE PARTIDA
 
+            var selectContent = new GUIContent("Selecionar");
+            selectContent.tooltip = 
+                (tracker.TipoPontuacao == -1)?"Voce precisa selecionar um modo de jogo":
+                (tracker.MapaEscolhido==0)?"Um mapa ainda não foi escolhido":
+                "999";
+
             GUI.skin = ControlSkin; // Design para o conteudo
-            if (tracker.TipoPontuacao != -1) {
-                bool VerificaMapaSelecionado = GUI.Button(new Rect(975, 370, 100, 30), "Selecionar"); //botão selecionar
-                if (VerificaMapaSelecionado) {
-                    mostrarJanelaIrParaMapa = true;
-                }
+            bool VerificaMapaSelecionado = GUI.Button(new Rect(975, 370, 100, 30), selectContent); //botão selecionar
+            if (VerificaMapaSelecionado && ((tracker.TipoPontuacao != -1)&&(tracker.MapaEscolhido!=0)) ) {
+                mostrarJanelaIrParaMapa = true;
             }
-        } 
+        }
         else if (BotaoSelecionadoToolbar == 2) { //mapas
             //GUI.skin = ControlSkin;
             //ScrollPosition = GUI.BeginScrollView(new Rect(15, 65, 800, 400), ScrollPosition, new Rect(0, 0, 750, 600), false, true);
