@@ -76,6 +76,7 @@ public class ModeTrackingScript : MonoBehaviour {
                 primeiraVez = false;
             }
         }
+
         if (TipoPontuacao == 0) {
             tempo = tempoInicio - Time.time;
             if (tempo < 0) {
@@ -87,29 +88,25 @@ public class ModeTrackingScript : MonoBehaviour {
         else if (TipoPontuacao == 1) {
             tempo = Time.time - tempoInicio;
 
-            if (Pecas != null)
-            {
-                if (Pecas.transform.childCount == 0)
-                {
+            if (Pecas != null) {
+                if (Pecas.transform.childCount == 0) {
                     Time.timeScale = 0;
                     fimDeJogo = true;
                 }
             }
-
         }
         else if (TipoPontuacao == 2) {
             tempo = tempoInicio - Time.time;
             if (tempo < 0) {
-                tempo = 0;
-                Time.timeScale = 0;
-                fimDeJogo = true;
-                if (Pecas != null) 
-                {
-                    if (Pecas.transform.childCount == 0)
-                    {
-                        Time.timeScale = 0;
-                        fimDeJogo = true;
-                    }
+            tempo = 0;
+            Time.timeScale = 0;
+            fimDeJogo = true;
+            }
+
+            if (Pecas != null) {
+                if (Pecas.transform.childCount == 0) {
+                    Time.timeScale = 0;
+                    fimDeJogo = true;
                 }
             }
         }
@@ -129,7 +126,12 @@ public class ModeTrackingScript : MonoBehaviour {
 
             #region Interface
             GUI.BeginGroup(new Rect(Screen.width - 150, 0, 200, 80));                       //----------------
-            if (ModoJogo != ModoDeJogo.Solo) {
+            if (ModoJogo == ModoDeJogo.Solo) {
+                GUI.Box(new Rect(0, 0, 150, 50), "");
+                GUI.contentColor = Color.white;                                             //
+                GUI.Label(new Rect(20, 25, 100, 25), "<b>Pontuação: </b>");                 //Solo:<pontos>
+                GUI.Label(new Rect(90, 25, 100, 25), pontuacaoRoboVermelho.ToString());     //
+            } else {
                 GUI.Box(new Rect(0, 0, 150, 80), "");
                 GUI.contentColor = Color.red;                                               //
                 GUI.Label(new Rect(20, 25, 100, 25), "<b>Vermelho: </b>");                  //Vermelho:<pontos>
@@ -138,11 +140,6 @@ public class ModeTrackingScript : MonoBehaviour {
                 GUI.contentColor = Color.blue;                                              //
                 GUI.Label(new Rect(45, 50, 100, 25), "<b>Azul: </b>");                      //Azul:<pontos>
                 GUI.Label(new Rect(90, 50, 100, 25), pontuacaoRoboAzul.ToString());         //
-            } else {
-                GUI.Box(new Rect(0, 0, 150, 50), "");
-                GUI.contentColor = Color.white;                                             //
-                GUI.Label(new Rect(20, 25, 100, 25), "<b>Pontuação: </b>");                 //Solo:<pontos>
-                GUI.Label(new Rect(90, 25, 100, 25), pontuacaoRoboVermelho.ToString());     //
             }
            
             GUI.Label(new Rect(35, 0, 50, 25), "<b>Tempo: </b>");                           //Tempo:<tempo>
@@ -191,9 +188,16 @@ public class ModeTrackingScript : MonoBehaviour {
                     "<color=#ffa500ff><size=50><b>Fim de Partida</b></size></color>");
 
                 if (ModoJogo == ModoDeJogo.Solo) {
-                    GUI.TextArea(new Rect(Screen.width / 2 - 275, Screen.height / 2 + 20, 550, 100),
+                    if (TipoPontuacao == 1) {
+                        GUI.TextArea(new Rect(Screen.width / 2 - 275, Screen.height / 2 + 20, 550, 100),
                         "<color=#ffa500ff><size=30><b>Você finalizou o jogo com: " +
-                        pontuacaoRoboVermelho + " pontos!</b></size></color>");
+                        segundosContador + " segundos!</b></size></color>");
+                    } else {
+                        GUI.TextArea(new Rect(Screen.width / 2 - 275, Screen.height / 2 + 20, 550, 100),
+                        "<color=#ffa500ff><size=30><b>Você finalizou o jogo com: " +
+                        pontuacaoRoboVermelho + " ponto(s)!</b></size></color>");
+                    }
+                    
                 }
                 else if (ModoJogo == ModoDeJogo.Competição) {
                     if (pontuacaoRoboAzul > pontuacaoRoboVermelho) {
@@ -247,11 +251,12 @@ public class ModeTrackingScript : MonoBehaviour {
     }
 
     private void ControlaTempo() {
-        if (TempoTotal <= 0) {
+        if (TipoPontuacao == 1) {
             tempoInicio = Time.time;
-        } else if (TempoTotal > 0) {
+        } else {
             tempoInicio = Time.time + TempoTotal;
         }
+
     }
     
 }
