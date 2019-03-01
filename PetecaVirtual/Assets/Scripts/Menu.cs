@@ -79,7 +79,7 @@ public class Menu : MonoBehaviour {
         mostrarJanelaIrParaMapa = false;
     }
 
-    string timeTotal;
+    string timeTotal = ModeTrackingScript.DEFAULT_INITIAL_TIME.ToString();
     /// <summary>
     /// Draw the Menu GUI
     /// </summary>
@@ -176,27 +176,35 @@ public class Menu : MonoBehaviour {
                 //timeTotal = tracker.TempoTotal.ToString();
                 timeTotal = GUI.TextField(new Rect(160, 105, 60, 20), timeTotal);
                 try{
-                    tracker.TempoTotal = int.Parse(timeTotal);
+                    tracker.TempoTotal = float.Parse(timeTotal);
+                    if (tracker.TempoTotal < 0) tracker.TempoTotal = ModeTrackingScript.DEFAULT_INITIAL_TIME;
                 }catch{
-                    tracker.TempoTotal = tracker.DEFAULT_INITIAL_TIME;
+                    tracker.TempoTotal = ModeTrackingScript.DEFAULT_INITIAL_TIME;
                 }
                 
             } else {
-                tracker.TempoTotal = tracker.DEFAULT_INITIAL_TIME;
+                timeTotal = tracker.TempoTotal.ToString();
+                tracker.TempoTotal = ModeTrackingScript.DEFAULT_INITIAL_TIME;
             }
 
             GUI.EndGroup();
             #endregion MODO DE PARTIDA
 
-            var selectContent = new GUIContent("Selecionar");
+            var ReadyToGo =
+                 ((tracker.TipoPontuacao != -1) &&                   //Modo de jogo selecionado 
+                  (tracker.MapaEscolhido != 0)) &&                   //Mapa selecionado
+                  (timeTotal == tracker.TempoTotal.ToString());      //Tempo valido digitado
+
+            var selectContent = new GUIContent($"{((ReadyToGo) ? "<color=#ffffff>" : "<color=#cc8888>")}Selecionar</color>");
             selectContent.tooltip = 
                 (tracker.TipoPontuacao == -1)?"Voce precisa selecionar um modo de jogo":
                 (tracker.MapaEscolhido==0)?"Um mapa ainda não foi escolhido":
+                (timeTotal!=tracker.TempoTotal.ToString())?"Tempo selecionado inválido":
                 "999";
 
-            GUI.skin = ControlSkin; // Design para o conteudo
+                GUI.skin = ControlSkin; // Design para o conteudo
             bool VerificaMapaSelecionado = GUI.Button(new Rect(975, 370, 100, 30), selectContent); //botão selecionar
-            if (VerificaMapaSelecionado && ((tracker.TipoPontuacao != -1)&&(tracker.MapaEscolhido!=0)) ) {
+            if (VerificaMapaSelecionado && ReadyToGo) { 
                 mostrarJanelaIrParaMapa = true;
             }
         }
