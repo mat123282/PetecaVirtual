@@ -60,8 +60,7 @@ public class Menu : MonoBehaviour {
     private IEnumerator Start() {
 
         tracker = Tracker.GetComponent<ModeTrackingScript>();
-        siteNoticias = UnityWebRequest.Get(
-            "http://www.sorocaba.unesp.br/Home/PaginaDocentes/PET-ECA/petecavirtualnoticias.txt");
+        siteNoticias = UnityWebRequest.Get("http://www.sorocaba.unesp.br/Home/PaginaDocentes/PET-ECA/petecavirtualnoticias.txt");
         yield return siteNoticias.SendWebRequest();
 
         if (siteNoticias.isNetworkError || siteNoticias.isHttpError) {
@@ -292,8 +291,7 @@ public class Menu : MonoBehaviour {
     /// Busca a atual versão do server
     /// </summary>
     private IEnumerator CarregarVersaoUpdate() {
-        VersaoUpdate1 = UnityWebRequest.Get("" +
-            "http://www.sorocaba.unesp.br/Home/PaginaDocentes/PET-ECA/petecavirtualversaoatual.txt");
+        VersaoUpdate1 = UnityWebRequest.Get("http://www.sorocaba.unesp.br/Home/PaginaDocentes/PET-ECA/petecavirtualversaoatual.txt");
         yield return VersaoUpdate1.SendWebRequest();
 
         if (VersaoUpdate1.isNetworkError || VersaoUpdate1.isHttpError) {
@@ -308,9 +306,7 @@ public class Menu : MonoBehaviour {
     /// Mostra o registro de atualização
     /// </summary>
     private IEnumerator CarregarLogUpdate() {
-        siteLogAtualizacao = UnityWebRequest.Get("" +
-            "http://www.sorocaba.unesp.br/Home/PaginaDocentes/" +
-            "PET-ECA/petecavirtualnotasatualizacao.txt");
+        siteLogAtualizacao = UnityWebRequest.Get("http://www.sorocaba.unesp.br/Home/PaginaDocentes/PET-ECA/petecavirtualnotasatualizacao.txt");
 
         yield return siteLogAtualizacao.SendWebRequest();
 

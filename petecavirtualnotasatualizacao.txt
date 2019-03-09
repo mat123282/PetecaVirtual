@@ -1,7 +1,29 @@
-â€¢ Versao 1.0.2 Beta
+• Versão 2019.0.9 Beta
+
+	Foram adicionados alguns shaders para deixar o
+ambiente mais competitivo e agradável. Caso aconteça
+algum bug, nos envie um e-mail para que possamos
+corrigir.
+Postado em 08, Março, 2019 por PetecaVirtual
+
+• Versão 2019.0.8 Beta
+
+	Estamos finalizando algumas novas ferramentas e
+animações. Foram consertados alguns bugs em relação
+ao Pause/Reinicar. Estamos cientes de alguns problemas,
+se tiver algum problema, nos envie um e-mail.
+Postado em 13, Fevereiro, 2019 por PetecaVirtual
+
+• Versão 1.0.3 Beta
+
+	Foram realizados algumas correções de objetos e
+adicionados novas ferramentas
+Postado em 23, Novembro, 2018 por PetecaVirtual
+
+• Versão 1.0.2 Beta
 
 	Foram adicionados dois mapas de treinamento para
-iniciarmos os testes referentes Ã  movimentaÃ§Ã£o dos robÃ´s.
-Verifiquem se hÃ¡ ocorrÃªncia de alguns bugs, caso perceba
+iniciarmos os testes referentes à  movimentação dos robôs.
+Verifiquem se há ocorrência de alguns bugs, caso perceba
 um, envie-nos uma mensagem.
 Postado em 27, Agosto, 2018 por PetecaVirtual

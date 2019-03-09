@@ -16,8 +16,6 @@ public class PontuacaoVermelho : MonoBehaviour {
     private void OnTriggerEnter(Collider objetoDeColisao) {
         switch (objetoDeColisao.tag) {
             case "Cilindro_amarelo":
-
-                objetoDeColisao.gameObject.GetComponent<MeshRenderer>().material.SetFloat("slider", 1);
                 Destroy(objetoDeColisao.gameObject);
                 tracker.pontuacaoRoboVermelho += Valores.Cilindro_amarelo;
                 break;
