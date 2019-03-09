@@ -7,20 +7,21 @@ public class Dissolve : MonoBehaviour
 {
     public bool diss;
     public bool undiss;
-    private Material mat;
+    private Material mat = null;
     private float height;
     private float progress;
     bool running;
     private void OnValidate()
     {
-        if (diss) {
+        if (diss)
+        {
             diss = !diss;
-            Disolver();
+            if (mat != null) Disolver();
         }
         if (undiss)
         {
             undiss = !undiss;
-            UnDisolver();
+            if (mat != null)UnDisolver();
         }
     }
     private void Start()
@@ -69,31 +70,33 @@ public class Dissolve : MonoBehaviour
     {
         if (running == false)
         {
-            mat?.SetFloat("_dissolveSize",height);
+            mat?.SetFloat("_dissolveSize", height);
             progress = 1;
             running = true;
             StartCoroutine(Diss());
         }
 
-        
+
     }
 
-    IEnumerator Diss() {
-        
+    IEnumerator Diss()
+    {
+
         yield return new WaitForFixedUpdate();
-        progress = progress -(0.01f+(Time.deltaTime*( progress)));
+        progress = progress - (0.01f + (Time.deltaTime * (progress)));
         mat.SetFloat("_progress", progress);
-        if (progress > -0.01) {
+        if (progress > -0.01)
+        {
             StartCoroutine(Diss());
         }
         else
         {
-            mat?.SetFloat("_dissolveSize",0);
+            mat?.SetFloat("_dissolveSize", 0);
             progress = 1;
             yield return null;
             running = false;
         }
-        
+
 
     }
 }
