@@ -328,7 +328,7 @@ public class Menu : MonoBehaviour {
                 textoDaJanela = "Atualização disponível: " + PegarVersao;
                 bool download = GUI.Button(new Rect(30, 50, 100, 25), "Download");
                 if (download) {
-                    Application.OpenURL("https://sites.google.com/site/virtualvex/downloads"); // ALTERAR O SITE DEPOIS
+                    Application.OpenURL("https://github.com/mat123282/PetecaVirtual/blob/master/Output/PetecaVirtual.exe");
                 }
             }
         }
