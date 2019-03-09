@@ -5,5 +5,5 @@ using System.Collections;
 /// Contains various global constants shared by two or more scripts
 /// </summary>
 public class Constants {
-        public static readonly string VERSION = "1.0.2 Beta";
+        public static readonly string VERSION = "2019.0.9 Beta";
 }
