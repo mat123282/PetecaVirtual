@@ -61,8 +61,7 @@ public class Menu : MonoBehaviour {
 
         tracker = Tracker.GetComponent<ModeTrackingScript>();
         siteNoticias = UnityWebRequest.Get(
-            "http://www.sorocaba.unesp.br/Home/PaginaDocentes/" +
-            "PET-ECA/petecavirtualnoticias.txt");
+            "http://www.sorocaba.unesp.br/Home/PaginaDocentes/PET-ECA/petecavirtualnoticias.txt");
         yield return siteNoticias.SendWebRequest();
 
         if (siteNoticias.isNetworkError || siteNoticias.isHttpError) {
@@ -294,8 +293,7 @@ public class Menu : MonoBehaviour {
     /// </summary>
     private IEnumerator CarregarVersaoUpdate() {
         VersaoUpdate1 = UnityWebRequest.Get("" +
-            "http://www.sorocaba.unesp.br/Home/PaginaDocentes/" +
-            "PET-ECA/petecavirtualversaoatual.txt");
+            "http://www.sorocaba.unesp.br/Home/PaginaDocentes/PET-ECA/petecavirtualversaoatual.txt");
         yield return VersaoUpdate1.SendWebRequest();
 
         if (VersaoUpdate1.isNetworkError || VersaoUpdate1.isHttpError) {

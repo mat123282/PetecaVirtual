@@ -1,0 +1,7 @@
+â€¢ Versao 1.0.2 Beta
+
+	Foram adicionados dois mapas de treinamento para
+iniciarmos os testes referentes Ã  movimentaÃ§Ã£o dos robÃ´s.
+Verifiquem se hÃ¡ ocorrÃªncia de alguns bugs, caso perceba
+um, envie-nos uma mensagem.
+Postado em 27, Agosto, 2018 por PetecaVirtual
