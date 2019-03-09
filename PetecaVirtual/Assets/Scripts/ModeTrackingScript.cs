@@ -75,6 +75,14 @@ public class ModeTrackingScript : MonoBehaviour {
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.B) == true) {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
+            Time.timeScale = 0;
+            ReiniciarPontuacao();
+            fimDeJogo = false;
+            JogoPausado = true;
+        }
+
         if (TipoPontuacao == 0) {
             tempo = tempoInicio - Time.time;
             if (tempo < 0) {
