@@ -17,7 +17,7 @@ class Robo {
 
 	public:
     // Movimentacoes
-        void VaiParaFrente(void) {
+        void VaiParaFrente() {
             if (tipoRobo == 0) {
                 key.ki.wVk = 0x57;
                 key.ki.dwFlags = 0;
@@ -36,7 +36,7 @@ class Robo {
                 cout << "Ocorreu algum erro." << endl;
             }
         }
-        void VaiParaTras(void) {
+        void VaiParaTras() {
             if (tipoRobo == 0) {
                 key.ki.wVk = 0x53;
                 key.ki.dwFlags = 0;
@@ -55,7 +55,7 @@ class Robo {
                 cout << "Ocorreu algum erro." << endl;
             }
         }
-        void RotacionaEsquerda(void) {
+        void RotacionaEsquerda() {
             if (tipoRobo == 0) {
                 key.ki.wVk = 0x41;
                 key.ki.dwFlags = 0;
@@ -74,7 +74,7 @@ class Robo {
                 cout << "Ocorreu algum erro." << endl;
             }
         }
-        void RotacionaDireita(void) {
+        void RotacionaDireita() {
             if (tipoRobo == 0) {
                 key.ki.wVk = 0x44;
                 key.ki.dwFlags = 0;
@@ -93,8 +93,7 @@ class Robo {
                 cout << "Ocorreu algum erro." << endl;
             }
         }
-
-        void DesceGarra(void) {
+        void DesceGarra() {
             if (tipoRobo == 0) {
                 key.ki.wVk = 0x45;
                 key.ki.dwFlags = 0;
@@ -113,7 +112,7 @@ class Robo {
                 cout << "Ocorreu algum erro." << endl;
             }
         }
-        void SobeGarra(void) {
+        void SobeGarra() {
             if (tipoRobo == 0) {
                 key.ki.wVk = 0x51;
                 key.ki.dwFlags = 0;
@@ -144,7 +143,8 @@ class Robo {
                 return false;
             }
         }
-        void Inicializa(void) {
+        void Inicializa() {
+        	cout << "PASSOU AQUI" << endl;
             if(BoolRobo == true) {
                 key.type = INPUT_KEYBOARD;
                 key.ki.wScan = 0; // hardware scan code for key
@@ -163,7 +163,7 @@ class Robo {
                 system("exit");
             }
         }
-        void ReiniciaJogo(void) {
+        void ReiniciaJogo() {
             key.ki.wVk = 0x42;
             key.ki.dwFlags = 0;
             SendInput(1, &key, sizeof(INPUT));
@@ -171,7 +171,7 @@ class Robo {
             key.ki.dwFlags = KEYEVENTF_KEYUP;
             SendInput(1, &key, sizeof(INPUT));
         }
-        void PausaOuDespausa(void) {
+        void PausaOuDespausa() {
                 key.ki.wVk = 0x50;
             key.ki.dwFlags = 0;
             SendInput(1, &key, sizeof(INPUT));
