@@ -320,8 +320,9 @@ public class Menu : MonoBehaviour {
 
     private void VerificarAtualizacao(int windowID) {
         string textoDaJanela = "Tentando conectar com o servidor...";
+
         if (VersaoUpdate1 != null) {
-            if (Constants.VERSION.Equals(PegarVersao)) {
+            if (PegarVersao.Contains(Constants.VERSION)) {
                 textoDaJanela = "Nenhuma atualização encontrada. " +
                     "Você possui a versão \nmais recente do PetecaVirtual instalada.";
             } else {
