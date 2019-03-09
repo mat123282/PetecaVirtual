@@ -5,7 +5,7 @@ using namespace std;
 Robo roboVermelho;
 
 int main() {
-	bool tentativa = roboVermelho.TipoDeRobo(0);
+	roboVermelho.TipoDeRobo(0);
 	roboVermelho.Inicializa();
 	roboVermelho.PausaOuDespausa();
 	roboVermelho.SelecionaCamera(2);

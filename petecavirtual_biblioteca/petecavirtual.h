@@ -33,7 +33,7 @@ class Robo {
                 key.ki.dwFlags = KEYEVENTF_KEYUP;
                 SendInput(1, &key, sizeof(INPUT));
             } else {
-                cout << "Ocorreu algum erro." << endl;
+                std::cout << "Ocorreu algum erro." << std::endl;
             }
         }
         void VaiParaTras() {
@@ -52,7 +52,7 @@ class Robo {
                 key.ki.dwFlags = KEYEVENTF_KEYUP;
                 SendInput(1, &key, sizeof(INPUT));
             } else {
-                cout << "Ocorreu algum erro." << endl;
+                std::cout << "Ocorreu algum erro." << std::endl;
             }
         }
         void RotacionaEsquerda() {
@@ -71,7 +71,7 @@ class Robo {
                 key.ki.dwFlags = KEYEVENTF_KEYUP;
                 SendInput(1, &key, sizeof(INPUT));
             } else {
-                cout << "Ocorreu algum erro." << endl;
+                std::cout << "Ocorreu algum erro." << std::endl;
             }
         }
         void RotacionaDireita() {
@@ -90,7 +90,7 @@ class Robo {
                 key.ki.dwFlags = KEYEVENTF_KEYUP;
                 SendInput(1, &key, sizeof(INPUT));
             } else {
-                cout << "Ocorreu algum erro." << endl;
+                std::cout << "Ocorreu algum erro." << std::endl;
             }
         }
         void DesceGarra() {
@@ -109,7 +109,7 @@ class Robo {
                 key.ki.dwFlags = KEYEVENTF_KEYUP;
                 SendInput(1, &key, sizeof(INPUT));
             } else {
-                cout << "Ocorreu algum erro." << endl;
+                std::cout << "Ocorreu algum erro." << std::endl;
             }
         }
         void SobeGarra() {
@@ -128,7 +128,7 @@ class Robo {
                 key.ki.dwFlags = KEYEVENTF_KEYUP;
                 SendInput(1, &key, sizeof(INPUT));
             } else {
-                cout << "Ocorreu algum erro." << endl;
+                std::cout << "Ocorreu algum erro." << std::endl;
             }
         }
 
@@ -144,22 +144,20 @@ class Robo {
             }
         }
         void Inicializa() {
-        	cout << "PASSOU AQUI" << endl;
             if(BoolRobo == true) {
                 key.type = INPUT_KEYBOARD;
                 key.ki.wScan = 0; // hardware scan code for key
                 key.ki.time = 0;
                 key.ki.dwExtraInfo = 0;
 
-                cout << "Inicializando configuracoes para partida..." << endl;
-                cout << "Mova para a tela do programa." << endl;
+                std::cout << "Inicializando configuracoes para partida..." << std::endl;
+                std::cout << "Mova para a tela do programa." << std::endl;
                 for(int iteracao = 5; iteracao > 0; iteracao--) {
-                    cout << (iteracao + 1) << endl;
+                    std::cout << iteracao << std::endl;
                     Sleep(1000);
                 }
             } else {
-                cout << "Erro! Nao foi encontrado o robo selecionado." << endl;
-                system("pause");
+                std::cout << "Erro! Nao foi encontrado o robo selecionado." << std::endl;
                 system("exit");
             }
         }
@@ -192,7 +190,7 @@ class Robo {
 
                 return true;
             } else {
-                cout << "Camera inexistente. Erro de sintaxe!"<< endl;
+                std::cout << "Camera inexistente. Erro de sintaxe!"<< std::endl;
                 return false;
             }
         }
