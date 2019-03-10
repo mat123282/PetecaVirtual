@@ -20,20 +20,25 @@ public class ControleRoboVermelho : MonoBehaviour {
     }
 	
 	void Update () {
+        
+    }
+
+    private void FixedUpdate() {
         float Translacao = Input.GetAxis("Vertical");
         float Rotacao = Input.GetAxis("Horizontal");
-        
+
         direcao = Vector3.zero;
         rotacaoRobo = Vector3.zero;
         if (Translacao != 0)
         {
             direcao = transform.right * Translacao;
-        } else if (Rotacao != 0) {
+        }
+        else if (Rotacao != 0)
+        {
             rotacaoRobo = new Vector3(0, 0, Rotacao);
         }
-    }
 
-    private void FixedUpdate() {
+
         rigidbodyRobo.MovePosition(rigidbodyRobo.position + (direcao * VelocidadeTranslacao * Time.deltaTime));
 
         Quaternion deltaRotation = Quaternion.Euler(rotacaoRobo * VelocidadeRotacao * Time.deltaTime);
