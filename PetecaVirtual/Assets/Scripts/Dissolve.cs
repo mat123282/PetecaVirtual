@@ -22,6 +22,7 @@ public class Dissolve : MonoBehaviour
 
         if (running == false)
         {
+            running = true;
             var tracker = FindObjectOfType<ModeTrackingScript>();
             if (!(tracker == null))
                 switch (obj)
@@ -36,7 +37,6 @@ public class Dissolve : MonoBehaviour
 
             mat?.SetFloat("_dissolveSize", height);
             progress = 1;
-            running = true;
             StartCoroutine(Diss());
             Debug.Log($"pontos adicionados ({pts})");
         }
