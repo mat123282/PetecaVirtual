@@ -117,7 +117,7 @@ public class Menu : MonoBehaviour {
             bool site = GUI.Button(new Rect(735, 155, 130, 25), "Ver o site");
 
             if (help)
-                Application.OpenURL("https://sites.google.com/site/virtualvex/knowledge-base"); // MUDAR O SITE
+                Application.OpenURL("https://www.sorocaba.unesp.br/Home/PaginaDocentes/PET-ECA/documentacao_petecavirtual.pdf"); // MUDAR O SITE
             if (site)
                 Application.OpenURL("http://www.sorocaba.unesp.br/#!/peteca");
 

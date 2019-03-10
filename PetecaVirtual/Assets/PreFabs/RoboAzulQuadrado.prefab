@@ -25,7 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1005694934196736}
-  m_LocalRotation: {x: 0.5476633, y: 0.5476633, z: 0.44728622, w: 0.44728625}
+  m_LocalRotation: {x: 0.5476633, y: 0.5476633, z: 0.44728622, w: 0.44728622}
   m_LocalPosition: {x: 0.797, y: -0, z: 1.17}
   m_LocalScale: {x: 1, y: 5, z: 1.2500002}
   m_Children: []
@@ -919,7 +919,7 @@ GameObject:
   - component: {fileID: 54592414230905950}
   - component: {fileID: 114531224928931008}
   m_Layer: 0
-  m_Name: RoboVermelhoQuadrado
+  m_Name: RoboAzulQuadrado
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -968,7 +968,7 @@ MeshRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: cee0c1ef2ee93254b9e5c51f7d67663d, type: 2}
+  - {fileID: 2100000, guid: 500cb4a269575174199df494d4822d66, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
