@@ -60,6 +60,8 @@ public class ModeTrackingScript : MonoBehaviour {
     {
         if (arg0.buildIndex!=0)// se a cena aberta não for o menu
         {//atualiza a ref de peças
+            ConfsIniciais();
+
             Pecas = SceneManager.GetSceneByBuildIndex(MapaEscolhido).GetRootGameObjects().Where(o => o.name == "Pecas").ToArray().First();
         }
     }
@@ -238,12 +240,18 @@ public class ModeTrackingScript : MonoBehaviour {
         }
     }
 
-    public void IniciarMapa() {
+    public void IniciarMapa()
+    {
+        SceneManager.LoadScene(MapaEscolhido, LoadSceneMode.Single);
+        ConfsIniciais();
+    }
+
+    private void ConfsIniciais()
+    {
         mostrarArquivo = false;
         fimDeJogo = false;
         JogoPausado = true;
         primeiraVez = true;
-        SceneManager.LoadScene(MapaEscolhido, LoadSceneMode.Single);
         ControlaTempo();
     }
 

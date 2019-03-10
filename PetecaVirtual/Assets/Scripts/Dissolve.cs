@@ -28,7 +28,6 @@ public class Dissolve : MonoBehaviour
     {
         mat = GetComponent<MeshRenderer>().material;
         height = mat.GetFloat("_dissolveSize");
-        Debug.Log(height);
     }
 
     public void UnDisolver()
@@ -95,6 +94,7 @@ public class Dissolve : MonoBehaviour
             progress = 1;
             yield return null;
             running = false;
+            Destroy(this.gameObject);
         }
 
 

@@ -43,12 +43,21 @@ public class ControleRoboAzul : MonoBehaviour {
         bool desceGarra = Input.GetKey(KeyCode.I);
         float posicao = SistemaBraco.transform.localRotation.eulerAngles.y;
 
-        if ((posicao <= 20 && posicao >= -1) || (posicao >= 270) && (posicao <= 361)) {
-            SistemaBraco.transform.Rotate((+((sobeGarra) ? 1 : 0) - ((desceGarra) ? 1 : 0)) * Vector3.right * Time.deltaTime * VelocidadeGarra);
-        } else if ((posicao > 20) && (posicao < 40)) {
-            SistemaBraco.transform.localRotation = Quaternion.Euler(0, 20, -90);
-        } else if ((posicao > 240) && (posicao < 270)) {
-            SistemaBraco.transform.localRotation = Quaternion.Euler(0, 270, -90);
-        }
+        float minRotation = -110;
+        float maxRotation = 0;
+        Vector3 currentRotation = transform.localRotation.eulerAngles-Vector3.right*20;
+        currentRotation.y = Mathf.Clamp(currentRotation.y, minRotation, maxRotation);
+        SistemaBraco.transform.localRotation = Quaternion.Euler(currentRotation+Vector3.right*20);
+        //var rot = posicao-20;
+        
+        
+        //SistemaBraco.transform.Rotate((+((sobeGarra) ? 1 : 0) - ((desceGarra) ? 1 : 0)) * Vector3.right * Time.deltaTime * VelocidadeGarra);
+        //if ((posicao <= 20 && posicao >= -1) || (posicao >= 270) && (posicao <= 361)) {
+        //    SistemaBraco.transform.Rotate((+((sobeGarra) ? 1 : 0) - ((desceGarra) ? 1 : 0)) * Vector3.right * Time.deltaTime * VelocidadeGarra);
+        //} else if ((posicao > 20) && (posicao < 40)) {
+        //    SistemaBraco.transform.localRotation = Quaternion.Euler(0, 20, -90);
+        //} else if ((posicao > 240) && (posicao < 270)) {
+        //    SistemaBraco.transform.localRotation = Quaternion.Euler(0, 270, -90);
+        //}
     }
 }
