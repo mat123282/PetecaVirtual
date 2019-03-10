@@ -125,7 +125,7 @@ GameObject:
   m_Layer: 0
   m_Name: Audio Source
   m_TagString: Untagged
-  m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -252,7 +252,7 @@ GameObject:
   m_Layer: 0
   m_Name: Mode Tracker
   m_TagString: Untagged
-  m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -287,7 +287,6 @@ MonoBehaviour:
   ModoJogo: 0
   TipoPontuacao: 2
   TempoTotal: 150
-  DEFAULT_INITIAL_TIME: 60
   pontuacaoRoboVermelho: 0
   pontuacaoRoboAzul: 0
   Pecas: {fileID: 0}
@@ -306,7 +305,7 @@ GameObject:
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
-  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -395,7 +394,7 @@ GameObject:
   m_Layer: 0
   m_Name: GUI
   m_TagString: Untagged
-  m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1

@@ -60,9 +60,7 @@ public class Menu : MonoBehaviour {
     private IEnumerator Start() {
 
         tracker = Tracker.GetComponent<ModeTrackingScript>();
-        siteNoticias = UnityWebRequest.Get(
-            "http://www.sorocaba.unesp.br/Home/PaginaDocentes/" +
-            "PET-ECA/petecavirtualnoticias.txt");
+        siteNoticias = UnityWebRequest.Get("http://www.sorocaba.unesp.br/Home/PaginaDocentes/PET-ECA/petecavirtualnoticias.txt");
         yield return siteNoticias.SendWebRequest();
 
         if (siteNoticias.isNetworkError || siteNoticias.isHttpError) {
@@ -119,7 +117,7 @@ public class Menu : MonoBehaviour {
             bool site = GUI.Button(new Rect(735, 155, 130, 25), "Ver o site");
 
             if (help)
-                Application.OpenURL("https://sites.google.com/site/virtualvex/knowledge-base"); // MUDAR O SITE
+                Application.OpenURL("https://www.sorocaba.unesp.br/Home/PaginaDocentes/PET-ECA/documentacao_petecavirtual.pdf"); // MUDAR O SITE
             if (site)
                 Application.OpenURL("http://www.sorocaba.unesp.br/#!/peteca");
 
@@ -293,9 +291,7 @@ public class Menu : MonoBehaviour {
     /// Busca a atual versão do server
     /// </summary>
     private IEnumerator CarregarVersaoUpdate() {
-        VersaoUpdate1 = UnityWebRequest.Get("" +
-            "http://www.sorocaba.unesp.br/Home/PaginaDocentes/" +
-            "PET-ECA/petecavirtualversaoatual.txt");
+        VersaoUpdate1 = UnityWebRequest.Get("http://www.sorocaba.unesp.br/Home/PaginaDocentes/PET-ECA/petecavirtualversaoatual.txt");
         yield return VersaoUpdate1.SendWebRequest();
 
         if (VersaoUpdate1.isNetworkError || VersaoUpdate1.isHttpError) {
@@ -310,9 +306,7 @@ public class Menu : MonoBehaviour {
     /// Mostra o registro de atualização
     /// </summary>
     private IEnumerator CarregarLogUpdate() {
-        siteLogAtualizacao = UnityWebRequest.Get("" +
-            "http://www.sorocaba.unesp.br/Home/PaginaDocentes/" +
-            "PET-ECA/petecavirtualnotasatualizacao.txt");
+        siteLogAtualizacao = UnityWebRequest.Get("http://www.sorocaba.unesp.br/Home/PaginaDocentes/PET-ECA/petecavirtualnotasatualizacao.txt");
 
         yield return siteLogAtualizacao.SendWebRequest();
 
@@ -326,15 +320,16 @@ public class Menu : MonoBehaviour {
 
     private void VerificarAtualizacao(int windowID) {
         string textoDaJanela = "Tentando conectar com o servidor...";
+
         if (VersaoUpdate1 != null) {
-            if (Constants.VERSION.Equals(PegarVersao)) {
+            if (PegarVersao.Contains(Constants.VERSION)) {
                 textoDaJanela = "Nenhuma atualização encontrada. " +
                     "Você possui a versão \nmais recente do PetecaVirtual instalada.";
             } else {
                 textoDaJanela = "Atualização disponível: " + PegarVersao;
                 bool download = GUI.Button(new Rect(30, 50, 100, 25), "Download");
                 if (download) {
-                    Application.OpenURL("https://sites.google.com/site/virtualvex/downloads"); // ALTERAR O SITE DEPOIS
+                    Application.OpenURL("https://github.com/mat123282/PetecaVirtual/blob/master/Output/PetecaVirtual.exe");
                 }
             }
         }
