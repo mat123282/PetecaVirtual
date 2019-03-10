@@ -7,13 +7,13 @@
 #include "iostream"
 #include "math.h"
 
-#define tempo 12
+#define tempo 15
 
 class Robo {
 	private:
     	INPUT key;
     	int tipoRobo;
-    	bool BoolRobo;
+    	bool boolRobo;
 
 	public:
     // Movimentacoes
@@ -136,15 +136,15 @@ class Robo {
         bool TipoDeRobo(int robo) {
             if ((robo == 0) || (robo == 1)) {
                 tipoRobo = robo;
-                BoolRobo = true;
+                boolRobo = true;
                 return true;
             } else {
-                BoolRobo = false;
+                boolRobo = false;
                 return false;
             }
         }
         void Inicializa() {
-            if(BoolRobo == true) {
+            if(boolRobo == true) {
                 key.type = INPUT_KEYBOARD;
                 key.ki.wScan = 0; // hardware scan code for key
                 key.ki.time = 0;
@@ -168,6 +168,7 @@ class Robo {
             Sleep(tempo);
             key.ki.dwFlags = KEYEVENTF_KEYUP;
             SendInput(1, &key, sizeof(INPUT));
+			Sleep(100);
         }
         void PausaOuDespausa() {
                 key.ki.wVk = 0x50;
