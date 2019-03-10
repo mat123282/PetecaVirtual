@@ -18,26 +18,29 @@ public class Dissolve : MonoBehaviour
     
     public void Disolver(int obj,int pts)
     {
-        var tracker = FindObjectOfType<ModeTrackingScript>();
-        if(!(tracker==null))
-            switch (obj)
-            {
-                case 1:
-                    tracker.pontuacaoRoboVermelho += pts;
-                    break;
-                case 2:
-                    tracker.pontuacaoRoboAzul += pts;
-                    break;
-            }
-        Debug.Log($"pontos adicionados ({pts})");
+        
 
         if (running == false)
         {
+            var tracker = FindObjectOfType<ModeTrackingScript>();
+            if (!(tracker == null))
+                switch (obj)
+                {
+                    case 1:
+                        tracker.pontuacaoRoboVermelho += pts;
+                        break;
+                    case 2:
+                        tracker.pontuacaoRoboAzul += pts;
+                        break;
+                }
+
             mat?.SetFloat("_dissolveSize", height);
             progress = 1;
             running = true;
             StartCoroutine(Diss());
+            Debug.Log($"pontos adicionados ({pts})");
         }
+
 
 
     }
