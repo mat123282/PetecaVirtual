@@ -300,6 +300,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1286144455271684, guid: 8cb00c84bc916c842bdbcc09e31ed0a3, type: 3}
+      propertyPath: m_Name
+      value: Piso_vermelho
+      objectReference: {fileID: 0}
     - target: {fileID: 4522294678787082, guid: 8cb00c84bc916c842bdbcc09e31ed0a3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2
@@ -332,11 +336,18 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 114435955418816284, guid: 8cb00c84bc916c842bdbcc09e31ed0a3,
-        type: 3}
-      propertyPath: Caracteristicas
-      value: 
-      objectReference: {fileID: 808230574}
+    - target: {fileID: 4522294678787082, guid: 8cb00c84bc916c842bdbcc09e31ed0a3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4522294678787082, guid: 8cb00c84bc916c842bdbcc09e31ed0a3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4522294678787082, guid: 8cb00c84bc916c842bdbcc09e31ed0a3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8cb00c84bc916c842bdbcc09e31ed0a3, type: 3}
 --- !u!1001 &48401432

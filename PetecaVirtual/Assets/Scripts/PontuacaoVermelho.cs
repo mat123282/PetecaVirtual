@@ -11,89 +11,74 @@ public class PontuacaoVermelho : MonoBehaviour {
     void Start() {
         Valores = FindObjectOfType<CaracteristicasScript>();
         tracker = FindObjectOfType<ModeTrackingScript>();
+        if (tracker == null) tracker = new ModeTrackingScript();
     }
 
     private void OnTriggerEnter(Collider objetoDeColisao) {
         switch (objetoDeColisao.tag) {
             case "Cilindro_amarelo":
                 //Destroy(objetoDeColisao.gameObject);
-                objetoDeColisao.GetComponent<Dissolve>()?.Disolver();
-                tracker.pontuacaoRoboVermelho += Valores.Cilindro_amarelo;
+                objetoDeColisao.GetComponent<Dissolve>()?.Disolver(1,Valores.Cilindro_amarelo);
                 break;
             case "Cilindro_anil":
                 //Destroy(objetoDeColisao.gameObject);
-                objetoDeColisao.GetComponent<Dissolve>()?.Disolver();
-                tracker.pontuacaoRoboVermelho += Valores.Cilindro_anil;
+                objetoDeColisao.GetComponent<Dissolve>()?.Disolver(1,Valores.Cilindro_anil);
                 break;
             case "Cilindro_magenta":
                 //Destroy(objetoDeColisao.gameObject);
-                objetoDeColisao.GetComponent<Dissolve>()?.Disolver();
-                tracker.pontuacaoRoboVermelho += Valores.Cilindro_magenta;
+                objetoDeColisao.GetComponent<Dissolve>()?.Disolver(1,Valores.Cilindro_anil);
                 break;
             case "Cilindro_verde":
                 //Destroy(objetoDeColisao.gameObject);
-                objetoDeColisao.GetComponent<Dissolve>()?.Disolver();
-                tracker.pontuacaoRoboVermelho += Valores.Cilindro_verde;
+                objetoDeColisao.GetComponent<Dissolve>()?.Disolver(1,Valores.Cilindro_anil);
                 break;
             case "Cubo_amarelo":
                 //Destroy(objetoDeColisao.gameObject);
-                objetoDeColisao.GetComponent<Dissolve>()?.Disolver();
-                tracker.pontuacaoRoboVermelho += Valores.Cubo_amarelo;
+                objetoDeColisao.GetComponent<Dissolve>()?.Disolver(1,Valores.Cilindro_anil);
                 break;
             case "Cubo_anil":
                 //Destroy(objetoDeColisao.gameObject);
-                objetoDeColisao.GetComponent<Dissolve>()?.Disolver();
-                tracker.pontuacaoRoboVermelho += Valores.Cubo_anil;
+                objetoDeColisao.GetComponent<Dissolve>()?.Disolver(1,Valores.Cilindro_anil);
                 break;
             case "Cubo_magenta":
                 //Destroy(objetoDeColisao.gameObject);
-                objetoDeColisao.GetComponent<Dissolve>()?.Disolver();
-                tracker.pontuacaoRoboVermelho += Valores.Cubo_magenta;
+                objetoDeColisao.GetComponent<Dissolve>()?.Disolver(1,Valores.Cilindro_anil);
                 break;
             case "Cubo_verde":
                 //Destroy(objetoDeColisao.gameObject);
-                objetoDeColisao.GetComponent<Dissolve>()?.Disolver();
-                tracker.pontuacaoRoboVermelho += Valores.Cubo_verde;
+                objetoDeColisao.GetComponent<Dissolve>()?.Disolver(1,Valores.Cilindro_anil);
                 break;
             case "Esfera_amarelo":
                 //Destroy(objetoDeColisao.gameObject);
-                objetoDeColisao.GetComponent<Dissolve>()?.Disolver();
-                tracker.pontuacaoRoboVermelho += Valores.Esfera_amarelo;
+                objetoDeColisao.GetComponent<Dissolve>()?.Disolver(1,Valores.Cilindro_anil);
                 break;
             case "Esfera_anil":
                 //Destroy(objetoDeColisao.gameObject);
-                objetoDeColisao.GetComponent<Dissolve>()?.Disolver();
-                tracker.pontuacaoRoboVermelho += Valores.Esfera_anil;
+                objetoDeColisao.GetComponent<Dissolve>()?.Disolver(1,Valores.Cilindro_anil);
                 break;
             case "Esfera_magenta":
                 //Destroy(objetoDeColisao.gameObject);
-                objetoDeColisao.GetComponent<Dissolve>()?.Disolver();
-                tracker.pontuacaoRoboVermelho += Valores.Esfera_magenta;
+                objetoDeColisao.GetComponent<Dissolve>()?.Disolver(1,Valores.Cilindro_anil);
                 break;
             case "Esfera_verde":
                 //Destroy(objetoDeColisao.gameObject);
-                objetoDeColisao.GetComponent<Dissolve>()?.Disolver();
-                tracker.pontuacaoRoboVermelho += Valores.Esfera_verde;
+                objetoDeColisao.GetComponent<Dissolve>()?.Disolver(1,Valores.Cilindro_anil);
                 break;
             case "PrismaTriangular_amarelo":
                 //Destroy(objetoDeColisao.gameObject);
-                objetoDeColisao.GetComponent<Dissolve>()?.Disolver();
-                tracker.pontuacaoRoboVermelho += Valores.PrismaTriangular_amarelo;
+                objetoDeColisao.GetComponent<Dissolve>()?.Disolver(1,Valores.Cilindro_anil);
                 break;
             case "PrismaTriangular_anil":
                 //Destroy(objetoDeColisao.gameObject);
-                objetoDeColisao.GetComponent<Dissolve>()?.Disolver();
-                tracker.pontuacaoRoboVermelho += Valores.PrismaTriangular_anil;
+                objetoDeColisao.GetComponent<Dissolve>()?.Disolver(1,Valores.Cilindro_anil);
                 break;
             case "PrismaTriangular_magenta":
                 //Destroy(objetoDeColisao.gameObject);
-                objetoDeColisao.GetComponent<Dissolve>()?.Disolver();
-                tracker.pontuacaoRoboVermelho += Valores.PrismaTriangular_magenta;
+                objetoDeColisao.GetComponent<Dissolve>()?.Disolver(1,Valores.Cilindro_anil);
                 break;
             case "PrismaTriangular_verde":
                 //Destroy(objetoDeColisao.gameObject);
-                objetoDeColisao.GetComponent<Dissolve>()?.Disolver();
-                tracker.pontuacaoRoboVermelho += Valores.PrismaTriangular_verde;
+                objetoDeColisao.GetComponent<Dissolve>()?.Disolver(1,Valores.Cilindro_anil);
                 break;
         }
     }

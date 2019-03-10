@@ -34,9 +34,9 @@ public class ControleRoboAzul : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        rigidbodyRobo.MovePosition(rigidbodyRobo.position + (direcao * VelocidadeTranslacao * Time.deltaTime));
+        rigidbodyRobo.MovePosition(rigidbodyRobo.position + (direcao * VelocidadeTranslacao * Time.fixedDeltaTime));
 
-        Quaternion deltaRotation = Quaternion.Euler(rotacaoRobo * VelocidadeRotacao * Time.deltaTime);
+        Quaternion deltaRotation = Quaternion.Euler(rotacaoRobo * VelocidadeRotacao * Time.fixedDeltaTime);
         rigidbodyRobo.MoveRotation(rigidbodyRobo.rotation * deltaRotation);
 
         bool sobeGarra = Input.GetKey(KeyCode.Y);
@@ -45,12 +45,16 @@ public class ControleRoboAzul : MonoBehaviour {
 
         float minRotation = -110;
         float maxRotation = 0;
-        Vector3 currentRotation = transform.localRotation.eulerAngles-Vector3.right*20;
+        Vector3 currentRotation = SistemaBraco.transform.localRotation.eulerAngles-Vector3.right*20;
         currentRotation.y = Mathf.Clamp(currentRotation.y, minRotation, maxRotation);
-        SistemaBraco.transform.localRotation = Quaternion.Euler(currentRotation+Vector3.right*20);
+        var desiredRotQ = Quaternion.Euler(currentRotation+Vector3.right*20);
+
+        SistemaBraco.transform.localRotation = Quaternion.Lerp(SistemaBraco.transform.localRotation, desiredRotQ, Time.deltaTime * 0.2f);
+        //SistemaBraco.transform.localRotation = Quaternion.Euler(currentRotation+Vector3.right*20);
+
         //var rot = posicao-20;
-        
-        
+
+
         //SistemaBraco.transform.Rotate((+((sobeGarra) ? 1 : 0) - ((desceGarra) ? 1 : 0)) * Vector3.right * Time.deltaTime * VelocidadeGarra);
         //if ((posicao <= 20 && posicao >= -1) || (posicao >= 270) && (posicao <= 361)) {
         //    SistemaBraco.transform.Rotate((+((sobeGarra) ? 1 : 0) - ((desceGarra) ? 1 : 0)) * Vector3.right * Time.deltaTime * VelocidadeGarra);
