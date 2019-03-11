@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Verde
-  m_Shader: {fileID: 4800000, guid: 5f4360e960487174abb86a1d6eea63d0, type: 3}
+  m_Shader: {fileID: 4800000, guid: 60e38881606a8a34d86c5a7597737587, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -60,6 +60,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Vector1_470CBEDC: 0
+    - Vector1_B8B91F01: 30
+    - Vector1_E2455132: 0.01
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -82,10 +85,11 @@ Material:
     - _UVSec: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
-    - _dissolveSize: 0.179
-    - _progress: 1
+    - _dissolveSize: 0.809
+    - _progress: 0.796
     - _worldSpace: 0
     m_Colors:
+    - Color_EF46B0D6: {r: 0, g: 5.145098, b: 16, a: 0}
     - _Color: {r: 0, g: 1, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
     - _MainColor: {r: 0, g: 1, b: 0, a: 0}
