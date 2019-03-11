@@ -4,17 +4,16 @@ using UnityEngine;
 
 
 public class Dissolve : MonoBehaviour {
-    private Material mat = null;
-    private float height;
-    private float progress;
+    private Material materialDissolvido = null;
+    private float progresso;
     bool running;
     
     private void Start() {
-        mat = GetComponent<MeshRenderer>().material;
-        height = mat.GetFloat("_dissolveSize");
+        materialDissolvido = GetComponent<MeshRenderer>().material;
+        progresso = 0;
     }
     
-    public void Disolver(int obj,int pts) {
+    public void Dissolver(int obj,int pts) {
         if (running == false) {
             running = true;
             var tracker = FindObjectOfType<ModeTrackingScript>();
@@ -27,30 +26,20 @@ public class Dissolve : MonoBehaviour {
                         tracker.pontuacaoRoboAzul += pts;
                         break;
                 }
-
-            mat?.SetFloat("_dissolveSize", height);
-            progress = 0;
+            progresso = 0;
             StartCoroutine(Diss());
-            Debug.Log($"pontos adicionados ({pts})");
         }
     }
 
     IEnumerator Diss() {
-
         yield return new WaitForFixedUpdate();
-        progress = progress + 2 * (0.01f + (Time.deltaTime * (progress)));
-        mat.SetFloat("_progress", progress);
-        if (progress < 1) {
+        progresso = progresso + 12 * (0.01f + (Time.deltaTime * (progresso)));
+        materialDissolvido.SetFloat("_progresso_shader", progresso);
+        if (progresso < 0.7) {
             StartCoroutine(Diss());
-        }
-        else {
-            mat?.SetFloat("_dissolveSize", 0);
-            progress = 0;
-            yield return null;
-            //running = false;
+        } else {
             Destroy(this.gameObject);
+            yield return null;
         }
-
-
     }
 }

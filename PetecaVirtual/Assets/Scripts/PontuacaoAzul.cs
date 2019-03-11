@@ -13,8 +13,7 @@ public class PontuacaoAzul : MonoBehaviour {
     }
 
 
-    private void OnTriggerEnter(Collider objetoDeColisao)
-    {
+    private void OnTriggerEnter(Collider objetoDeColisao){
         switch (objetoDeColisao.tag) {
             case "Cilindro_amarelo":
                 Destroy(objetoDeColisao.gameObject);
