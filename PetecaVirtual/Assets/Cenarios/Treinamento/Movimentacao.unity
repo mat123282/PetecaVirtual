@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17338702, g: 0.216739, b: 0.29880795, a: 1}
+  m_IndirectSpecularColor: {r: 0.17338844, g: 0.21674153, b: 0.29881227, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1980,6 +1980,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4871302846775594, guid: f4a6e00eb6457ba4f901d79e11baf4c8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.12278779
+      objectReference: {fileID: 0}
+    - target: {fileID: 4871302846775594, guid: f4a6e00eb6457ba4f901d79e11baf4c8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.12278779
+      objectReference: {fileID: 0}
+    - target: {fileID: 4871302846775594, guid: f4a6e00eb6457ba4f901d79e11baf4c8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.6963643
+      objectReference: {fileID: 0}
+    - target: {fileID: 4871302846775594, guid: f4a6e00eb6457ba4f901d79e11baf4c8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.6963643
+      objectReference: {fileID: 0}
+    - target: {fileID: 4871302846775594, guid: f4a6e00eb6457ba4f901d79e11baf4c8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 54592414230905950, guid: f4a6e00eb6457ba4f901d79e11baf4c8,
         type: 3}
       propertyPath: m_Mass
@@ -2000,25 +2020,9 @@ PrefabInstance:
       propertyPath: VelocidadeGarra
       value: 100
       objectReference: {fileID: 0}
-    - target: {fileID: 4871302846775594, guid: f4a6e00eb6457ba4f901d79e11baf4c8, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.12278779
-      objectReference: {fileID: 0}
-    - target: {fileID: 4871302846775594, guid: f4a6e00eb6457ba4f901d79e11baf4c8, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.12278779
-      objectReference: {fileID: 0}
-    - target: {fileID: 4871302846775594, guid: f4a6e00eb6457ba4f901d79e11baf4c8, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.6963643
-      objectReference: {fileID: 0}
-    - target: {fileID: 4871302846775594, guid: f4a6e00eb6457ba4f901d79e11baf4c8, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.6963643
-      objectReference: {fileID: 0}
-    - target: {fileID: 4871302846775594, guid: f4a6e00eb6457ba4f901d79e11baf4c8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 20
+    - target: {fileID: 1005694934196736, guid: f4a6e00eb6457ba4f901d79e11baf4c8, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f4a6e00eb6457ba4f901d79e11baf4c8, type: 3}
@@ -2537,7 +2541,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 760995965}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &760995968
 Camera:
   m_ObjectHideFlags: 0
@@ -3227,7 +3231,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 950781966}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &950781969
 Camera:
   m_ObjectHideFlags: 0
@@ -3845,7 +3849,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1079083529}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &1079083532
 Camera:
   m_ObjectHideFlags: 0
@@ -3968,7 +3972,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1135535711}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &1135535713
 Camera:
   m_ObjectHideFlags: 0
@@ -5108,7 +5112,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1497643229}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &1497643232
 Camera:
   m_ObjectHideFlags: 0
@@ -6895,7 +6899,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2017697260}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &2017697263
 Camera:
   m_ObjectHideFlags: 0
