@@ -33,7 +33,7 @@ public class Dissolve : MonoBehaviour {
 
     IEnumerator Diss() {
         yield return new WaitForFixedUpdate();
-        progresso = progresso + 12 * (0.01f + (Time.deltaTime * (progresso)));
+        progresso = progresso + 15 * (0.01f + (Time.deltaTime * (progresso)));
         materialDissolvido.SetFloat("_progresso_shader", progresso);
         if (progresso < 0.7) {
             StartCoroutine(Diss());
