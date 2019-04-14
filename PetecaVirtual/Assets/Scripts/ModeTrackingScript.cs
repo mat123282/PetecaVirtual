@@ -45,9 +45,19 @@ public class ModeTrackingScript : MonoBehaviour {
         }
     }
 
+    NamedPipeServer PServer1;
+    NamedPipeServer PServer2;
+
+
     void Start() {
         DontDestroyOnLoad(transform.gameObject);
         tracker = FindObjectOfType<ModeTrackingScript>().gameObject; //encontra o objeto que tem esse script
+
+        PServer1 = new NamedPipeServer(@"\\.\pipe\PetServerPipe0", 0);//sread
+        PServer2 = new NamedPipeServer(@"\\.\pipe\PetServerPipe1", 1);//swrite
+        PServer1.Start();
+        PServer2.Start();
+        NamedPipeServer.OnDataReceived += SeverResponse;
 
         SceneManager.sceneLoaded += OnSceneLoaded;
         Time.timeScale = 0;                         //
@@ -55,6 +65,19 @@ public class ModeTrackingScript : MonoBehaviour {
         QualitySettings.vSyncCount = 0;             //
         Application.targetFrameRate = 60;           //
     }
+
+    private void SeverResponse(object sender, string readValue)
+    {
+        PServer2.SendMessage(readValue, PServer2.clientse);
+    }
+
+    private void OnApplicationQuit()
+    {
+        PServer1.StopServer();
+        PServer2.StopServer();
+        Debug.Log("SeverStoped");
+    }
+
 
     private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
@@ -272,5 +295,8 @@ public class ModeTrackingScript : MonoBehaviour {
         }
 
     }
+
+
+
     
 }
