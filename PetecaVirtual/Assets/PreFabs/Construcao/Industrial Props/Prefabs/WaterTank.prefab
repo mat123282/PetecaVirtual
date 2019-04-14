@@ -1994,6 +1994,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 437386}
+  - component: {fileID: 2262763149137018328}
   m_Layer: 0
   m_Name: WaterTank
   m_TagString: Untagged
@@ -2016,6 +2017,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2262763149137018328
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 184236}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.021241, y: 2.1380682, z: 2.0531032}
+  m_Center: {x: 0.76551664, y: 0.98323965, z: 0.27165604}
 --- !u!1 &185700
 GameObject:
   m_ObjectHideFlags: 0
