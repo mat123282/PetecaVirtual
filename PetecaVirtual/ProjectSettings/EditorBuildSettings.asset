@@ -9,9 +9,9 @@ EditorBuildSettings:
     path: Assets/Menu/Menu.unity
     guid: bff43c100c215b34c8c77947c6d7815f
   - enabled: 1
-    path: Assets/Cenarios/Treinamento/Movimentacao.unity
+    path: Assets/Cenarios/Treinamento/Prontos/Movimentacao.unity
     guid: 00d0fe58bf6137e4e982391a31ba74a3
   - enabled: 1
-    path: Assets/Cenarios/Treinamento/Curva logo a frente.unity
+    path: Assets/Cenarios/Treinamento/Prontos/Curva logo a frente.unity
     guid: 224b12f38d11c704cafb7e2772d415aa
   m_configObjects: {}
