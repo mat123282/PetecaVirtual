@@ -13,21 +13,14 @@ public class MapasCompeticoes {
     public static List<Mapa> mapas =
         new List<Mapa>(){
 
-            new Mapa(){//Mapa1
-                titulo = "Movimento",
-                dificuldade = 1,
-                descricao = "Mapa inicial para aprender sobre as movimentações" +
-                            " básicas do robo e verificar seu código.",
-                buildIndex = 1
-            },
-
-            new Mapa(){//Mapa2
-                titulo = "Curva logo a frente",
-                dificuldade = 1,
-                descricao = "Teste suas habilidades de rotação com " +
-                            "as curvas que você encontrará aqui.",
-                buildIndex = 2
+            new Mapa {//Mapa1
+                titulo = "Construção",
+                dificuldade = 3,
+                descricao = "Um incrível mapa de cooperação em um prédio em construção!",
+                buildIndex = 3,
+                modoJogo = ModoDeJogo.Cooperacao
             }
         };
-    public int numeroMapas => mapas.Count;
+
+    public static int numeroMapas => mapas.Count;
 }

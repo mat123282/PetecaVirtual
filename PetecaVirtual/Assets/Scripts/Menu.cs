@@ -207,22 +207,88 @@ public class Menu : MonoBehaviour {
             }
         }
         else if (BotaoSelecionadoToolbar == 2) { //mapas
-            //GUI.skin = ControlSkin;
-            //ScrollPosition = GUI.BeginScrollView(new Rect(15, 65, 800, 400), ScrollPosition, new Rect(0, 0, 750, 600), false, true);
+            ScrollPosition = GUI.BeginScrollView(
+                                 new Rect(15, 65, 800, 400), ScrollPosition,
+                                 new Rect(0, 0, 750, MapasCompeticoes.numeroMapas * 72),
+                                 false, true);
+            #region SELEÇÃO DE MAPAS
+            GUI.skin = ConteudoBotoes;
 
-            // Make four buttons - one in each corner. The coordinate system is defined
-            // by the last parameter to BeginScrollView.
-            //GUI.Button(new Rect(0, 0, 100, 20), "Top-left");
-            //GUI.Button(new Rect(700, 0, 100, 20), "Top-right");
-            //GUI.Button(new Rect(0, 540, 100, 20), "Bottom-left");
-            //GUI.Button(new Rect(700, 540, 100, 20), "Bottom-right");
+            for (int i = 0; i < MapasCompeticoes.numeroMapas; i++) {
+                Mapa mapa = MapasCompeticoes.mapas[i];
+                bool choosed = (tracker.MapaEscolhido == mapa.buildIndex);
 
-            // End the scroll view that we began above.
-            //GUI.EndScrollView();
+                bool pressed = GUI.Button(new Rect(0, 70 * i, 780, 60),
+                   ((choosed) ? $"<color=#ffffff><size={ConteudoBotoes.font.fontSize + 2}>  " :
+                                 $"<color=#aaaaaa><size={ConteudoBotoes.font.fontSize    }> ") +
+                                $"<b>{i + 1}. {mapa.titulo}</b></size> \nModo: Solo\tDificuldade: " +
+                                $"{mapa.dificuldade} de 5\n{ mapa.descricao}</color>");
 
-            //GUI.Button(new Rect(900, 200, 130, 50), "Botao1");
-            //GUI.Button(new Rect(1100, 200, 130, 50), "Botao2");
-            //GUI.Button(new Rect(1000, 300, 130, 50), "Botao3");
+                if (pressed == true) {
+                    if (mapa.buildIndex < SceneManager.sceneCountInBuildSettings) {
+                        tracker.MapaEscolhido = mapa.buildIndex;
+                        tracker.ModoJogo = mapa.modoJogo;
+                    } else {
+                        print("Contate o administrador, erro de Build Inde");
+                    }
+                }
+            }
+            GUI.EndScrollView();
+            #endregion SELEÇÃO DE MAPAS
+
+            #region MODO DE PARTIDA
+            GUI.BeginGroup(new Rect(850, 90, 350, 250));
+            GUI.skin = ConteudoMenu;
+            GUI.Box(new Rect(5, 5, 340, 240), "\nModo de Partida");
+
+            GUI.skin = ControlSkin; // Design para o conteudo
+            botaoTempo = GUI.Toggle(new Rect(50, 70, 220, 30), botaoTempo, "<size=18>Por tempo</size>", "checkbox");
+            botaoPontuacao = GUI.Toggle(new Rect(50, 160, 220, 30), botaoPontuacao, "<size=18>Por pontuação</size>", "checkbox");
+
+            // 0 - Por tempo. 1 - Por pontos. 2 - Por tempo e pontuacao
+            tracker.TipoPontuacao = botaoTempo ? (botaoPontuacao ? 2 : 0) : (botaoPontuacao ? 1 : -1);
+
+
+            if (botaoTempo) {
+
+                GUI.Label(new Rect(90, 100, 70, 60),
+                    $"{((timeTotal != tracker.TempoTotal.ToString()) ? "<color=#ff0000>" : "<color=#ffffff>")}" +
+                    $"<size=18>Tempo: </size></color>");
+                //timeTotal = tracker.TempoTotal.ToString();
+                timeTotal = GUI.TextField(new Rect(160, 105, 60, 20), timeTotal);
+                try {
+                    tracker.TempoTotal = float.Parse(timeTotal);
+                    if (tracker.TempoTotal < 0) tracker.TempoTotal = ModeTrackingScript.DEFAULT_INITIAL_TIME;
+                }
+                catch {
+                    tracker.TempoTotal = ModeTrackingScript.DEFAULT_INITIAL_TIME;
+                }
+
+            } else {
+                timeTotal = tracker.TempoTotal.ToString();
+                tracker.TempoTotal = ModeTrackingScript.DEFAULT_INITIAL_TIME;
+            }
+
+            GUI.EndGroup();
+            #endregion MODO DE PARTIDA
+
+            var ReadyToGo =
+                 ((tracker.TipoPontuacao != -1) &&                   //Modo de jogo selecionado 
+                  (tracker.MapaEscolhido != 0)) &&                   //Mapa selecionado
+                  (timeTotal == tracker.TempoTotal.ToString());      //Tempo valido digitado
+
+            var selectContent = new GUIContent($"{((ReadyToGo) ? "<color=#ffffff>" : "<color=#cc8888>")}Selecionar</color>");
+            selectContent.tooltip =
+                (tracker.TipoPontuacao == -1) ? "Voce precisa selecionar um modo de jogo" :
+                (tracker.MapaEscolhido == 0) ? "Um mapa ainda não foi escolhido" :
+                (timeTotal != tracker.TempoTotal.ToString()) ? "Tempo selecionado inválido" :
+                "999";
+
+            GUI.skin = ControlSkin; // Design para o conteudo
+            bool VerificaMapaSelecionado = GUI.Button(new Rect(975, 370, 100, 30), selectContent); //botão selecionar
+            if (VerificaMapaSelecionado && ReadyToGo) {
+                mostrarJanelaIrParaMapa = true;
+            }
         } 
         else if (BotaoSelecionadoToolbar == 3) { //Updates
             GUI.Box(new Rect(5, 65, 400, 350), "Notas de Atualização", "score");

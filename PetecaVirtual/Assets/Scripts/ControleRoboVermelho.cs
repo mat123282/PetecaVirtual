@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class ControleRoboVermelho : MonoBehaviour {
 
-    public float VelocidadeTranslacao = 2;
-    public float VelocidadeRotacao = 50;
-    public float VelocidadeGarra = 50;
+    public float VelocidadeTranslacao = 4;
+    public float VelocidadeRotacao = 100;
+    public float VelocidadeGarra = 100;
     public GameObject SistemaBraco;
     private Vector3 direcao;
     private Rigidbody rigidbodyRobo;
@@ -29,12 +29,9 @@ public class ControleRoboVermelho : MonoBehaviour {
 
         direcao = Vector3.zero;
         rotacaoRobo = Vector3.zero;
-        if (Translacao != 0)
-        {
+        if (Translacao != 0) {
             direcao = transform.right * Translacao;
-        }
-        else if (Rotacao != 0)
-        {
+        } else if (Rotacao != 0) {
             rotacaoRobo = new Vector3(0, 0, Rotacao);
         }
 

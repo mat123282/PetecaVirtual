@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Cenarios/Treinamento/Prontos/Curva logo a frente.unity
     guid: 224b12f38d11c704cafb7e2772d415aa
+  - enabled: 1
+    path: Assets/Cenarios/Mapas/Construcao.unity
+    guid: fc3ca94cbfc2a8a4d96eb738b98227e2
   m_configObjects: {}

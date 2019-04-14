@@ -18,6 +18,7 @@ public class Mapa {
  public enum ModoDeJogo {
     Nenhum,
     Solo,
+    Cooperacao,
     Competição,
-    Arena
+    Labirinto
 }

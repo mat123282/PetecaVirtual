@@ -9,29 +9,29 @@
 /// <c>... new MapasTreinamento();</c> para inicializar
 /// <c> MapasTreinamento.mapas[valor] </c> buscar valor
 /// </example>
-public class MapasTreinamento
-{
+public class MapasTreinamento {
     public static List<Mapa> mapas = 
-    new List<Mapa>() {
+        new List<Mapa>() {
         
-        new Mapa {//Mapa1
-            titulo = "Movimento",
-            dificuldade = 1,
-            descricao = "Mapa inicial para aprender sobre as movimentações " +
-                        "básicas do robo e verificar seu código.",
-            buildIndex = 1,
-            modoJogo = ModoDeJogo.Solo
-        },
+            new Mapa {//Mapa1
+                titulo = "Movimento",
+                dificuldade = 1,
+                descricao = "Mapa inicial para aprender sobre as movimentações " +
+                            "básicas do robo e verificar seu código.",
+                buildIndex = 1,
+                modoJogo = ModoDeJogo.Solo
+            },
         
-        new Mapa{//Mapa2
-            titulo = "Curva logo a frente",
-            dificuldade = 1,
-            descricao = "Teste suas habilidades de rotação " +
-                        "com as curvas que você encontrará aqui.",
-            buildIndex = 2,
-            modoJogo = ModoDeJogo.Solo
-        }
+            new Mapa{//Mapa2
+                titulo = "Curva logo a frente",
+                dificuldade = 1,
+                descricao = "Teste suas habilidades de rotação " +
+                            "com as curvas que você encontrará aqui.",
+                buildIndex = 2,
+                modoJogo = ModoDeJogo.Solo
+            }
 
-    };
+        };
+
     public static int numeroMapas => mapas.Count;
 }
