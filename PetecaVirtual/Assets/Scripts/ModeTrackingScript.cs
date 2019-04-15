@@ -114,6 +114,11 @@ public class ModeTrackingScript : MonoBehaviour {
                 tempo = 0;
                 Time.timeScale = 0;
                 fimDeJogo = true;
+            } else if (Pecas != null) {
+                if (Pecas.transform.childCount == 0) {
+                    Time.timeScale = 0;
+                    fimDeJogo = true;
+                }
             }
         }
         else if (TipoPontuacao == 1) {

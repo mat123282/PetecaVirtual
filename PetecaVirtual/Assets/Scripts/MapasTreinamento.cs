@@ -12,10 +12,18 @@
 public class MapasTreinamento {
     public static List<Mapa> mapas = 
         new List<Mapa>() {
-        
+
+            new Mapa {//Mapa1
+                titulo = "Mapa Inicial",
+                dificuldade = 1,
+                descricao = "Aprenda os movimentos mais básicos da plataforma.",
+                buildIndex = 4,
+                modoJogo = ModoDeJogo.Solo
+            },
+
             new Mapa {//Mapa1
                 titulo = "Movimento",
-                dificuldade = 1,
+                dificuldade = 2,
                 descricao = "Mapa inicial para aprender sobre as movimentações " +
                             "básicas do robo e verificar seu código.",
                 buildIndex = 1,
@@ -24,13 +32,12 @@ public class MapasTreinamento {
         
             new Mapa{//Mapa2
                 titulo = "Curva logo a frente",
-                dificuldade = 1,
+                dificuldade = 2,
                 descricao = "Teste suas habilidades de rotação " +
                             "com as curvas que você encontrará aqui.",
                 buildIndex = 2,
                 modoJogo = ModoDeJogo.Solo
             }
-
         };
 
     public static int numeroMapas => mapas.Count;
