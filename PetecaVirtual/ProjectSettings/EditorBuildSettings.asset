@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Cenarios/Mapas/Construcao.unity
     guid: fc3ca94cbfc2a8a4d96eb738b98227e2
+  - enabled: 1
+    path: Assets/Cenarios/Treinamento/Prontos/Mapa inicial.unity
+    guid: 8b8e6f7020a09ac479399c421e89bb2d
   m_configObjects: {}
