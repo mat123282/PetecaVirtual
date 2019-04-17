@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Linq;
+using System;
 
 //a tag abaixo adiciona uma descrição ao script
 /// <summary>
@@ -66,9 +67,24 @@ public class ModeTrackingScript : MonoBehaviour {
         Application.targetFrameRate = 60;           //
     }
 
+    public static event EventHandler<int> OnMoveCommand;
+
     private void SeverResponse(object sender, string readValue)
     {
-        PServer2.SendMessage(readValue, PServer2.clientse);
+        var v = readValue.Split(';');
+        if (v.Length == 3)
+        {
+            if (v[1] == "MOVE")
+            {
+                //Debug.Log("Movendo" + ((v[0] == "R1") ? "Robo Vermelho" : "Robo Azul")+" para ");
+                //Debug.Log(((v[0][1]-49)<<2) | (v[2][0]-49) );
+                var st = "Movendo" + ((v[0] == "R1") ? "Robo Vermelho" : "Robo Azul");
+                //PServer2.SendMessage(st, PServer2.clientse);
+                OnMoveCommand?.Invoke(PServer2, ((v[0][1]-49)<<2) | (v[2][0]-49) );
+            }
+        }
+
+        //PServer2.SendMessage(readValue, PServer2.clientse);
     }
 
     private void OnApplicationQuit()

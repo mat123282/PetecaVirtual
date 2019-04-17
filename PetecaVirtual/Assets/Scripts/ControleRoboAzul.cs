@@ -17,15 +17,38 @@ public class ControleRoboAzul : MonoBehaviour {
     void Start () {
         rigidbodyRobo = GetComponent<Rigidbody>();
         rotacaoRobo = Vector3.zero;
+        ModeTrackingScript.OnMoveCommand += MoveCommand;
     }
-	
-	void Update () {
+
+    float vTranslacao, vRotacao;
+    private void MoveCommand(object sender, int e)
+    {
+        //Debug.Log("AzulResp");
+        if (e >> 2 == 1)
+        {
+            Debug.Log("Mover Azul " + (e & 3));
+            switch ((e & 3))
+            {
+                case 0: vTranslacao = 1; break;
+                case 1: vTranslacao = -1; break;
+                case 2: vRotacao = 1; break;
+                case 3: vRotacao = -1; break;
+            }
+        }
+    }
+
+    void Update () {
 
     }
 
     private void FixedUpdate() {
         float Translacao = Input.GetAxis("Vertical2");
         float Rotacao = Input.GetAxis("Horizontal2");
+
+        if (Translacao == 0)
+            Translacao = vTranslacao;
+        if (Rotacao == 0)
+            Rotacao = vRotacao;
 
         direcao = Vector3.zero;
         rotacaoRobo = Vector3.zero;
@@ -52,5 +75,7 @@ public class ControleRoboAzul : MonoBehaviour {
         } else if ((posicao > 240) && (posicao < 270)) {
             SistemaBraco.transform.localRotation = Quaternion.Euler(0, 270, -90);
         }
+
+        vRotacao = vTranslacao = 0;
     }
 }
