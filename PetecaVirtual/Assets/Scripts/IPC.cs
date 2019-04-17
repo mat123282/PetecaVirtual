@@ -135,7 +135,7 @@ public class NamedPipeServer
                 Buffer.BlockCopy(buffer, 0, Rc, 0, ReadLength);
 
                 string readValue = encoder.GetString(Rc, 0, ReadLength);
-                Debug.Log("C# App: Received " + ReadLength + " Bytes: " + readValue);
+                //Debug.Log("C# App: Received " + ReadLength + " Bytes: " + readValue);
                 OnDataReceived?.Invoke(this, readValue);
 
                 buffer.Initialize();
