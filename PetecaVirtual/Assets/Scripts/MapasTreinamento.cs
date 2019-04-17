@@ -13,7 +13,7 @@ public class MapasTreinamento {
     public static List<Mapa> mapas = 
         new List<Mapa>() {
 
-            new Mapa {//Mapa1
+            new Mapa {
                 titulo = "Mapa Inicial",
                 dificuldade = 1,
                 descricao = "Aprenda os movimentos mais básicos da plataforma.",
@@ -21,7 +21,31 @@ public class MapasTreinamento {
                 modoJogo = ModoDeJogo.Solo
             },
 
-            new Mapa {//Mapa1
+            new Mapa {
+                titulo = "Aprenda a se virar",
+                dificuldade = 1,
+                descricao = "Aprenda os movimentos mais básicos da plataforma.",
+                buildIndex = 5,
+                modoJogo = ModoDeJogo.Solo
+            },
+
+            new Mapa {
+                titulo = "Zipado",
+                dificuldade = 2,
+                descricao = "Por que? Porque esse mapa é muito apertado.",
+                buildIndex = 6,
+                modoJogo = ModoDeJogo.Solo
+            },
+
+            new Mapa {
+                titulo = "Tá bem?",
+                dificuldade = 1,
+                descricao = "O mapa parece uma resposta pra isso.",
+                buildIndex = 7,
+                modoJogo = ModoDeJogo.Solo
+            },
+
+            new Mapa {
                 titulo = "Movimento",
                 dificuldade = 2,
                 descricao = "Mapa inicial para aprender sobre as movimentações " +
@@ -30,7 +54,7 @@ public class MapasTreinamento {
                 modoJogo = ModoDeJogo.Solo
             },
         
-            new Mapa{//Mapa2
+            new Mapa{
                 titulo = "Curva logo a frente",
                 dificuldade = 2,
                 descricao = "Teste suas habilidades de rotação " +
