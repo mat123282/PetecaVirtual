@@ -79,6 +79,21 @@ public class MapasTreinamento {
                 modoJogo = ModoDeJogo.Cooperacao
             },
 
+            new Mapa{
+                titulo = "Nível 1",
+                dificuldade = 1,
+                descricao = "Um puzzle tão fácil que dá até vergonha se perder.",
+                buildIndex = 9,
+                modoJogo = ModoDeJogo.Labirinto
+            },
+
+            new Mapa{
+                titulo = "Nível 2",
+                dificuldade = 2,
+                descricao = "Esse puzzle será impossível, eu acho.",
+                buildIndex = 10,
+                modoJogo = ModoDeJogo.Labirinto
+            },
         };
 
     public static int numeroMapas => mapas.Count;

@@ -197,15 +197,11 @@ public class ModeTrackingScript : MonoBehaviour {
                 GUI.contentColor = Color.blue;                                              //
                 GUI.Label(new Rect(45, 50, 100, 25), "<b>Azul: </b>");                      //Azul:<pontos>
                 GUI.Label(new Rect(90, 50, 100, 25), pontuacaoRoboAzul.ToString());         //
-            } else {
-                GUI.Box(new Rect(0, 0, 150, 80), "");
-                GUI.contentColor = Color.red;                                               //
-                GUI.Label(new Rect(20, 25, 100, 25), "<b>Vermelho: </b>");                  //Vermelho:<pontos>
-                GUI.Label(new Rect(90, 25, 100, 25), pontuacaoRoboVermelho.ToString());     //
-
-                GUI.contentColor = Color.blue;                                              //
-                GUI.Label(new Rect(45, 50, 100, 25), "<b>Azul: </b>");                      //Azul:<pontos>
-                GUI.Label(new Rect(90, 50, 100, 25), pontuacaoRoboAzul.ToString());         //
+            } else if (ModoJogo == ModoDeJogo.Labirinto) {
+                GUI.Box(new Rect(0, 0, 150, 50), "");
+                GUI.contentColor = Color.white;                                             //
+                GUI.Label(new Rect(20, 25, 100, 25), "<b>Pontuação: </b>");                 //Solo:<pontos>
+                GUI.Label(new Rect(90, 25, 100, 25), pontuacaoRoboAzul.ToString());     //
             }
            
             GUI.Label(new Rect(35, 0, 50, 25), "<b>Tempo: </b>");                           //Tempo:<tempo>
@@ -262,13 +258,13 @@ public class ModeTrackingScript : MonoBehaviour {
                         GUI.Label(new Rect(Screen.width / 2 - 275, Screen.height / 2 + 20, 550, 100),
                         "<color=#ffa500ff><size=30><b>Você finalizou o jogo com: " +
                         segundosContador + " segundos!</b></size></color>");
-                    } else if(TipoPontuacao == 2) {
+                    } else if (TipoPontuacao == 2) {
                         GUI.Label(new Rect(Screen.width / 2 - 275, Screen.height / 2 + 20, 550, 100),
                         "<color=#ffa500ff><size=30><b>Você finalizou o jogo com: " +
                         pontuacaoRoboVermelho + $" ponto{((pontuacaoRoboVermelho != 1) ? ("s") : "")}!" +
                         $"em" + segundosContador + "segundos</b></size></color>");
                     }
-                    
+
                 } else if (ModoJogo == ModoDeJogo.Cooperacao) {
                     if (TipoPontuacao == 0) {
                         GUI.Label(new Rect(Screen.width / 2 - 275, Screen.height / 2 + 20, 550, 100),
@@ -281,7 +277,7 @@ public class ModeTrackingScript : MonoBehaviour {
                     } else if (TipoPontuacao == 2) {
                         GUI.Label(new Rect(Screen.width / 2 - 275, Screen.height / 2 + 20, 550, 100),
                         "<color=#ffa500ff><size=30><b>Você finalizou o jogo com: " +
-                        (pontuacaoRoboVermelho + pontuacaoRoboAzul) + $" pontos!"+
+                        (pontuacaoRoboVermelho + pontuacaoRoboAzul) + $" pontos!" +
                         $"em" + segundosContador + "segundos</b></size></color>");
                     }
                 } else if (ModoJogo == ModoDeJogo.Competição) {
@@ -293,7 +289,22 @@ public class ModeTrackingScript : MonoBehaviour {
                         GUI.TextArea(new Rect(Screen.width / 2 - 200, Screen.height / 2 + 20, 400, 100),
                             "<color=#ffa500ff><size=30><b>O time " + "Vermelho" +
                             " ganhou!" + "</b></size></color>");
-                    }                   
+                    }
+                } else if (ModoJogo == ModoDeJogo.Labirinto) {
+                    if (TipoPontuacao == 0) {
+                        GUI.Label(new Rect(Screen.width / 2 - 275, Screen.height / 2 + 20, 550, 100),
+                        "<color=#ffa500ff><size=30><b>Você finalizou o jogo com: " +
+                        pontuacaoRoboAzul + $" ponto{((pontuacaoRoboAzul != 1) ? ("s") : "")}!</b></size></color>");
+                    } else if (TipoPontuacao == 1) {
+                        GUI.Label(new Rect(Screen.width / 2 - 275, Screen.height / 2 + 20, 550, 100),
+                        "<color=#ffa500ff><size=30><b>Você finalizou o jogo com: " +
+                        segundosContador + " segundos!</b></size></color>");
+                    } else if (TipoPontuacao == 2) {
+                        GUI.Label(new Rect(Screen.width / 2 - 275, Screen.height / 2 + 20, 550, 100),
+                        "<color=#ffa500ff><size=30><b>Você finalizou o jogo com: " +
+                        pontuacaoRoboAzul + $" ponto{((pontuacaoRoboAzul != 1) ? ("s") : "")}!" +
+                        $"em" + segundosContador + "segundos</b></size></color>");
+                    }
                 }
             } else {
                 if (JogoPausado == true) {
@@ -301,7 +312,6 @@ public class ModeTrackingScript : MonoBehaviour {
                         "<color=#ffa500ff><size=50><b>Partida Pausada</b></size></color>");
                 }
             }
-
         }
     }
 
@@ -320,16 +330,24 @@ public class ModeTrackingScript : MonoBehaviour {
         ControlaTempo();
     }
 
+    
     private void ReiniciarPontuacao() {
-        if (ModoJogo == ModoDeJogo.Solo) {
-            pontuacaoRoboAzul = 0;
-            pontuacaoRoboVermelho = 0;
-            ControlaTempo();
-        } else if (ModoJogo == ModoDeJogo.Cooperacao) {
-            pontuacaoRoboAzul = 0;
-            pontuacaoRoboVermelho = 0;
-            ControlaTempo();
-        }
+        // if (ModoJogo == ModoDeJogo.Solo) {
+        //     pontuacaoRoboAzul = 0;
+        //     pontuacaoRoboVermelho = 0;
+        //     ControlaTempo();
+        // } else if (ModoJogo == ModoDeJogo.Cooperacao) {
+        //     pontuacaoRoboAzul = 0;
+        //     pontuacaoRoboVermelho = 0;
+        //     ControlaTempo();
+        // } else if (ModoJogo == ModoDeJogo.Labirinto) {
+        //     pontuacaoRoboAzul = 0;
+        //     pontuacaoRoboVermelho = 0;
+        //     ControlaTempo();
+        // }
+        pontuacaoRoboAzul = 0;
+        pontuacaoRoboVermelho = 0;
+        ControlaTempo();
         fimDeJogo = false;
     }
 

@@ -33,6 +33,12 @@ EditorBuildSettings:
     path: Assets/Cenarios/Treinamento/Prontos/Cooperacao/Parceria.unity
     guid: b527da36ffdb1824eb8d843a4bf7f1ba
   - enabled: 1
+    path: Assets/Cenarios/Treinamento/Prontos/Labirinto/Nivel 1.unity
+    guid: 52b00411517f42e42ac67fe10c296e30
+  - enabled: 1
+    path: Assets/Cenarios/Treinamento/Prontos/Labirinto/Nivel 2.unity
+    guid: c663396498e3d714a8fd4f66f49d0fe5
+  - enabled: 1
     path: Assets/Cenarios/Mapas/Construcao.unity
     guid: fc3ca94cbfc2a8a4d96eb738b98227e2
   m_configObjects: {}

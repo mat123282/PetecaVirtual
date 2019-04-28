@@ -13,7 +13,13 @@ public class MapasCompeticoes {
     public static List<Mapa> mapas =
         new List<Mapa>(){
 
-            
+            new Mapa {
+                titulo = "Construção",
+                dificuldade = 3,
+                descricao = "Um incrível mapa de cooperação em um prédio em construção!",
+                buildIndex = 11,
+                modoJogo = ModoDeJogo.Cooperacao
+            }
         };
 
     public static int numeroMapas => mapas.Count;
