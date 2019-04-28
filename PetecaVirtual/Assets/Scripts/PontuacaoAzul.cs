@@ -5,14 +5,11 @@ public class PontuacaoAzul : MonoBehaviour {
     private CaracteristicasScript Valores;
     private ModeTrackingScript tracker;
 
-    // Use this for initialization
-    void Start()
-    {
+    void Start() {
         Valores = FindObjectOfType<CaracteristicasScript>();
         tracker = FindObjectOfType<ModeTrackingScript>();
         if (tracker == null) tracker = new ModeTrackingScript();
     }
-
 
     private void OnTriggerEnter(Collider objetoDeColisao){
         switch (objetoDeColisao.tag) {

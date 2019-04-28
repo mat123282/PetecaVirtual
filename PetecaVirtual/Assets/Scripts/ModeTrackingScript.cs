@@ -325,6 +325,10 @@ public class ModeTrackingScript : MonoBehaviour {
             pontuacaoRoboAzul = 0;
             pontuacaoRoboVermelho = 0;
             ControlaTempo();
+        } else if (ModoJogo == ModoDeJogo.Cooperacao) {
+            pontuacaoRoboAzul = 0;
+            pontuacaoRoboVermelho = 0;
+            ControlaTempo();
         }
         fimDeJogo = false;
     }

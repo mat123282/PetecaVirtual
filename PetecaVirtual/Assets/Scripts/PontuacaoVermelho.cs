@@ -2,7 +2,6 @@
 
 public class PontuacaoVermelho : MonoBehaviour {
 
-
     private CaracteristicasScript Valores;
     private ModeTrackingScript tracker;
 
