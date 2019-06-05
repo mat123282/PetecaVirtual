@@ -18,7 +18,7 @@ class Comunicacao {
         BOOL Write_St = TRUE;
 
     public:
-        void comunica() {
+        void IniciaComunicacao() {
             hPipe1 = CreateFile(lpszPipename1, GENERIC_WRITE, 0, NULL, OPEN_EXISTING, FILE_FLAG_OVERLAPPED, NULL);
             hPipe2 = CreateFile(lpszPipename2, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_FLAG_OVERLAPPED, NULL);
 
@@ -40,6 +40,18 @@ class Comunicacao {
                 CloseHandle(hPipe2);
                 Finished = TRUE;
             }
+        }
+
+        void EnviaDados() {
+
+        }
+
+        void RecebeDados() {
+
+        }
+
+        void EncerraComunicacao() {
+
         }
 };
 
