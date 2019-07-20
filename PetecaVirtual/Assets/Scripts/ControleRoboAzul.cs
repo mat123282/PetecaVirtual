@@ -17,23 +17,43 @@ public class ControleRoboAzul : MonoBehaviour {
     void Start () {
         rigidbodyRobo = GetComponent<Rigidbody>();
         rotacaoRobo = Vector3.zero;
-        ModeTrackingScript.OnMoveCommand += MoveCommand;
+        ExtLibControl.OnCommandCalled += MoveCommand;
     }
 
     float vTranslacao, vRotacao;
-    private void MoveCommand(object sender, int e)
+
+    float desiredDisplacement;
+
+    float DesiredDisplacement {
+        get => desiredDisplacement;
+        set
+        {
+            desiredDisplacement = Mathf.Abs(value);
+            if (desiredDisplacement <= 0.01f)
+            {
+                desiredDisplacement = vRotacao = vTranslacao = 0;
+                ExtLibControl.DeQueueAction();
+            }
+        }
+    }
+
+    private void MoveCommand(object sender, ExtLibControl.UserAction a)
     {
         //Debug.Log("AzulResp");
-        if (e >> 2 == 1)
+        if (a.target == 1 && a.type < 2) //target == BlueBot
         {
-            Debug.Log("Mover Azul " + (e & 3));
-            switch ((e & 3))
+            if (a.type==0) //type == Movement
             {
-                case 0: vTranslacao = 1; break;
-                case 1: vTranslacao = -1; break;
-                case 2: vRotacao = 1; break;
-                case 3: vRotacao = -1; break;
+                vTranslacao = Mathf.Sign(a.value);
+                DesiredDisplacement = a.value;
             }
+            else if (a.type == 1) //type == rotation
+            {
+                vRotacao = Mathf.Sign(a.value);
+                DesiredDisplacement = a.value;
+            }
+            
+
         }
     }
 
@@ -58,9 +78,10 @@ public class ControleRoboAzul : MonoBehaviour {
             rotacaoRobo = new Vector3(0, 0, Rotacao);
         }
 
+        Vector3 displacement = (direcao * VelocidadeTranslacao * Time.deltaTime);
+        rigidbodyRobo.MovePosition(rigidbodyRobo.position + displacement);
 
-        rigidbodyRobo.MovePosition(rigidbodyRobo.position + (direcao * VelocidadeTranslacao * Time.deltaTime));
-
+        //rotação
         Quaternion deltaRotation = Quaternion.Euler(rotacaoRobo * VelocidadeRotacao * Time.deltaTime);
         rigidbodyRobo.MoveRotation(rigidbodyRobo.rotation * deltaRotation);
 
@@ -76,6 +97,12 @@ public class ControleRoboAzul : MonoBehaviour {
             SistemaBraco.transform.localRotation = Quaternion.Euler(0, 270, -90);
         }
 
-        vRotacao = vTranslacao = 0;
+
+        if (vTranslacao != 0)
+            DesiredDisplacement -= displacement.magnitude;
+
+        if (vRotacao != 0)
+            DesiredDisplacement -= deltaRotation.z;
+
     }
 }

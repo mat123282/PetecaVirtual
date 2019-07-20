@@ -19,26 +19,45 @@ public class ControleRoboVermelho : MonoBehaviour
     {
         rigidbodyRobo = GetComponent<Rigidbody>();
         rotacaoRobo = Vector3.zero;
-        ModeTrackingScript.OnMoveCommand += MoveCommand;
+        ExtLibControl.OnCommandCalled += MoveCommand;
     }
 
     float vTranslacao, vRotacao;
-    private void MoveCommand(object sender, int e)
-    {
-        //Debug.Log("VermReps");
-        if (e >> 2 == 0)
-        {
-            //var SV = (sender as NamedPipeServer);
-            //SV.SendMessage("A mover vermelho", SV.clientse);
+    float desiredDisplacement;
 
-            Debug.Log("Mover Vermelho " + (e & 3));
-            switch ((e & 3))
+    public float DesiredDisplacement {
+        get => desiredDisplacement;
+        set
+        {
+            desiredDisplacement = Mathf.Abs(value);
+            if (desiredDisplacement <= 0.1f)
             {
-                case 0: vTranslacao = 1; break;
-                case 1: vTranslacao = -1; break;
-                case 2: vRotacao = 1; break;
-                case 3: vRotacao = -1; break;
+                desiredDisplacement = vRotacao = vTranslacao = 0;
+                ExtLibControl.DeQueueAction();
             }
+        }
+    }
+
+    private void MoveCommand(object sender, ExtLibControl.UserAction a)
+    {
+        if (a.target == 0 && a.type < 2) //target == BlueBot
+        {
+            string s = " 00 ";
+            if (a.type == 0) //type == Movement
+            {
+                vTranslacao = Mathf.Sign(a.value);
+                DesiredDisplacement = a.value;
+                s = "Translação";
+            }
+            else if (a.type == 1) //type == rotation
+            {
+                vRotacao = Mathf.Sign(a.value);
+                DesiredDisplacement = a.value;
+                s = "Rotação";
+            }
+
+            Debug.Log($"RedBot deslocando {DesiredDisplacement}u.( {s} -{a.type})");
+
         }
     }
 
@@ -70,10 +89,14 @@ public class ControleRoboVermelho : MonoBehaviour
         }
 
 
-        rigidbodyRobo.MovePosition(rigidbodyRobo.position + (direcao * VelocidadeTranslacao * Time.deltaTime));
+        Vector3 displacement = (direcao * VelocidadeTranslacao * Time.deltaTime);
+        rigidbodyRobo.MovePosition(rigidbodyRobo.position + displacement);
 
-        Quaternion deltaRotation = Quaternion.Euler(rotacaoRobo * VelocidadeRotacao * Time.deltaTime);
-        rigidbodyRobo.MoveRotation(rigidbodyRobo.rotation * deltaRotation);
+
+        //rotação
+
+        Vector3 deltaRotation = rotacaoRobo * VelocidadeRotacao * Time.deltaTime;
+        rigidbodyRobo.MoveRotation(rigidbodyRobo.rotation * Quaternion.Euler(deltaRotation));
 
         bool SobeGarra = Input.GetKey(KeyCode.Q);
         bool DesceGarra = Input.GetKey(KeyCode.E);
@@ -92,7 +115,24 @@ public class ControleRoboVermelho : MonoBehaviour
             SistemaBraco.transform.localRotation = Quaternion.Euler(0, 270, -90);
         }
 
-        vRotacao = vTranslacao = 0;
+        if (vTranslacao != 0)
+            DesiredDisplacement -= displacement.magnitude;
+
+        if (vRotacao != 0)
+        {
+            DesiredDisplacement -= Mathf.Deg2Rad*deltaRotation.magnitude;
+            Debug.LogWarning(Mathf.Deg2Rad*deltaRotation.magnitude);
+        }
+
     }
+
+    private void OnGUI()
+    {
+        GUI.Label(new Rect(Screen.width / 2 - 200, Screen.height - 50, 400, 100),
+                        $"<color=#ff0000><size=30><b>{DesiredDisplacement}</b></size></color>");
+    }
+
 }
+
+
 

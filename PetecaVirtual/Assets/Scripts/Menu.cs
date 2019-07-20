@@ -137,7 +137,7 @@ public class Menu : MonoBehaviour {
 
                 bool pressed = GUI.Button(new Rect(0, 70 * i, 780, 60),
                    ((choosed) ? $"<color=#ffffff><size={ConteudoBotoes.font.fontSize + 2}>  " :
-                                 $"<color=#aaaaaa><size={ConteudoBotoes.font.fontSize    }> ") +
+                                 $"<color=#666666><size={ConteudoBotoes.font.fontSize    }> ") +
                                 $"<b>{i + 1}. {mapa.titulo}</b></size> \nModo: {mapa.modoJogo}\tDificuldade: " +
                                 $"{mapa.dificuldade} de 5\n{ mapa.descricao}</color>");
 

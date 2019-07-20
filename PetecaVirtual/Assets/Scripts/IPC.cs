@@ -88,6 +88,7 @@ public class NamedPipeServer
         }
 
     }
+
     private void Read()
     {
         //Client client = (Client)clientObj;
@@ -99,7 +100,7 @@ public class NamedPipeServer
         {
 
             int bytesRead = 0;
-
+            buffer = null;
             try
             {
                 buffer = new byte[BUFFER_SIZE];
@@ -107,6 +108,7 @@ public class NamedPipeServer
             }
             catch
             {
+                Debug.Log("something wrong is not right");
                 //read error has occurred
                 break;
             }
@@ -120,22 +122,27 @@ public class NamedPipeServer
             //    this.MessageReceived(clientse, encoder.GetString(buffer, 0, bytesRead));
 
             int ReadLength = 0;
+            string s="";
             for (int i = 0; i < BUFFER_SIZE; i++)
             {
-                if (buffer[i].ToString("x2") != "cc")
+                s += buffer[i].ToString("x2")+" ";
+
+                if (buffer[i].ToString("x2") != "00")
                 {
                     ReadLength++;
                 }
                 else
                     break;
             }
+            Debug.LogWarning(s);
+
             if (ReadLength > 0)
             {
                 byte[] Rc = new byte[ReadLength];
                 Buffer.BlockCopy(buffer, 0, Rc, 0, ReadLength);
 
                 string readValue = encoder.GetString(Rc, 0, ReadLength);
-                //Debug.Log("C# App: Received " + ReadLength + " Bytes: " + readValue);
+                //Debug.Log($"Received-mesage({ReadLength}): {readValue}");
                 OnDataReceived?.Invoke(this, readValue);
 
                 buffer.Initialize();
@@ -161,6 +168,7 @@ public class NamedPipeServer
         if (client.stream.CanWrite)
         {
             client.stream.Write(messageBuffer, 0, messageBuffer.Length);
+            Debug.Log($"mesage({messageBuffer.Length}): {message}");
             client.stream.Flush();
         }
 
