@@ -40,23 +40,21 @@ public class ControleRoboVermelho : MonoBehaviour
 
     private void MoveCommand(object sender, ExtLibControl.UserAction a)
     {
-        if (a.target == 0 && a.type < 2) //target == BlueBot
+        if (a.target == 0) //target == RedBot
         {
-            string s = " 00 ";
-            if (a.type == 0) //type == Movement
+            if (a.type == "move") //type == Movement
             {
                 vTranslacao = Mathf.Sign(a.value);
                 DesiredDisplacement = a.value;
-                s = "Translação";
             }
-            else if (a.type == 1) //type == rotation
+            else if (a.type == "rot") //type == rotation
             {
+                ang = -2;
                 vRotacao = Mathf.Sign(a.value);
-                DesiredDisplacement = a.value;
-                s = "Rotação";
+                float d = a.value % 360; d = (d > 0) ? d : d + 360;
+                desiredDisplacement = d;
             }
 
-            Debug.Log($"RedBot deslocando {DesiredDisplacement}u.( {s} -{a.type})");
 
         }
     }
@@ -66,15 +64,24 @@ public class ControleRoboVermelho : MonoBehaviour
 
     }
 
+    float ang = -1;
+    //bool holdAngle = false;
+
     private void FixedUpdate()
     {
+
+        if (ang == -2)
+        {
+            ang = (rigidbodyRobo.rotation.eulerAngles.y + DesiredDisplacement) % 360;
+            //Debug.Log($"<color=#00ff00>(T:{rigidbodyRobo.rotation.eulerAngles.y:F2} + D:{DesiredDisplacement:F2})</color>" +
+            //    $"\tParar em {ang:F2}");
+        }
+
         float Translacao = Input.GetAxis("Vertical");
         float Rotacao = Input.GetAxis("Horizontal");
 
-        if (Translacao == 0)
-            Translacao = vTranslacao;
-        if (Rotacao == 0)
-            Rotacao = vRotacao;
+        if (Translacao == 0) Translacao = vTranslacao;
+        if (Rotacao == 0) Rotacao = vRotacao;
 
         direcao = Vector3.zero;
         rotacaoRobo = Vector3.zero;
@@ -83,19 +90,18 @@ public class ControleRoboVermelho : MonoBehaviour
         {
             direcao = transform.right * Translacao;
         }
-        else if (Rotacao != 0)
+        if (Rotacao != 0)
         {
             rotacaoRobo = new Vector3(0, 0, Rotacao);
         }
 
 
-        Vector3 displacement = (direcao * VelocidadeTranslacao * Time.deltaTime);
+        Vector3 displacement = (direcao * VelocidadeTranslacao * Time.fixedDeltaTime);
         rigidbodyRobo.MovePosition(rigidbodyRobo.position + displacement);
 
 
         //rotação
-
-        Vector3 deltaRotation = rotacaoRobo * VelocidadeRotacao * Time.deltaTime;
+        Vector3 deltaRotation = rotacaoRobo * VelocidadeRotacao * Time.fixedDeltaTime;
         rigidbodyRobo.MoveRotation(rigidbodyRobo.rotation * Quaternion.Euler(deltaRotation));
 
         bool SobeGarra = Input.GetKey(KeyCode.Q);
@@ -118,18 +124,43 @@ public class ControleRoboVermelho : MonoBehaviour
         if (vTranslacao != 0)
             DesiredDisplacement -= displacement.magnitude;
 
-        if (vRotacao != 0)
+        if (vRotacao != 0 && ang > 0)
         {
-            DesiredDisplacement -= Mathf.Deg2Rad*deltaRotation.magnitude;
-            Debug.LogWarning(Mathf.Deg2Rad*deltaRotation.magnitude);
+            var angN = rigidbodyRobo.rotation.eulerAngles.y;
+            var diff = Mathf.Abs(ang - angN);
+            //var dang = (diff < 180) ? diff : 360 - diff;
+            var dang = Mathf.Min(diff, 360 - diff);
+
+            if (dang < 0.1f)
+            {
+                //print($"{dang:F2}");
+                //print($"O:{ang:F2}° D:{desiredDisplacement:F2}° N:{angN:F2}°");
+                DesiredDisplacement = 0;
+                ang = -1;
+            }
         }
 
     }
 
     private void OnGUI()
     {
-        GUI.Label(new Rect(Screen.width / 2 - 200, Screen.height - 50, 400, 100),
-                        $"<color=#ff0000><size=30><b>{DesiredDisplacement}</b></size></color>");
+
+        var angN = rigidbodyRobo.rotation.eulerAngles.y;
+        var diff = Mathf.Abs(ang - angN);
+        var dang = Mathf.Min(diff, 360 - diff);
+        if (DesiredDisplacement != 0)
+        {
+
+            GUI.Label(new Rect(Screen.width / 2 - 200, Screen.height - 100, 400, 100),
+                            $"<color=#06357a><size=25><b>" +
+                            $"Deslocando " +
+                            $"{DesiredDisplacement:F2} u \n" +
+                            ((vRotacao != 0) ? (
+                            $"no sentido {((vRotacao == -1) ? "anti" : "")}horário \n " +
+                            $"faltando {dang:F2}° " +
+                            $"para {ang:F2}°") : "") +
+                            $"</b></size></color>");
+        }
     }
 
 }

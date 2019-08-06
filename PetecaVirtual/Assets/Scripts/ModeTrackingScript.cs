@@ -29,14 +29,14 @@ public class ModeTrackingScript : MonoBehaviour
     public GameObject Pecas;                        //
 
     private float tempoInicio;                      //
-    private float tempo;                            //
+    public static float tempo;                      //
     private string segundosContador = "";           //
     private bool mostrarArquivo = false;            //
     private bool primeiraVez = true;                //
     private bool fimDeJogo = false;                 //
     private bool JogoPausado = true;                //
 
-    private static ModeTrackingScript ModeTrack;
+    public static ModeTrackingScript ModeTrack;
     void Awake()
     {
         DontDestroyOnLoad(transform.gameObject);        //Torna obj persistente a troca de cenas
@@ -59,7 +59,7 @@ public class ModeTrackingScript : MonoBehaviour
         DontDestroyOnLoad(transform.gameObject);
         tracker = FindObjectOfType<ModeTrackingScript>().gameObject; //encontra o objeto que tem esse script
 
-        ExtnInstance.INIT(); 
+        ExtnInstance.INIT();
 
         SceneManager.sceneLoaded += OnSceneLoaded;
         Time.timeScale = 0;                         //
@@ -72,16 +72,33 @@ public class ModeTrackingScript : MonoBehaviour
 
     private void UserActionControl(object sender, ExtLibControl.UserAction a)
     {
-        if (a.type == 2)
+        if (a.type == "pause")
         {
             //PauseGame();
-            ExtLibControl.DeQueueAction();
+            PauseCommand = true;
+            //ExtLibControl.DeQueueAction();
         }
-        else if (a.type == 3)
+        else if (a.type == "restart")
         {
-            //ReloadGame();
+            ReloadCommand = true;
+        }
+        else if (a.type == "hold")
+        {
+            StartCoroutine(WaitAndDo(a.value, () => ExtLibControl.DeQueueAction()));
+        }
+        else if (a.type == "getTIME")
+        {
+            ExtnInstance.PServer2.SendMessage($"{tempo}", ExtnInstance.PServer2.clientse);
+            Debug.Log($"<color=#00ff00>Time goted: time ={tempo} seconds...</color>");
             ExtLibControl.DeQueueAction();
         }
+    }
+    bool PauseCommand, ReloadCommand;
+
+    IEnumerator WaitAndDo(float time, Action action)
+    {
+        yield return new WaitForSecondsRealtime(time);
+        action();
     }
 
     private void OnApplicationQuit()
@@ -105,16 +122,21 @@ public class ModeTrackingScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z))
             ExtLibControl.DeQueueAction();
+        if (Input.GetKeyDown(KeyCode.X))
+            ExtLibControl.userActions.Clear();
+
+        if (PauseCommand || ReloadCommand)
+            ExtLibControl.DeQueueAction();
 
         // 0 - Por tempo. 1 - Por pontos. 2 - Por tempo e pontuacao
-        if (Input.GetKeyDown(KeyCode.P) == true)//game pause
+        if (Input.GetKeyDown(KeyCode.P) == true || PauseCommand)//game pause
         {
-            PauseGame();
+            PauseGame(); PauseCommand = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.B) == true)//game reload
+        if (Input.GetKeyDown(KeyCode.B) == true || ReloadCommand)//game reload
         {
-            ReloadGame();
+            ReloadGame(); ReloadCommand = false;
         }
 
         if (TipoPontuacao == 0)

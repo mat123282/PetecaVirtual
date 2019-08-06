@@ -6,8 +6,8 @@ using UnityEngine;
 public class ExtLibControl
 {
 
-    NamedPipeServer PServer1;
-    NamedPipeServer PServer2;
+    public NamedPipeServer PServer1;
+    public NamedPipeServer PServer2;
 
     public static event EventHandler<UserAction> OnCommandCalled;
 
@@ -15,7 +15,7 @@ public class ExtLibControl
 
     public struct UserAction
     {
-        public int type;
+        public string type;
         //0 -   Movement
         //1 -   Rotation
         //2 -   Pause
@@ -25,14 +25,14 @@ public class ExtLibControl
         //0 -   RedBot
         //1 -   BlueBot
         public float value;
-        public UserAction(int type, int target, float value)
+        public UserAction(string type, int target, float value)
         { this.type = type; this.target = target; this.value = value; }
 
-        public UserAction(int type, int target)
-        { this.type = type; this.target = target; this.value = 0; }
+        public UserAction(string type, int target)
+        { this.type = type; this.target = target; this.value = -1; }
 
-        public UserAction(int type)
-        { this.type = type; this.target = -1; this.value = 0; }
+        public UserAction(string type)
+        { this.type = type; this.target = -1; this.value = -1; }
 
     }
 
@@ -60,7 +60,7 @@ public class ExtLibControl
                 {
                     st = $"Movendo {((v[1] == "R0") ? "Robo Vermelho" : "Robo Azul")} {float.Parse(v[2])} unidades";
 
-                    action = new UserAction(0, (v[1] == "R1") ? 1 : 0, float.Parse(v[2]));
+                    action = new UserAction("move", (v[1] == "R1") ? 1 : 0, float.Parse(v[2]));
                 }
                 break;
             case "ROTATE":
@@ -68,35 +68,56 @@ public class ExtLibControl
                 {
                     st = $"Rotacionando {((v[1] == "R0") ? "Robo Vermelho" : "Robo Azul")} {float.Parse(v[2])} unidades";
 
-                    action = new UserAction(1, (v[1] == "R1") ? 1 : 0, float.Parse(v[2]));
+                    action = new UserAction("rot", (v[1] == "R1") ? 1 : 0, float.Parse(v[2]));
                 }
                 break;
             case "PAUSE":
 
                 st = $"Pausando...";
-                action = new UserAction(2);
-
+                action = new UserAction("pause");
 
                 break;
             case "RESTART":
 
                 st = $"Reininciando o nivel...";
-                action = new UserAction(3);
+                action = new UserAction("restart");
 
                 break;
             case "GARRA":
                 if (v.Length == 2)
                 {
                     st = $"Agindo na garra do {((v[1] == "R0") ? "Robo Vermelho" : "Robo Azul")}";
-                    action = new UserAction(4, (v[1] == "R1") ? 1 : 0);
+                    action = new UserAction("garra", (v[1] == "R1") ? 1 : 0);
                 }
+                break;
+            case "CAM"://não implementada
+                if(v.Length == 2)
+                {
+                    st = $"Alternando para camera {v[1]}";
+                    action = new UserAction("cam", -1, float.Parse(v[1]));
+                }
+                break;
+            case "WAIT"://não implementada
+                if (v.Length == 2)
+                {
+                    st = $"Segurando a fila por  {v[1]} segundos";
+                    action = new UserAction("hold", -1, float.Parse(v[1]));
+                }
+                break;
+            case "getTIME":
+
+                action = new UserAction("getTIME");
+
+                break;
+            case "DEQUEUE":
+                userActions.Clear();
                 break;
             default:
                 break;
         }
         userActions.Enqueue(action);
 
-        Debug.Log($"{st}\n{userActions.Count} ações na fila");
+        //Debug.Log($"{st}\n{userActions.Count} ações na fila");
 
         if (userActions.Count == 1)
             MoveActionQueue();
@@ -119,7 +140,7 @@ public class ExtLibControl
 
     public static void MoveActionQueue()
     {
-        Debug.Log($"{userActions.Count} ações na fila- tipo:{userActions.Peek().type}, valor:{userActions.Peek().value}");
+        //Debug.Log($"{userActions.Count-1} ações na fila- tipo:{userActions.Peek().type}, valor:{userActions.Peek().value}");
         OnCommandCalled?.Invoke(null, userActions.Peek());
     }
 

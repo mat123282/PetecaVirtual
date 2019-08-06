@@ -134,7 +134,7 @@ public class NamedPipeServer
                 else
                     break;
             }
-            Debug.LogWarning(s);
+            //Debug.LogWarning(s);
 
             if (ReadLength > 0)
             {

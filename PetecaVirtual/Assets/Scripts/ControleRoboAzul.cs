@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ControleRoboAzul : MonoBehaviour {
+public class ControleRoboAzul : MonoBehaviour
+{
 
     public float VelocidadeTranslacao = 4;
     public float VelocidadeRotacao = 100;
@@ -14,14 +15,14 @@ public class ControleRoboAzul : MonoBehaviour {
     private bool sobeGarra;
     private bool desceGarra;
 
-    void Start () {
+    void Start()
+    {
         rigidbodyRobo = GetComponent<Rigidbody>();
         rotacaoRobo = Vector3.zero;
         ExtLibControl.OnCommandCalled += MoveCommand;
     }
 
     float vTranslacao, vRotacao;
-
     float desiredDisplacement;
 
     float DesiredDisplacement {
@@ -40,41 +41,53 @@ public class ControleRoboAzul : MonoBehaviour {
     private void MoveCommand(object sender, ExtLibControl.UserAction a)
     {
         //Debug.Log("AzulResp");
-        if (a.target == 1 && a.type < 2) //target == BlueBot
+        if (a.target == 1) //target == BlueBot
         {
-            if (a.type==0) //type == Movement
+            if (a.type == "move") //type == Movement
             {
                 vTranslacao = Mathf.Sign(a.value);
                 DesiredDisplacement = a.value;
             }
-            else if (a.type == 1) //type == rotation
+            else if (a.type == "rot") //type == rotation
             {
+                ang = -2;
                 vRotacao = Mathf.Sign(a.value);
-                DesiredDisplacement = a.value;
+                float d = a.value % 360; d = (d > 0) ? d : d + 360;
+                desiredDisplacement = d;
             }
-            
-
         }
     }
 
-    void Update () {
+    void Update()
+    {
 
     }
 
-    private void FixedUpdate() {
+    float ang = -1;
+
+    private void FixedUpdate()
+    {
+
+        if (ang == -2)
+        {
+            ang = (rigidbodyRobo.rotation.eulerAngles.y + DesiredDisplacement) % 360;
+        }
+
+
         float Translacao = Input.GetAxis("Vertical2");
         float Rotacao = Input.GetAxis("Horizontal2");
 
-        if (Translacao == 0)
-            Translacao = vTranslacao;
-        if (Rotacao == 0)
-            Rotacao = vRotacao;
+        if (Translacao == 0) Translacao = vTranslacao;
+        if (Rotacao == 0) Rotacao = vRotacao;
 
         direcao = Vector3.zero;
         rotacaoRobo = Vector3.zero;
-        if (Translacao != 0) {
+        if (Translacao != 0)
+        {
             direcao = transform.right * Translacao;
-        } else if (Rotacao != 0) {
+        }
+        if (Rotacao != 0)
+        {
             rotacaoRobo = new Vector3(0, 0, Rotacao);
         }
 
@@ -82,18 +95,23 @@ public class ControleRoboAzul : MonoBehaviour {
         rigidbodyRobo.MovePosition(rigidbodyRobo.position + displacement);
 
         //rotação
-        Quaternion deltaRotation = Quaternion.Euler(rotacaoRobo * VelocidadeRotacao * Time.deltaTime);
-        rigidbodyRobo.MoveRotation(rigidbodyRobo.rotation * deltaRotation);
+        Vector3 deltaRotation = rotacaoRobo * VelocidadeRotacao * Time.fixedDeltaTime;
+        rigidbodyRobo.MoveRotation(rigidbodyRobo.rotation * Quaternion.Euler(deltaRotation));
 
         bool SobeGarra = Input.GetKey(KeyCode.Y);
         bool DesceGarra = Input.GetKey(KeyCode.I);
         float posicao = SistemaBraco.transform.localRotation.eulerAngles.y;
 
-        if ((posicao <= 20 && posicao >= -1) || (posicao >= 270) && (posicao <= 361)) {
+        if ((posicao <= 20 && posicao >= -1) || (posicao >= 270) && (posicao <= 361))
+        {
             SistemaBraco.transform.Rotate((+((SobeGarra) ? 1 : 0) - ((DesceGarra) ? 1 : 0)) * Vector3.right * Time.deltaTime * VelocidadeGarra);
-        } else if ((posicao > 20) && (posicao < 40)) {
+        }
+        else if ((posicao > 20) && (posicao < 40))
+        {
             SistemaBraco.transform.localRotation = Quaternion.Euler(0, 20, -90);
-        } else if ((posicao > 240) && (posicao < 270)) {
+        }
+        else if ((posicao > 240) && (posicao < 270))
+        {
             SistemaBraco.transform.localRotation = Quaternion.Euler(0, 270, -90);
         }
 
@@ -101,8 +119,19 @@ public class ControleRoboAzul : MonoBehaviour {
         if (vTranslacao != 0)
             DesiredDisplacement -= displacement.magnitude;
 
-        if (vRotacao != 0)
-            DesiredDisplacement -= deltaRotation.z;
+        if (vRotacao != 0 && ang > 0)
+        {
+            var angN = rigidbodyRobo.rotation.eulerAngles.y;
+            var diff = Mathf.Abs(ang - angN);
+            //var dang = (diff < 180) ? diff : 360 - diff;
+            var dang = Mathf.Min(diff, 360 - diff);
+
+            if (dang < 0.1f)
+            {
+                DesiredDisplacement = 0;
+                ang = -1;
+            }
+        }
 
     }
 }
